@@ -1,0 +1,626 @@
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/autogen.sh ./autogen.sh
+--- /home/janneke/cvs/wine/wine/programs/notepad/autogen.sh	1970-01-01 01:00:00 +0100
++++ ./autogen.sh	2005-05-15 10:48:44 +0200
+@@ -0,0 +1,6 @@
++#! /bin/sh
++#libtoolize --force --copy --automake
++aclocal
++#autoheader
++autoconf
++#automake --add-missing --copy
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/configure.in ./configure.in
+--- /home/janneke/cvs/wine/wine/programs/notepad/configure.in	1970-01-01 01:00:00 +0100
++++ ./configure.in	2005-05-15 11:48:17 +0200
+@@ -0,0 +1,77 @@
++# -*-shell-script-*-
++AC_PREREQ(2.54)
++
++m4_define([major_version], [2])
++m4_define([minor_version], [3])
++m4_define([patch_level], [90])
++m4_define([version],
++          [major_version.minor_version.patch_level])
++
++AC_INIT(regex, [version], [http://lilypond.org/download/mingw])
++AC_CONFIG_SRCDIR([ChangeLog])
++#AM_CONFIG_HEADER([config.h])
++#AC_CONFIG_HEADER([config.h])
++
++m4_define([api_version], [2])
++API_VERSION="api_version()"
++AC_SUBST(API_VERSION)
++LT_VERSION_INFO="api_version():0:0"
++AC_SUBST(LT_VERSION_INFO)
++AC_SUBST(LT_CURRENT_MINUS_AGE)
++
++AC_CYGWIN
++AC_LIBTOOL_WIN32_DLL
++AC_MINGW32
++#AM_DISABLE_STATIC
++#AM_MAINTAINER_MODE
++#AM_PROG_LIBTOOL
++
++AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
++
++AC_MSG_CHECKING([for some Windows platform])
++if test "$CYGWIN$MINGW32" == "nono"; then
++    platform_windows=no
++else
++    platform_windows=yes
++fi
++AC_MSG_RESULT([$platform_windows])
++#AM_CONDITIONAL(PLATFORM_WINDOWS, test "$platform_windows" = "yes")
++
++AC_CHECK_HEADERS(error.h)
++
++ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
++
++CFLAGS=
++DLLDEFS=
++DLLEXT=
++DLLFLAGS=
++EXTRACFLAGS=
++LDFLAGS=
++LDPATH=
++MAKE_PROG_RULES="include Makeprog.rules"
++MAKE_RULES="include Make.rules"
++SET_MAKE=
++
++AC_CHECK_PROGS(WINDRES, $target-windres windres, no)
++AC_CHECK_PROGS(WRC, wrc, no)
++
++AC_SUBST(CFLAGS)
++AC_SUBST(CPPFLAGS)
++AC_SUBST(DLLDEFS)
++AC_SUBST(DLLEXT)
++AC_SUBST(DLLFLAGS)
++AC_SUBST(EXTRACFLAGS)
++AC_SUBST(LDFLAGS)
++AC_SUBST(LDPATH)
++AC_SUBST(MAKE_PROG_RULES)
++AC_SUBST(MAKE_RULES)
++AC_SUBST(SET_MAKE)
++AC_SUBST(WINDRES)
++
++AC_CONFIG_FILES([
++Makefile
++Make.rules
++Makeprog.rules
++])
++
++AC_OUTPUT
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/.cvsignore ./.cvsignore
+--- /home/janneke/cvs/wine/wine/programs/notepad/.cvsignore	2004-03-02 22:16:38 +0100
++++ ./.cvsignore	2005-05-15 11:52:25 +0200
+@@ -1,3 +1,27 @@
++#*
++*.orig
++*.patch
++*.rej
++*~
++.#*
++.bash_mknetrel
++CVS
++CYGWIN-PATCHES
++GNUmakefile
++MINGW-PATCHES
++Make.rules.in
+ Makefile
++Makefile.in
++Makeprog.rules.in
++aclocal.m4
++autom4te.cache
++config.guess
++config.sub
++configure
++install-sh
++libltdl
++ltmain.sh
++missing
++mkinstalldirs
+ notepad.exe.dbg.c
+ rsrc.res
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel ./mingw/mknetrel
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel	2005-05-15 11:47:22 +0200
+@@ -0,0 +1,27 @@
++# -*- shell-script -*-
++
++# copy and include extra mknetrel stuff
++. $src/$cygwin/mknetrel.extras || . $extra/mknetrel.extras
++
++flags () {
++    addmakeflags \
++ "ALL_OBJS='\$(OBJS)'" ' '\
++ "WRC=" ' '\
++ "CPPFLAGS=-I$cygwin_prefix/include" ' '\
++ "'RC=\$(WCR) \$(CPPFLAGS)'" ' '\
++ "LIBWINE=" ' '\
++ "LIBPORT=" ' '\
++ "MKINSTALLDIRS=$src/mkinstalldirs" ' '\
++ "INSTALL_PROGRAM=$src/install-sh" ' '\
++
++}
++
++prebuild () {
++    extras_prebuild
++    flags
++}
++
++preinstall () {
++    extras_preinstall
++    flags
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.auto ./mingw/mknetrel.auto
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.auto	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.auto	2005-05-06 18:57:20 +0200
+@@ -0,0 +1,29 @@
++# -*- shell-script -*-
++
++#
++# mknetrel.split -- autotools
++#
++
++autoupdate () {
++    if [ "$base" != "libtool" ]; then
++	if [ -d libltdl ]; then
++	    rm -rf libltdl
++	    libtoolize --force --copy --automake --ltdl
++	else
++	    libtoolize --force --copy --automake
++	fi
++    fi
++
++    chmod +x ./bootstrap ./autogen.sh || :
++    if [ -x ./bootstrap ]; then
++	./bootstrap --noconfigure
++    elif [ -x ./autogen.sh ]; then
++	./autogen.sh --noconfigure
++    else
++	aclocal
++	autoheader
++	autoconf
++	automake --add-missing
++    fi
++    sed -i~ -e 's/ x$PKG_CONFIG / "$x$PKG_CONFIG" /' $src/configure
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.cross ./mingw/mknetrel.cross
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.cross	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.cross	2005-05-07 10:22:34 +0200
+@@ -0,0 +1,103 @@
++# -*- shell-script -*-
++
++#
++# mknetrel.cross -- set cross.cache for configure
++#
++
++# for cross-compiling
++if ! iscygwin; then
++    uploads=$here/uploads/$base && mkdir -p $uploads/
++    tarstem=$uploads/$package
++fi
++
++crosscache () {
++	cat <<EOF > config.cache
++ac_cv_c_bigendian=\${ac_cv_c_bigendian=no}
++ac_cv_c_long_size_t=\${ac_cv_c_long_size_t=no}
++ac_cv_c_long_time_t=\${ac_cv_c_long_time_t=yes}
++ac_cv_sizeof___int64=\${ac_cv_sizeof___int64=0}
++ac_cv_sizeof_char=\${ac_cv_sizeof_char=1}
++ac_cv_sizeof_char_p=\${ac_cv_sizeof_char_p=4}
++ac_cv_sizeof_double=\${ac_cv_sizeof_double=8}
++ac_cv_sizeof_float=\${ac_cv_sizeof_float=4}
++ac_cv_sizeof_int=\${ac_cv_sizeof_int=4}
++ac_cv_sizeof_intmax_t=\${ac_cv_sizeof_intmax_t=8}
++ac_cv_sizeof_intptr_t=\${ac_cv_sizeof_intptr_t=4}
++ac_cv_sizeof_long=\${ac_cv_sizeof_long=4}
++ac_cv_sizeof_long_double=\${ac_cv_sizeof_long_double=12}
++ac_cv_sizeof_long_long=\${ac_cv_sizeof_long_long=8}
++ac_cv_sizeof_ptrdiff_t=\${ac_cv_sizeof_ptrdiff_t=4}
++ac_cv_sizeof_short=\${ac_cv_sizeof_short=2}
++ac_cv_sizeof_size_t=\${ac_cv_sizeof_size_t=4}
++ac_cv_sizeof_uintptr_t=\${ac_cv_sizeof_uintptr_t=4}
++ac_cv_sizeof_unsigned___int64=\${ac_cv_sizeof_unsigned___int64=0}
++ac_cv_sizeof_unsigned_char=\${ac_cv_sizeof_unsigned_char=1}
++ac_cv_sizeof_unsigned_int=\${ac_cv_sizeof_unsigned_int=4}
++ac_cv_sizeof_unsigned_long=\${ac_cv_sizeof_unsigned_long=4}
++ac_cv_sizeof_unsigned_long_long=\${ac_cv_sizeof_unsigned_long_long=8}
++ac_cv_sizeof_unsigned_short=\${ac_cv_sizeof_unsigned_short=2}
++ac_cv_sizeof_void_p=\${ac_cv_sizeof_void_p=4}
++ac_16bit_type=\${ac_16bit_type=short}
++ac_32bit_type=\${ac_32bit_type=int}
++ac_64bit_type=\${ac_64bit_type=none}
++ac_cv_sys_restartable_syscalls=\${ac_cv_sys_restartable_syscalls=yes}
++ac_cv_sprintf_count=\${ac_cv_sprintf_count=yes}
++ac_cv_spinlocks=\${ac_cv_spinlocks=no}
++ac_cv_func_getpgrp_void=\${ac_cv_func_getpgrp_void=yes}
++ac_cv_func_setvbuf_reversed=\${ac_cv_func_setvbuf_reversed=no}
++ac_cv_func_mkfifo=yes
++# but in mingw only if winsock2.h
++ac_cv_func_select=\${ac_cv_func_select=yes}
++ac_cv_search_dlopen=\${ac_cv_search_dlopen="none required"}
++ac_exeext=\${ac_exeext=}
++ac_cv_exeext=\${ac_cv_exeext=}
++
++# libtool searches not only in the cross libpath
++#     /cygwin/usr/lib:/cygwin/usr/lib/w32api:/usr/i686-cygwin/lib
++# but also in /usr/lib.  there it finds libdl.a and adds -ldl
++# to LIBS
++# it seems that libtool is broken wrt cross compilation:
++#    sys_lib_search_path_spec="/usr/lib /lib/w32api /lib /usr/local/lib"
++lt_cv_dlopen=\${lt_cv_dlopen="dlopen"}
++lt_cv_dlopen_libs=\${lt_cv_dlopen_libs="none required"}
++## trying to get .la's in /usr/lib, will this work? -- jcn
++##libltdl_cv_sys_search_path=\${libltdl_cv_sys_search_path="'"/lib /usr/lib"'"}
++##libltdl_cv_sys_search_path=\${libltdl_cv_sys_search_path="'"$cygwin_prefix/lib"'"}
++libltdl_cv_sys_search_path=\${libltdl_cv_sys_search_path="'"$cygwin_prefix/lib"'"}
++lt_cv_sys_max_cmd_len=\${lt_cv_sys_max_cmd_len=8192}
++##ac_cv_header_strings_h=\${ac_cv_header_strings_h=yes}
++ac_cv_lib_dld_shl_load=\${ac_cv_lib_dld_shl_load=no}
++ac_cv_lib_dl_dlopen=\${ac_cv_lib_dl_dlopen=no}
++ac_cv_c_stack_direction=\${ac_cv_c_stack_direction=-1}
++EOF
++}
++
++needdevoflags () {
++    return 1
++}
++
++extras_preconfig () {
++    cd $src || exit 1
++    patchsrc
++    if [ ! -x ./configure ]; then
++	autoupdate
++    fi
++    for i in $(find $src -name configure | xargs grep -l PKG_CONFIG); do
++	sed -i~ -e 's/ x$PKG_CONFIG / "$x$PKG_CONFIG" /' $i
++    done
++    cd $build || exit 1
++    CONFIGOPTS="--config-cache --enable-shared --disable-static $CONFIGOPTS"
++    iscygwin || crosscache
++}
++
++preconfig () {
++    extras_preconfig
++}
++
++extras_postconfig () {
++    fix_libtool_script
++}
++
++postconfig () {
++    extras_postconfig
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.doc ./mingw/mknetrel.doc
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.doc	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.doc	2005-05-02 19:28:24 +0200
+@@ -0,0 +1,32 @@
++# -*- shell-script -*-
++
++#
++# mknetrel.doc -- fixup doc
++#
++
++docprefix=$prefix/share
++docdir=$docprefix/doc
++
++cygdocdir=$docdir/$Cygwin
++infodir=$docprefix/info
++mandir=$docprefix/man
++packagedocdir=$docdir/$base-$ver
++
++fixdoc () {
++    #
++    cd $inst || exit 1
++    mkdir -p $inst/$docprefix
++    for i in info man doc; do
++	#if [ -d $inst/$docprefix/$i ]; then
++	if [ -d $inst/$prefix/$i ]; then
++	    cd $inst/$prefix
++	    tar -cf - $i | tar -C $inst/$docprefix -xf -
++	    rm -rf $inst/$prefix/$i
++	fi
++    done
++    if [ -f $inst/$docprefix/$base ]; then
++	mkdir -p $packagedocdir
++	tar -C $inst/$docprefix/$base -cf - . | tar -C $inst/$packagedocdir -xf -
++    fi
++    true
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.extras ./mingw/mknetrel.extras
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.extras	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.extras	2005-05-04 16:58:23 +0200
+@@ -0,0 +1,13 @@
++# -*- shell-script -*-
++
++# copy and include extra mknetrel stuff
++extras=${extras-"auto cross doc libtool patch split"}
++[ ! -d $src/$cygwin ] && mkdir -p $src/$cygwin
++f=mknetrel.extras
++cp -pv $extra/$f $src/$cygwin/$f
++for i in $extras; do
++    f=mknetrel.$i
++    [ -r $extra/$f ] && cp -pv $extra/$f $src/$cygwin/$f
++    . $src/$cygwin/$f
++done
++cp -pv $extra/$base $src/$cygwin/mknetrel
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.libtool ./mingw/mknetrel.libtool
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.libtool	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.libtool	2005-05-07 08:43:42 +0200
+@@ -0,0 +1,55 @@
++# -*- shell-script -*-
++# mknetrel.libtool -- libtool fixups
++
++fix_libtool_dltool () {
++    sed -i~ \
++	-e "s/^DLLTOOL=.*/DLLTOOL='$target-dlltool'/" \
++        -e "s/^DLLTOOL=/HOST_CC=gcc\nDLLTOOL=/" \
++        -e "s/^HOST_CC=/SED=sed\nHOST_CC=/" \
++        -e "s/^allow_undefined_flag=.*/allow_undefined_flag=/" \
++	$1
++##	-e "s@^sys_lib_dlsearch_path_spec=.*@sys_lib_dlsearch_path_spec='$cygwin_prefix/lib'@"
++}
++
++fix_libtool_dlopen_undefined () {
++    for i in $(find $build -name libtool); do
++	sed -i~ -e 's/\(allow_undefined_flag=.*\)unsupported/\1/' $i
++    done
++}
++    
++fix_libtool_script () {
++    [ $base != "libtool" ] || return 0
++    for i in $mknetrel_root/bin/$target-libtool \
++	$cygwin_prefix/bin/$target-libtool; do
++	[ -x "$i" ] && fixtool=$i
++    done
++    for i in $(find $build -name libtool); do
++	[ -n "$fixtool" ] || exit 1
++	cp --backup $fixtool $i
++    done
++}
++
++fix_libtool_la () {
++    # fix libtool's .la dependency_libs output for dlopen
++    for i in $inst/lib $inst/$prefix/lib; do
++	if [ -d "$i" ]; then
++	    cd $i || exit 1
++	    for j in $(ls -1 *.la); do
++		sed -i~ \
++		    -e 's/ *-L *[^"'"'"' ][^"'"'"' ]*//g'\
++		    -e "s@\( \|=\)\(/usr/lib/lib\)@\1$cygwin_root\2@g"\
++		    $j
++	    done
++	fi
++    done
++
++    # fix some libtool's .dll name
++    mv $inst/$prefix/lib/$dll_prefix$base-$sover $inst/$prefix/bin/$dll_prefix$base-$sover.dll
++
++    # more libtool fixups.  I love libtool.
++    sed -i~ \
++	-e "s@^dlname=.*@dlname='../bin/$dll_prefix$base-$sover.dll'@" \
++	-e "s@^library_names=.*@library_names='$dll_prefix$base.dll.a'@" \
++	-e "s@^old_library=.*@old_library='$dll_prefix$base.a'@" \
++	$inst/$prefix/lib/lib$base.la
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.split ./mingw/mknetrel.split
+--- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel.split	1970-01-01 01:00:00 +0100
++++ ./mingw/mknetrel.split	2005-05-09 12:40:57 +0200
+@@ -0,0 +1,203 @@
++# -*- shell-script -*-
++# mknetrel.split -- split subpackages
++
++extras_preinstall () {
++    :;
++}
++
++extras_presplit () {
++    :;
++}
++
++presplit () {
++    :;
++}
++
++devel_name () {
++    if ! libdev 2> /dev/null ; then
++	echo $base-devel
++    else
++	if expr "$base" : "\(lib\)" > /dev/null 2>&1; then
++	    echo $base-dev
++	else
++	    echo lib$base-dev
++	fi
++    fi
++}
++
++doc_name () {
++    echo $base-doc
++}
++
++lib_name () {
++    if expr "$base" : "\(lib\)" > /dev/null 2>&1; then
++	echo $base$sover
++    else
++	echo lib$base$sover
++    fi
++}
++
++extras_lib_split () {
++    mkdir -p ./$prefix/bin || exit 1
++    mv $inst/$prefix/bin/*.dll ./$prefix/bin
++    # better move dlls to bin, see gmp
++    mkdir -p ./$prefix/lib || exit 1
++    mv $inst/$prefix/lib/*.dll ./$prefix/lib
++    mkdir -p ./$prefix/lib || exit 1
++    mv $inst/$prefix/lib/lib*.la ./$prefix/lib
++    mkdir -p ./$prefix/share || exit 1
++    mv $inst/$prefix/share/$base ./$prefix/share
++    rmdir $inst/$prefix/bin || true
++    rmdir $inst/$prefix/lib || true
++    rmdir $inst/$prefix/share || true
++    true
++}
++   
++extras_devel_split () {
++    mkdir -p ./$prefix/bin || exit 1
++    tar -C $inst -cf - ./$prefix/include | tar -xf -
++    rm -rf $inst/$prefix/include
++    # Only static .a libs in devel, load time .la files go in LIB or
++    # BIN package.
++    mkdir -p ./$prefix/lib || exit 1
++    mv $inst/$prefix/lib/*.a ./$prefix/lib
++    mkdir -p ./$prefix/share || exit 1
++    tar -C $inst -cf - ./$prefix/share/aclocal | tar -xf -
++    rm -rf $inst/$prefix/share/aclocal
++    rmdir $inst/$prefix/lib || true
++    rmdir $inst/$prefix/share || true
++    true
++}
++
++doc_split () {
++    mkdir -p ./$docprefix || exit 1
++    mkdir -p ./$infodir || exit 1
++    tar -C $inst -cf - ./$infodir | tar -xf -
++    rm -rf $inst/$infodir
++    true
++}
++
++extras_prebuild () {
++    for i in $sub_packages; do
++	rm -rf $inst-$i
++	mkdir -p $inst-$i || exit 1
++    done
++}
++
++extras_postinstall () {
++    fixdoc
++    fix_libtool_la
++    
++    mkdir -p $inst-doc/$docprefix
++    cd $build || exit 1
++
++    cd $src || exit 1
++    install -d -m755 $inst/$packagedocdir
++
++    readmes="$(find . -maxdepth 1 -type f -a -name '[A-Z]*' | egrep -v 'Makefile|GNUmakefile')"
++    install -m644 $readmes $inst/$packagedocdir
++
++    ## Cygwin readmes
++    cd $src || exit 1
++    install -d -m755 $inst/$cygdocdir
++    install -m644 $cygwin/changelog $inst/$cygdocdir/changelog.$Cygwin
++
++    cd $src || exit 1
++    install -m644 $cygwin/README $inst/$packagedocdir/README.$Cygwin
++    install -m644 $cygwin/README $inst/$cygdocdir/$package.README
++    cd $build || exit 1
++    install -m644 $cygwin/out/README $inst/$packagedocdir/README.$Cygwin
++    install -m644 $cygwin/out/README $inst/$cygdocdir/$package.README
++}
++
++domkdist () {
++    #
++    # Fix up installation slightly
++    #
++    cd $inst || exit 1
++    chmod -R u+w,og-w,a+rX .
++    cd usr 2>/dev/null && dousrstuff
++
++    # Split off any sub-packages.  The actual splitting is handled by
++    # a package's specific code in extra/.
++
++    # To package `foo' in foo, foo-doc and foo-devel, set
++    # sub_packages='doc devel'.
++
++    # Then provide functions doc_name and devel_name, that return the
++    # full name of the sub-package.  Also provide functions doc_split
++    # and devel_split, that mv part of foo's installation in $inst to
++    # the sub-packages' installation roots $inst-doc and $inst-devel.
++
++    cd $inst || exit 1
++    presplit
++
++    for i in $sub_packages; do
++	subname=$(${i}_name)
++  	cd $inst-$i || exit 1
++	${i}_split || exit 1
++    done
++    
++    cd $inst || exit 1
++    prepackage
++
++    cd $inst || exit 1
++    hard2soft
++
++    #
++    # Make tar balls
++    #
++
++    # The base package
++    echo creating $tarstem.tar.bz2
++    cd $inst || exit 1
++
++    f=$src/$cygwin/setup.hint && test -r $f && cp $f $uploads
++    f=$src/$cygwin/$base.hintk && test -r $f && cp $f $uploads/setup.hint
++    [ -r $uploads/setup.hint ] || cat > $uploads/setup.hint <<EOF
++sdesc: "$base"
++ldesc: "$base - no description (missing $package/$cygwin/$base.hint file)"
++EOF
++    find * -print | egrep -v '\.cvsignore|\.bak$|\.orig$|\.o$|\.rej$|~$|^.#|CVS|/tags$' | sort | tar -T - --no-recursion --owner=0 --group=0 -cjf $tarstem.tar.bz2
++
++    # Any sub-packages
++    for i in $sub_packages; do
++	subname=$(${i}_name)
++	subload=$uploads/$subname
++	subtarstem=$subload/$subname-$ver
++	mkdir -p $subload || exit 1
++	echo creating $subtarstem.tar.bz2
++	f=$src/$cygwin/$subname.hint && test -r $f && cp $f $subload/setup.hint
++	[ -r $subload/setup.hint ] || cat > $subload/setup.hint <<EOF
++sdesc: "$subname"
++ldesc: "$sunbame - no description (missing $package/$cygwin/$subname.hint file)"
++EOF
++  	cd $inst-$i
++	hard2soft
++	find * -print | egrep -v '\.cvsignore|\.bak$|\.orig$|\.o$|\.rej$|~$|^.#|CVS|/tags$' | sort | tar -T - --no-recursion --owner=0 --group=0 -cjf $subtarstem.tar.bz2
++    done
++
++    # The source package
++    cd $src/.. || exit 1
++    echo creating "$tarstem"-src.tar.bz2
++    ##find $package_src/* -print -follow | egrep -v '\.cvsignore|\.bak$|\.orig$|\.o$|~$|^.#|CVS|%redact|/tags$' | egrep -v "$src_exclude" | sort | tar -T - --no-recursion --owner=0 --group=0 -cjf "$tarstem"-src.tar.bz2
++    find $package_src/* -print | egrep -v '\.cvsignore|\.bak$|\.orig$|\.o$|\.rej$|~$|^.#|CVS|%redact|/tags$' | egrep -v "$src_exclude" | sort | tar -T - --no-recursion --owner=0 --group=0 -cjf "$tarstem"-src.tar.bz2
++    ##cd $package_src && tar -cj --exclude='\.cvsignore' --exclude='\.bak$' --exclude='\.orig$' --exclude='\.o$' --exclude='~$' --exclude='^.#' --exclude='CVS' --exclude='%redact' --exclude='/tags$' --owner=0 --group=0 -f "$tarstem"-src.tar.bz2 .
++    postpackage
++}
++
++devel_split () {
++    extras_devel_split
++}
++
++lib_split () {
++    extras_lib_split
++}
++
++prebuild () {
++    extras_prebuild
++}
++
++postinstall () {
++    extras_postinstall
++}
+diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/README ./README
+--- /home/janneke/cvs/wine/wine/programs/notepad/README	1970-01-01 01:00:00 +0100
++++ ./README	2005-05-15 11:26:53 +0200
+@@ -0,0 +1,10 @@
++
++
++Taken from wine CVS 2005-05-15
++
++
++cp -prv ~janneke/cvs/wine/wine/programs/notepad lilypad
++cp ~janneke/cvs/wine/wine/programs/Makeprog.rules.in lilypad
++cp ~janneke/cvs/wine/wine/Make.rules.in lilypad
++
++diff -purNX.cvsignore ~janneke/cvs/wine/wine/programs/notepad . > lilypad-0.0.0-1.patch

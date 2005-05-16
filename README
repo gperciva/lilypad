@@ -1,0 +1,10 @@
+
+
+Taken from wine CVS 2005-05-15
+
+
+cp -prv ~/cvs/wine/wine/programs/notepad lilypad
+cp ~/cvs/wine/wine/programs/Makeprog.rules.in lilypad
+cp ~/cvs/wine/wine/Make.rules.in lilypad
+
+diff -purNX.cvsignore ~janneke/cvs/wine/wine/programs/notepad . > lilypad-0.0.0-1.patch

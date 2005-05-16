@@ -1,0 +1,64 @@
+# -*-shell-script-*-
+AC_PREREQ(2.54)
+
+m4_define([major_version], [0])
+m4_define([minor_version], [0])
+m4_define([patch_level], [1])
+m4_define([version],
+          [major_version.minor_version.patch_level])
+
+AC_INIT(regex, [version], [http://lilypond.org/download/mingw])
+AC_CONFIG_SRCDIR([ChangeLog])
+
+AC_CYGWIN
+AC_MINGW32
+
+AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
+
+AC_MSG_CHECKING([for some Windows platform])
+if test "$CYGWIN$MINGW32" == "nono"; then
+    platform_windows=no
+else
+    platform_windows=yes
+fi
+AC_MSG_RESULT([$platform_windows])
+#AM_CONDITIONAL(PLATFORM_WINDOWS, test "$platform_windows" = "yes")
+
+AC_CHECK_HEADERS(error.h)
+
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+CFLAGS=
+DLLDEFS=
+DLLEXT=
+DLLFLAGS=
+EXTRACFLAGS=
+LDFLAGS=
+LDPATH=
+MAKE_PROG_RULES="include Makeprog.rules"
+MAKE_RULES="include Make.rules"
+SET_MAKE=
+
+AC_CHECK_PROGS(WINDRES, $target-windres windres, no)
+AC_CHECK_PROGS(WRC, wrc, no)
+
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(DLLDEFS)
+AC_SUBST(DLLEXT)
+AC_SUBST(DLLFLAGS)
+AC_SUBST(EXTRACFLAGS)
+AC_SUBST(LDFLAGS)
+AC_SUBST(LDPATH)
+AC_SUBST(MAKE_PROG_RULES)
+AC_SUBST(MAKE_RULES)
+AC_SUBST(SET_MAKE)
+AC_SUBST(WINDRES)
+
+AC_CONFIG_FILES([
+Makefile
+Make.rules
+Makeprog.rules
+])
+
+AC_OUTPUT
