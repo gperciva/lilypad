@@ -247,7 +247,8 @@ static void HandleCommandLine(LPWSTR cmdline)
     while (*cmdline && *cmdline != delimiter);
     if (*cmdline == delimiter) cmdline++;
 
-    while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/' || *cmdline == '+')
+    while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/'
+	   || *cmdline == '+')
     {
         WCHAR option;
 
@@ -256,7 +257,11 @@ static void HandleCommandLine(LPWSTR cmdline)
 	    line = atoi ((char *) cmdline);
 	    while (*cmdline >= '0' && *cmdline <= '9') cmdline++;
 	    if (*cmdline++ == ':')
+	    {
 		column = atoi ((char *) cmdline);
+		while (*cmdline >= '0' && *cmdline <= '9') cmdline++;
+	    }
+	    while (*cmdline == ' ') cmdline++;
 	    continue;
 	}
 

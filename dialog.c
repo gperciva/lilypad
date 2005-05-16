@@ -771,6 +771,10 @@ BOOL GotoLineColumn(int nLine, int nColumn)
     int nCharacters;
     int nIndex;
 
+    /* Line count is zero based.  */
+    if (nLine > 0)
+        nLine--;
+
     /* The number of lines.  */
     nLines = SendMessage(Globals.hEdit, EM_GETLINECOUNT, 0, 0);
 
