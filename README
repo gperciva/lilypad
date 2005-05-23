@@ -16,3 +16,5 @@ for i in *.rc; do sed -i~ -e 's/[Tt]ext/LilyPond/g' -e 's/[Tt]ekst/LilyPond/g' -
 # for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'n','o','t','e','p','a','d'/'l','i','l','y','p','a','d'/g" $i; done
 
 for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'N','o','t','e','p','a','d'/'L','i','l','y','P','a','d'/g" $i; done
+
+for i in *rc; do sed -i~ -e 's/STRING_NOTEPAD,.*/STRING_NOTEPAD, "LilyPad"/' $i; done

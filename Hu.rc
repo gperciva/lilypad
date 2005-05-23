@@ -102,7 +102,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 mm"     /* FIXME */
 
-STRING_NOTEPAD,                                 "Jegyzettömb"
+STRING_NOTEPAD, "LilyPad"
 STRING_ERROR,                                   "HIBA"
 STRING_WARNING,                                 "FIGYELMEZTETÉS"
 STRING_INFO,                                    "Információ"

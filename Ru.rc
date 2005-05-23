@@ -99,7 +99,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 мм"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 мм"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 мм"     /* FIXME */
 
-STRING_NOTEPAD,                                 "Блокнот"
+STRING_NOTEPAD, "LilyPad"
 STRING_ERROR,                                   "ОШИБКА"
 STRING_WARNING,                                 "ВНИМАНИЕ"
 STRING_INFO,                                    "Информация"
