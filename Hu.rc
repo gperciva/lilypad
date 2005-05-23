@@ -1,5 +1,5 @@
 /*
- *  Notepad (Hungarian resources)
+ *  LilyPad (Hungarian resources)
  *
  *  Copyright 1997,98 Marcel Baur
  *  Proofread 1998 by David Lee Lambert
@@ -110,7 +110,7 @@ STRING_INFO,                                    "Információ"
 STRING_UNTITLED,                                "(névtelen)"
 
 STRING_ALL_FILES,                               "Minden fájl (*.*)"
-STRING_TEXT_FILES_TXT,                  "Szövegfájlok (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "Szövegfájlok (*.ly)"
 
 STRING_TOOLARGE,                                "'%s' fájl túl nagy méretû.\n \
 Kérem használjon másik szövegszerkesztõ programot."

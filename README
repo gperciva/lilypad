@@ -8,3 +8,11 @@ cp ~/cvs/wine/wine/programs/Makeprog.rules.in lilypad
 cp ~/cvs/wine/wine/Make.rules.in lilypad
 
 diff -purNX.cvsignore ~janneke/cvs/wine/wine/programs/notepad . > lilypad-0.0.0-1.patch
+
+for i in *[ch]; do sed -i~ -e 's/TEXT_/LILYPOND_/' -e 's/TXT/LY/g' -e 's/txt/ly/g' -e "s/'t','x','t'/'l','y'/g" $i; done
+
+for i in *.rc; do sed -i~ -e 's/[Tt]ext/LilyPond/g' -e 's/[Tt]ekst/LilyPond/g' -e 's/[Tt]est/LilyPond/g' -e 's/[Tt]eks/LilyPond/g' $i; done
+
+# for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'n','o','t','e','p','a','d'/'l','i','l','y','p','a','d'/g" $i; done
+
+for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'N','o','t','e','p','a','d'/'L','i','l','y','P','a','d'/g" $i; done

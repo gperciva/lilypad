@@ -1,5 +1,5 @@
 /*
- *  Notepad (Thai Resources)
+ *  LilyPad (Thai Resources)
  *
  *  Copyright 2003 Jon Griffiths
  *
@@ -101,7 +101,7 @@ STRING_PAGESETUP_RIGHTVALUE,  "20 มม."     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,    "25 มม."     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE, "25 มม."     /* FIXME */
 
-STRING_NOTEPAD,       "Notepad"
+STRING_NOTEPAD,       "LilyPad"
 STRING_ERROR,         "ความปิด"
 STRING_WARNING,       "คําตือน"
 STRING_INFO,          "รายละเอียด"
@@ -109,7 +109,7 @@ STRING_INFO,          "รายละเอียด"
 STRING_UNTITLED,      "ไม่กําหนดชึ่อ"
 
 STRING_ALL_FILES,       "ทุกแฟ้ม (*.*)"
-STRING_TEXT_FILES_TXT,  "แฟ้มตํารา (*.txt)"
+STRING_LILYPOND_FILES_LY,  "แฟ้มตํารา (*.ly)"
 
 STRING_TOOLARGE,  "แฟ้ม '%s' ใหญ่เกินไป"
 STRING_NOTEXT,    "คุณไม่ใดเขียนอะไร\nกรุณาลองใหม่"

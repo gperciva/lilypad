@@ -1,5 +1,5 @@
 /*
- *  Notepad (Slovak resources)
+ *  LilyPad (Slovak resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -101,7 +101,7 @@ STRING_PAGESETUP_RIGHTVALUE,	"20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,		"25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,	"25 mm"     /* FIXME */
 
-STRING_NOTEPAD,					"Notepad"
+STRING_NOTEPAD,					"LilyPad"
 STRING_ERROR,					"ERROR"
 STRING_WARNING,					"WARNING"
 STRING_INFO,					"Information"
@@ -109,11 +109,11 @@ STRING_INFO,					"Information"
 STRING_UNTITLED,				"(untitled)"
 
 STRING_ALL_FILES,				"All files (*.*)"
-STRING_TEXT_FILES_TXT,			"Text files (*.txt)"
+STRING_LILYPOND_FILES_LY,			"LilyPond files (*.ly)"
 
-STRING_TOOLARGE,				"File '%s' is too large for notepad.\n \
+STRING_TOOLARGE,				"File '%s' is too large for lilypad.\n \
 Please use a different editor."
-STRING_NOTEXT,					"You didn't enter any text. \
+STRING_NOTEXT,					"You didn't enter any LilyPond. \
 \nPlease type something and try again"
 STRING_DOESNOTEXIST,				"File '%s'\ndoes not exist\n\n \
 Do you want to create a new file ?"

@@ -1,5 +1,5 @@
 /*
- * Notepad
+ * LilyPad
  * Portuguese Language Support
  *
  * Copyright 1999 Marcel Baur <alves@correionet.com.br>
@@ -158,7 +158,7 @@ STRING_PAGESETUP_RIGHTVALUE,	"20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,		"25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,	"25 mm"     /* FIXME */
 
-STRING_NOTEPAD,					"Notepad"
+STRING_NOTEPAD,					"LilyPad"
 STRING_ERROR,					"ERRO"
 STRING_WARNING,					"AVISO"
 STRING_INFO,					"Informação"
@@ -166,11 +166,11 @@ STRING_INFO,					"Informação"
 STRING_UNTITLED,				"(sem nome)"
 
 STRING_ALL_FILES,				"Todos os arquivos (*.*)"
-STRING_TEXT_FILES_TXT,			"Arquivos texto (*.txt)"
+STRING_LILYPOND_FILES_LY,			"Arquivos LilyPondo (*.ly)"
 
-STRING_TOOLARGE,				"Arquivo '%s' é muito longo para o notepad.\n \
+STRING_TOOLARGE,				"Arquivo '%s' é muito longo para o lilypad.\n \
 Por favor use um editor diferente."
-STRING_NOTEXT,					"Você não digitou nenhum texto. \
+STRING_NOTEXT,					"Você não digitou nenhum LilyPondo. \
 \nPor favor digite alguma coisa e tente novamente"
 STRING_DOESNOTEXIST,				"Arquivo '%s'\nnão existe\n\n \
 Você deseja criar um novo arquivo?"
@@ -192,7 +192,7 @@ STRINGTABLE DISCARDABLE
  STRING_PAGESETUP_TOPVALUE,	"25 mm"     /* FIXME */
  STRING_PAGESETUP_BOTTOMVALUE,	"25 mm"     /* FIXME */
 
- STRING_NOTEPAD,		"Notepad"
+ STRING_NOTEPAD,		"LilyPad"
  STRING_ERROR,			"ERRO"
  STRING_WARNING,		"AVISO"
  STRING_INFO,			"Informação"
@@ -200,11 +200,11 @@ STRINGTABLE DISCARDABLE
  STRING_UNTITLED,		"(sem nome)"
 
  STRING_ALL_FILES,		"Todos os arquivos (*.*)"
- STRING_TEXT_FILES_TXT,		"Ficheiros de texto (*.txt)"
+ STRING_LILYPOND_FILES_LY,		"Ficheiros de LilyPondo (*.ly)"
 
- STRING_TOOLARGE,		"Ficheiros '%s' é muito longo para o notepad.\n \
+ STRING_TOOLARGE,		"Ficheiros '%s' é muito longo para o lilypad.\n \
  Por favor use um editor diferente."
- STRING_NOTEXT,			"Não digitou nenhum texto. \
+ STRING_NOTEXT,			"Não digitou nenhum LilyPondo. \
  \nPor favor digite alguma coisa e tente novamente"
  STRING_DOESNOTEXIST,		"Ficheiro '%s'\nnão existe\n\n \
 Deseja criar um novo ficheiro?"

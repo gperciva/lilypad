@@ -1,5 +1,5 @@
 /*
- *  Notepad (Dutch resources)
+ *  LilyPad (Dutch resources)
  *
  *  Copyright 2003 Hans Leidekker
  *
@@ -72,9 +72,9 @@ STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
 FONT 8, "MS Shell Dlg"
 CAPTION "Pagina-instelling"
 {
-LTEXT    "&Koptekst:",  0x140,   10, 07, 40, 15
+LTEXT    "&KopLilyPond:",  0x140,   10, 07, 40, 15
 EDITTEXT                         0x141,       60, 05,110, 12, WS_BORDER | WS_TABSTOP
-LTEXT    "&Voettekst:",  0x142,   10, 24, 40, 15
+LTEXT    "&VoetLilyPond:",  0x142,   10, 24, 40, 15
 EDITTEXT                         0x143,       60, 22,110, 12, WS_BORDER | WS_TABSTOP
 
 GROUPBOX "&Marges:",      0x144,     10, 43,160, 45
@@ -109,12 +109,12 @@ STRING_INFO,                                    "Informatie"
 STRING_UNTITLED,                                "(naamloos)"
 
 STRING_ALL_FILES,                               "Alle bestanden (*.*)"
-STRING_TEXT_FILES_TXT,                          "Tekstbestanden (*.txt)"
+STRING_LILYPOND_FILES_LY,                          "LilyPondbestanden (*.ly)"
 
 STRING_TOOLARGE,                                "Het bestand '%s' is te groot voor Kladblok.\n \
 Gebruik een andere editor."
-STRING_NOTEXT,                                  "U heeft geen tekst ingevoerd. \
-\nType uw tekst en probeer het nogmaals"
+STRING_NOTEXT,                                  "U heeft geen LilyPond ingevoerd. \
+\nType uw LilyPond en probeer het nogmaals"
 STRING_DOESNOTEXIST,                            "Het bestand '%s'\nbestaat niet\n\n \
 Wilt u een nieuw bestand maken?"
 STRING_NOTSAVED,                                "Het bestand '%s'\nis gewijzigd\n\n \

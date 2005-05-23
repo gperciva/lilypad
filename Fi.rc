@@ -1,5 +1,5 @@
 /*
- *  Notepad (Finnish resources)
+ *  LilyPad (Finnish resources)
  *
  *  Copyright 1999 by Jukka Iivonen <iivonen@iki.fi>
  *  Copyright 2002 Sylvain Petreolle <spetreolle@yahoo.fr>
@@ -100,7 +100,7 @@ STRING_PAGESETUP_RIGHTVALUE,	"20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,		"25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,	"25 mm"     /* FIXME */
 
-STRING_NOTEPAD,					"Notepad"
+STRING_NOTEPAD,					"LilyPad"
 STRING_ERROR,					"VIRHE"
 STRING_WARNING,					"VAROITUS"
 STRING_INFO,					"Tiedoitus"
@@ -108,11 +108,11 @@ STRING_INFO,					"Tiedoitus"
 STRING_UNTITLED,				"(otsikoimaton)"
 
 STRING_ALL_FILES,				"Kaikki tiedostot (*.*)"
-STRING_TEXT_FILES_TXT,			"Teksti tiedostot (*.txt)"
+STRING_LILYPOND_FILES_LY,			"LilyPondi tiedostot (*.ly)"
 
 STRING_TOOLARGE,				"Tiedosto '%s' on liian suuri.\n \
 Please use a different editor."
-STRING_NOTEXT,					"Et syöttänyt lainkaan tekstiä. \
+STRING_NOTEXT,					"Et syöttänyt lainkaan LilyPondiä. \
 \nKirjoita jotain ja yritä uudelleen"
 STRING_DOESNOTEXIST,				"File '%s'\ndoes not exist\n\n \
 Do you want to create a new file ?"

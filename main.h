@@ -1,5 +1,5 @@
 /*
- *  Notepad (notepad.h)
+ *  LilyPad (notepad.h)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Copyright 2002 Sylvain Petreolle <spetreolle@yahoo.fr>
@@ -46,8 +46,8 @@ typedef struct
   WCHAR   szFooter[MAX_PATH];
 
   FINDREPLACE find;
-} NOTEPAD_GLOBALS;
+} LILYPAD_GLOBALS;
 
-extern NOTEPAD_GLOBALS Globals;
+extern LILYPAD_GLOBALS Globals;
 
 VOID SetFileName(LPCWSTR szFileName);

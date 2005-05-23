@@ -1,5 +1,5 @@
 /*
- *  Notepad (Polish resources)
+ *  LilyPad (Polish resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -112,11 +112,11 @@ STRING_INFO,                                    "Informacja"
 STRING_UNTITLED,                                "(bez tytu³u)"
 
 STRING_ALL_FILES,                               "Wszystkie piki (*.*)"
-STRING_TEXT_FILES_TXT,                  "Pliki tekstowe (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "Pliki LilyPondowe (*.ly)"
 
 STRING_TOOLARGE,                                "Plik '%s' jest za du¿y dla notatnika.\n \
 Proszê u¿yæ innego edytora."
-STRING_NOTEXT,                                  "Nie wprowadzi³eœ ¿adnego tekstu. \
+STRING_NOTEXT,                                  "Nie wprowadzi³eœ ¿adnego LilyPondu. \
 \nProszê coœ wpisaæ i spróbowaæ ponownie."
 STRING_DOESNOTEXIST,                            "Plik '%s' nie istnieje\n\n \
 Czy chcesz utworzyæ nowy plik ?"

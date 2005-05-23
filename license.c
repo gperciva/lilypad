@@ -1,5 +1,5 @@
 /*
- *  Notepad (license.h)
+ *  LilyPad (license.h)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *

@@ -1,5 +1,5 @@
 /* -*-c-style:stroustrup-*-
- *  Notepad (dialog.c)
+ *  LilyPad (dialog.c)
  *
  *  Copyright 1998,99 Marcel Baur <mbaur@g26.ethz.ch>
  *  Copyright 2002 Sylvain Petreolle <spetreolle@yahoo.fr>
@@ -31,7 +31,7 @@
 #include "license.h"
 #include "dialog.h"
 
-static const WCHAR helpfileW[] = { 'n','o','t','e','p','a','d','.','h','l','p',0 };
+static const WCHAR helpfileW[] = { 'l','i','l','y','p','a','d','.','h','l','p',0 };
 
 static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -55,8 +55,8 @@ VOID ShowLastError(void)
 
 /**
  * Sets the caption of the main window according to Globals.szFileTitle:
- *    Notepad - (untitled)      if no file is open
- *    Notepad - [filename]      if a file is given
+ *    LilyPad - (untitled)      if no file is open
+ *    LilyPad - [filename]      if a file is given
  */
 static void UpdateWindowCaption(void)
 {
@@ -302,13 +302,13 @@ VOID DIALOG_FileOpen(VOID)
     OPENFILENAME openfilename;
     WCHAR szPath[MAX_PATH];
     WCHAR szDir[MAX_PATH];
-    static const WCHAR szDefaultExt[] = { 't','x','t',0 };
-    static const WCHAR txt_files[] = { '*','.','t','x','t',0 };
+    static const WCHAR szDefaultExt[] = { 'l','y',0 };
+    static const WCHAR ly_files[] = { '*','.','l','y',0 };
 
     ZeroMemory(&openfilename, sizeof(openfilename));
 
     GetCurrentDirectory(SIZEOF(szDir), szDir);
-    lstrcpy(szPath, txt_files);
+    lstrcpy(szPath, ly_files);
 
     openfilename.lStructSize       = sizeof(openfilename);
     openfilename.hwndOwner         = Globals.hMainWnd;
@@ -344,13 +344,13 @@ VOID DIALOG_FileSaveAs(VOID)
     OPENFILENAME saveas;
     WCHAR szPath[MAX_PATH];
     WCHAR szDir[MAX_PATH];
-    static const WCHAR szDefaultExt[] = { 't','x','t',0 };
-    static const WCHAR txt_files[] = { '*','.','t','x','t',0 };
+    static const WCHAR szDefaultExt[] = { 'l','y',0 };
+    static const WCHAR ly_files[] = { '*','.','l','y',0 };
 
     ZeroMemory(&saveas, sizeof(saveas));
 
     GetCurrentDirectory(SIZEOF(szDir), szDir);
-    lstrcpy(szPath, txt_files);
+    lstrcpy(szPath, ly_files);
 
     saveas.lStructSize       = sizeof(OPENFILENAME);
     saveas.hwndOwner         = Globals.hMainWnd;
@@ -683,11 +683,11 @@ VOID DIALOG_HelpNoWarranty(VOID)
 
 VOID DIALOG_HelpAboutWine(VOID)
 {
-    static const WCHAR notepadW[] = { 'N','o','t','e','p','a','d','\n',0 };
-    WCHAR szNotepad[MAX_STRING_LEN];
+    static const WCHAR lilypadW[] = { 'L','i','l','y','P','a','d','\n',0 };
+    WCHAR szLilyPad[MAX_STRING_LEN];
 
-    LoadString(Globals.hInstance, STRING_NOTEPAD, szNotepad, SIZEOF(szNotepad));
-    ShellAbout(Globals.hMainWnd, szNotepad, notepadW, 0);
+    LoadString(Globals.hInstance, STRING_NOTEPAD, szLilyPad, SIZEOF(szLilyPad));
+    ShellAbout(Globals.hMainWnd, szLilyPad, lilypadW, 0);
 }
 
 

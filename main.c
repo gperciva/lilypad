@@ -1,5 +1,5 @@
 /* -*-c-style:stroustrup-*-
- *  Notepad
+ *  LilyPad
  *
  *  Copyright 2000 Mike McCormack <Mike_McCormack@looksmart.com.au>
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
@@ -31,7 +31,7 @@
 #include "dialog.h"
 #include "notepad_res.h"
 
-NOTEPAD_GLOBALS Globals;
+LILYPAD_GLOBALS Globals;
 static ATOM aFINDMSGSTRING;
 
 /***********************************************************************
@@ -49,11 +49,11 @@ VOID SetFileName(LPCWSTR szFileName)
 
 /***********************************************************************
  *
- *           NOTEPAD_MenuCommand
+ *           LILYPAD_MenuCommand
  *
  *  All handling of main menu events
  */
-static int NOTEPAD_MenuCommand(WPARAM wParam)
+static int LILYPAD_MenuCommand(WPARAM wParam)
 {
     switch (wParam)
     {
@@ -96,15 +96,15 @@ static int NOTEPAD_MenuCommand(WPARAM wParam)
 /***********************************************************************
  * Data Initialization
  */
-static VOID NOTEPAD_InitData(VOID)
+static VOID LILYPAD_InitData(VOID)
 {
     LPWSTR p = Globals.szFilter;
-    static const WCHAR txt_files[] = { '*','.','t','x','t',0 };
+    static const WCHAR ly_files[] = { '*','.','l','y',0 };
     static const WCHAR all_files[] = { '*','.','*',0 };
 
-    LoadString(Globals.hInstance, STRING_TEXT_FILES_TXT, p, MAX_STRING_LEN);
+    LoadString(Globals.hInstance, STRING_LILYPOND_FILES_LY, p, MAX_STRING_LEN);
     p += lstrlen(p) + 1;
-    lstrcpy(p, txt_files);
+    lstrcpy(p, ly_files);
     p += lstrlen(p) + 1;
     LoadString(Globals.hInstance, STRING_ALL_FILES, p, MAX_STRING_LEN);
     p += lstrlen(p) + 1;
@@ -116,7 +116,7 @@ static VOID NOTEPAD_InitData(VOID)
 /***********************************************************************
  * Enable/disable items on the menu based on control state
  */
-static VOID NOTEPAD_InitMenuPopup(HMENU menu, int index)
+static VOID LILYPAD_InitMenuPopup(HMENU menu, int index)
 {
     int enable;
 
@@ -136,9 +136,9 @@ static VOID NOTEPAD_InitMenuPopup(HMENU menu, int index)
 
 /***********************************************************************
  *
- *           NOTEPAD_WndProc
+ *           LILYPAD_WndProc
  */
-static LRESULT WINAPI NOTEPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
+static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
                                LPARAM lParam)
 {
     switch (msg) {
@@ -157,7 +157,7 @@ static LRESULT WINAPI NOTEPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
     }
 
     case WM_COMMAND:
-        NOTEPAD_MenuCommand(LOWORD(wParam));
+        LILYPAD_MenuCommand(LOWORD(wParam));
         break;
 
     case WM_DESTROYCLIPBOARD:
@@ -201,7 +201,7 @@ static LRESULT WINAPI NOTEPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
     }
     
     case WM_INITMENUPOPUP:
-        NOTEPAD_InitMenuPopup((HMENU)wParam, lParam);
+        LILYPAD_InitMenuPopup((HMENU)wParam, lParam);
         break;
 
     default:
@@ -233,18 +233,15 @@ static void HandleCommandLine(LPWSTR cmdline)
     int opt_print=0;
     int column=0;
     int line=0;
-    
+
     /* skip white space */
-    while (*cmdline == ' ') cmdline++;
+    while (*cmdline == ' ')
+      cmdline++;
 
     /* skip executable name */
-    delimiter = (*cmdline == '"' ? '"' : ' ');
+    delimiter = (*cmdline++ == '"' ? '"' : ' ');
 
-    do
-    {
-        cmdline++;
-    }
-    while (*cmdline && *cmdline != delimiter);
+    while (*cmdline && *cmdline != delimiter) cmdline++;
     if (*cmdline == delimiter) cmdline++;
 
     while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/'
@@ -300,18 +297,18 @@ static void HandleCommandLine(LPWSTR cmdline)
         }
         else
         {
-            static const WCHAR txtW[] = { '.','t','x','t',0 };
+            static const WCHAR lyW[] = { '.','l','y',0 };
 
-            /* try to find file with ".txt" extension */
-            if (!lstrcmp(txtW, cmdline + lstrlen(cmdline) - lstrlen(txtW)))
+            /* try to find file with ".ly" extension */
+            if (!lstrcmp(lyW, cmdline + lstrlen(cmdline) - lstrlen(lyW)))
             {
                 file_exists = FALSE;
                 file_name = cmdline;
-            }
+	    }
             else
             {
-                lstrcpyn(buf, cmdline, MAX_PATH - lstrlen(txtW) - 1);
-                lstrcat(buf, txtW);
+                lstrcpyn(buf, cmdline, MAX_PATH - lstrlen(lyW) - 1);
+                lstrcat(buf, lyW);
                 file_name = buf;
                 file_exists = FileExists(buf);
             }
@@ -350,7 +347,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     HACCEL      hAccel;
     WNDCLASSEX class;
     static const WCHAR className[] = {'N','P','C','l','a','s','s',0};
-    static const WCHAR winName[]   = {'N','o','t','e','p','a','d',0};
+    static const WCHAR winName[]   = {'L','i','l','y','P','a','d',0};
 
     aFINDMSGSTRING = RegisterWindowMessage(FINDMSGSTRING);
 
@@ -359,7 +356,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
 
     ZeroMemory(&class, sizeof(class));
     class.cbSize        = sizeof(class);
-    class.lpfnWndProc   = NOTEPAD_WndProc;
+    class.lpfnWndProc   = LILYPAD_WndProc;
     class.hInstance     = Globals.hInstance;
     class.hIcon         = LoadIcon(0, IDI_APPLICATION);
     class.hCursor       = LoadCursor(0, IDC_ARROW);
@@ -381,7 +378,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
         ExitProcess(1);
     }
 
-    NOTEPAD_InitData();
+    LILYPAD_InitData();
     DIALOG_FileNew();
 
     ShowWindow(Globals.hMainWnd, show);

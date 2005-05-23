@@ -124,7 +124,7 @@ diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/.cvsignore ./
 +ltmain.sh
 +missing
 +mkinstalldirs
- notepad.exe.dbg.c
+ lilypad.exe.dbg.c
  rsrc.res
 diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/dialog.c ./dialog.c
 --- /home/janneke/cvs/wine/wine/programs/notepad/dialog.c	2005-05-07 14:14:05 +0200
@@ -132,7 +132,7 @@ diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/dialog.c ./di
 @@ -1,4 +1,4 @@
 -/*
 +/* -*-c-style:stroustrup-*-
-  *  Notepad (dialog.c)
+  *  LilyPad (dialog.c)
   *
   *  Copyright 1998,99 Marcel Baur <mbaur@g26.ethz.ch>
 @@ -758,3 +758,36 @@ static INT_PTR WINAPI DIALOG_PAGESETUP_D
@@ -178,7 +178,7 @@ diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/main.c ./main
 @@ -1,4 +1,4 @@
 -/*
 +/* -*-c-style:stroustrup-*-
-  *  Notepad
+  *  LilyPad
   *
   *  Copyright 2000 Mike McCormack <Mike_McCormack@looksmart.com.au>
 @@ -231,6 +231,8 @@ static void HandleCommandLine(LPWSTR cmd

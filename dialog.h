@@ -1,5 +1,5 @@
 /*
- *  Notepad (dialog.h)
+ *  LilyPad (dialog.h)
  *
  *  Copyright 1998 Marcel Baur <mbaur@g26.ethz.ch>
  *

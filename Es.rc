@@ -1,5 +1,5 @@
 /*
- *  Notepad (Spanish resources)
+ *  LilyPad (Spanish resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -113,7 +113,7 @@ STRING_INFO,                    "Información"
 STRING_UNTITLED,                "(sin título)"
 
 STRING_ALL_FILES,               "Todos los archivos (*.*)"
-STRING_TEXT_FILES_TXT,          "Documentos de texto (*.txt)"
+STRING_LILYPOND_FILES_LY,          "Documentos de LilyPondo (*.ly)"
 
 STRING_TOOLARGE,                "El archivo '%s' es demasiado grande para el \
                                  bloc de notas.\n Use otro editor."
@@ -121,7 +121,7 @@ STRING_NOTEXT,                  "No escribió nada. \nPor favor escriba algo e \
                                  inténtelo de nuevo"
 STRING_DOESNOTEXIST,            "El archivo '%s'\nno existe\n\n ¿Desea crear \
                                  un nuevo archivo?"
-STRING_NOTSAVED,                "El texto en el archivo '%s' ha cambiado\n\n \
+STRING_NOTSAVED,                "El LilyPondo en el archivo '%s' ha cambiado\n\n \
                                  ¿Desea guardar los cambios?"
 STRING_NOTFOUND,                "No se encontró '%s'."
 STRING_OUT_OF_MEMORY,           "No hay suficiente memoria para terminar esta \

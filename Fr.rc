@@ -1,5 +1,5 @@
 /*
- *  Notepad (French resources)
+ *  LilyPad (French resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Translation by Laurent Buffler <laurent@bluewin.ch>
@@ -111,11 +111,11 @@ STRING_INFO,                                    "Information"
 STRING_UNTITLED,                                "(sans-titre)"
 
 STRING_ALL_FILES,                               "Tous fichiers (*.*)"
-STRING_TEXT_FILES_TXT,                          "Fichiers texte (*.txt)"
+STRING_LILYPOND_FILES_LY,                          "Fichiers LilyPonde (*.ly)"
 
 STRING_TOOLARGE,                                "Le fichier '%s' est trop grand pour le bloc-notes.\n \
 Veuillez utiliser un autre éditeur."
-STRING_NOTEXT,                                  "Vous n'avez pas entré de texte. \
+STRING_NOTEXT,                                  "Vous n'avez pas entré de LilyPonde. \
 Veuillez taper quelque chose et recommencer"
 STRING_DOESNOTEXIST,                            "Le fichier '%s'\nn'existe pas.\n\n \
 Voulez-vous créer un nouveau fichier ?"

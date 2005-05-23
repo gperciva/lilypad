@@ -1,5 +1,5 @@
 /*
- *  Notepad (Japanese resources)
+ *  LilyPad (Japanese resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -111,7 +111,7 @@ STRING_INFO,                                    "情報"
 STRING_UNTITLED,                                "(無題)"
 
 STRING_ALL_FILES,                               "全てのファイル (*.*)"
-STRING_TEXT_FILES_TXT,                  "テキストファイル (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "テキストファイル (*.ly)"
 
 STRING_TOOLARGE,                                "ファイル '%s' のサイズは大きすぎるため、メモ帳では編集できません。\n \
 別のエディタを使用して下さい。"

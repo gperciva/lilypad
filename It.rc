@@ -1,5 +1,5 @@
 /*
- *  Notepad (Italian resources)
+ *  LilyPad (Italian resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -113,11 +113,11 @@ STRING_INFO,                                    "Info"
 STRING_UNTITLED,                                "(senza nome)"
 
 STRING_ALL_FILES,                               "Tutti i file (*.*)"
-STRING_TEXT_FILES_TXT,                  "File di testo (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "File di LilyPondo (*.ly)"
 
 STRING_TOOLARGE,                                "Il file '%s' è troppo grande per il blocco note.\n \
 Per favore usare un altro editor."
-STRING_NOTEXT,                                  "Non è stato inserito alcun testo. \
+STRING_NOTEXT,                                  "Non è stato inserito alcun LilyPondo. \
 \nPer favore digitare qualcosa e riprovare"
 STRING_DOESNOTEXIST,                            "Il file '%s'\nnon esiste\n\n \
 Creare un nuovo file ?"

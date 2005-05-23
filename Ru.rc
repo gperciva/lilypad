@@ -1,5 +1,5 @@
 /*
- * Notepad (Russian resources)
+ * LilyPad (Russian resources)
  *
  * Copyright 2003 Igor Stepin
  *
@@ -107,7 +107,7 @@ STRING_INFO,                                    "Информация"
 STRING_UNTITLED,                                "(без заголовка)"
 
 STRING_ALL_FILES,                               "Все файлы (*.*)"
-STRING_TEXT_FILES_TXT,                  "Текстовые файлы (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "Текстовые файлы (*.ly)"
 
 STRING_TOOLARGE,                                "Файл '%s' слишком большой для блокнота.\n \
 Используйте другой редактор."

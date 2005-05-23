@@ -118,7 +118,7 @@ diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/.cvsignore ./
 +ltmain.sh
 +missing
 +mkinstalldirs
- notepad.exe.dbg.c
+ lilypad.exe.dbg.c
  rsrc.res
 diff -purNX.cvsignore /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel ./mingw/mknetrel
 --- /home/janneke/cvs/wine/wine/programs/notepad/mingw/mknetrel	1970-01-01 01:00:00 +0100

@@ -1,5 +1,5 @@
 /*
- * Notepad (Slovenian resources)
+ * LilyPad (Slovenian resources)
  *
  * Copyright 2002-2003 Rok Mandeljc <rok.mandeljc@gimb.org>
  *
@@ -108,7 +108,7 @@ STRING_INFO,                                    "Informacija"
 STRING_UNTITLED,                                "Neimenovana"
 
 STRING_ALL_FILES,                               "Vse datoteke (*.*)"
-STRING_TEXT_FILES_TXT,                  "Datoteke z besedilom (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "Datoteke z besedilom (*.ly)"
 
 STRING_TOOLARGE,                                "Datoteka '%s' je prevelika za Beležnico.\n \
 Uporabite drug urejevalnik."

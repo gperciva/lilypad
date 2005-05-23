@@ -1,5 +1,5 @@
 /*
- *  Notepad (Walon resources)
+ *  LilyPad (Walon resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -103,7 +103,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 mm"     /* FIXME */
 
-STRING_NOTEPAD,                                 "Notepad"
+STRING_NOTEPAD,                                 "LilyPad"
 STRING_ERROR,                                   "AROKE"
 STRING_WARNING,                                 "ADVERTIXHMINT"
 STRING_INFO,                                    "Informåcion"
@@ -111,10 +111,10 @@ STRING_INFO,                                    "Informåcion"
 STRING_UNTITLED,                                "(sin tite)"
 
 STRING_ALL_FILES,                               "Tos les fitchîs (*.*)"
-STRING_TEXT_FILES_TXT,                  "Fitchîs tekse (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "Fitchîs LilyPonde (*.ly)"
 
-STRING_TOOLARGE,                                "Li fitchî '%s' est trop gros pol notepad.\n \
-Eployoz on ôte aspougneu di tekse."
+STRING_TOOLARGE,                                "Li fitchî '%s' est trop gros pol lilypad.\n \
+Eployoz on ôte aspougneu di LilyPonde."
 STRING_NOTEXT,                                  "Vos n' avoz rén sicrît. \
 \nTapez ene sacwe èt rasayez"
 STRING_DOESNOTEXIST,                            "File '%s'\ndoes not exist\n\n \

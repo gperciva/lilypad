@@ -1,5 +1,5 @@
 /*
- *  Notepad (Czech resources)
+ *  LilyPad (Czech resources)
  *
  *  Copyright 1997,98 Marcel Baur
  *  Proofread 1998 by David Lee Lambert
@@ -104,7 +104,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 mm"     /* FIXME */
 
-STRING_NOTEPAD,                                 "Notepad"
+STRING_NOTEPAD,                                 "LilyPad"
 STRING_ERROR,                                   "CHYBA"
 STRING_WARNING,                                 "VAROVÁNÍ"
 STRING_INFO,                                    "Informace"
@@ -112,11 +112,11 @@ STRING_INFO,                                    "Informace"
 STRING_UNTITLED,                                "(bez názvu)"
 
 STRING_ALL_FILES,                               "V¹echny soubory (*.*)"
-STRING_TEXT_FILES_TXT,                  "Textové soubory (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "LilyPondové soubory (*.ly)"
 
-STRING_TOOLARGE,                                "Soubor '%s' je pro notepad pøíli¹ velký.\n \
+STRING_TOOLARGE,                                "Soubor '%s' je pro lilypad pøíli¹ velký.\n \
 Pou¾ijte jiný editor, prosím."
-STRING_NOTEXT,                                  "Nebyl zadán ¾ádný text. \
+STRING_NOTEXT,                                  "Nebyl zadán ¾ádný LilyPond. \
 \nPlease type something and try again"
 STRING_DOESNOTEXIST,                            "Soubor '%s'\nneexistuje.\n\n \
 Chcete ho vytvoøit ?"

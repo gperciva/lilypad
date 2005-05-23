@@ -1,5 +1,5 @@
 /*
- *  Notepad (Swedish resources)
+ *  LilyPad (Swedish resources)
  *
  *  Copyright 1997,98 Marcel Baur <mbaur@g26.ethz.ch>
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
@@ -109,11 +109,11 @@ STRING_INFO,                                    "Information"
 STRING_UNTITLED,                                "(untitled)"
 
 STRING_ALL_FILES,                               "Alla filer (*.*)"
-STRING_TEXT_FILES_TXT,                  "Text filer (*.txt)"
+STRING_LILYPOND_FILES_LY,                  "LilyPond filer (*.ly)"
 
-STRING_TOOLARGE,                                "Filen '%s' är för stor för notepad.\n \
+STRING_TOOLARGE,                                "Filen '%s' är för stor för lilypad.\n \
 Använd en annan editor."
-STRING_NOTEXT,                                  "Du skrev inte in någon text. \
+STRING_NOTEXT,                                  "Du skrev inte in någon LilyPond. \
 \nSkriv något och försök sedan igen"
 STRING_DOESNOTEXIST,                            "File '%s'\ndoes not exist\n\n \
 Do you want to create a new file ?"
