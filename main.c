@@ -251,22 +251,32 @@ static void HandleCommandLine(LPWSTR cmdline)
 
 	if (*cmdline++ == '+')
 	{
-	    line = atoi ((char *) cmdline);
-	    while (*cmdline >= '0' && *cmdline <= '9') cmdline++;
-	    if (*cmdline++ == ':')
+	    while (*cmdline >= '0' && *cmdline <= '9')
 	    {
-		column = atoi ((char *) cmdline);
-		while (*cmdline >= '0' && *cmdline <= '9') cmdline++;
+	        line *= 10;
+		line += *((char *) cmdline) - '0';
+		cmdline++;
 	    }
-	    while (*cmdline == ' ') cmdline++;
+	    if (*cmdline++ == ':')
+		while (*cmdline >= '0' && *cmdline <= '9')
+		{
+		    column *= 10;
+		    column += *((char *) cmdline) - '0';
+		    cmdline++;
+		}
+	    while (*cmdline == ' ')
+	        cmdline++;
 	    continue;
 	}
 
-        if (*cmdline == ' ') continue;
+        if (*cmdline == ' ')
+	    continue;
 
         option = *cmdline;
-        if (option) cmdline++;
-        while (*cmdline == ' ') cmdline++;
+        if (option)
+	    cmdline++;
+        while (*cmdline == ' ')
+	    cmdline++;
 
         switch(option)
         {
