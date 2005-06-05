@@ -1,3 +1,10 @@
+2005-06-05  Jan Nieuwenhuizen  <janneke@gnu.org>
+
+	* configure.in: Version 0.0.4.
+
+	* main.c (HandleCommandLine): Bugfix: Do not skip first character
+	of command line; on Windows there may not be argv[0].
+
 2005-05-30  Jan Nieuwenhuizen  <janneke@gnu.org>
 
 	* configure.in: Version 0.0.3.

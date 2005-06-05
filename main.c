@@ -239,9 +239,12 @@ static void HandleCommandLine(LPWSTR cmdline)
       cmdline++;
 
     /* skip executable name */
-    delimiter = (*cmdline++ == '"' ? '"' : ' ');
+    delimiter = (*cmdline == '"' ? '"' : ' ');
 
-    while (*cmdline && *cmdline != delimiter) cmdline++;
+    if (*cmdline == delimiter) cmdline++;
+
+    while (*cmdline && *cmdline != delimiter)
+      cmdline++;
     if (*cmdline == delimiter) cmdline++;
 
     while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/'

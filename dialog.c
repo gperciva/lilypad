@@ -31,7 +31,7 @@
 #include "license.h"
 #include "dialog.h"
 
-static const WCHAR helpfileW[] = { 'l','i','l','y','p','a','d','.','h','l','p',0 };
+static const WCHAR helpfileW[] = { 'n','o','t','e','p','a','d','.','h','l','p',0 };
 
 static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
