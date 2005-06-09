@@ -1,3 +1,12 @@
+2005-06-09  Jan Nieuwenhuizen  <janneke@gnu.org>
+
+	* configure.in: Version 0.0.5.
+
+	* Makefile.in (all): Add lilypad-ascii.exe target.
+
+	* dialog.h, dialog.c, main.h, main.c: UNICODE/ASCII patch from
+	Russ Jorgensen.
+
 2005-06-05  Jan Nieuwenhuizen  <janneke@gnu.org>
 
 	* configure.in: Version 0.0.4.

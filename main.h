@@ -19,6 +19,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef UNICODE
+#define __WCHAR	    WCHAR
+#define __LPCWSTR   LPCWSTR
+#define __LPWSTR    LPWSTR
+#else
+#define	__WCHAR	    char
+#define __LPCWSTR   LPCSTR
+#define __LPWSTR    LPSTR
+#endif
+
 #define SIZEOF(a) sizeof(a)/sizeof((a)[0])
 
 #include "notepad_res.h"
@@ -34,20 +44,20 @@ typedef struct
   HFONT   hFont; /* Font used by the edit control */
   LOGFONT lfFont;
   BOOL    bWrapLongLines;
-  WCHAR   szFindText[MAX_PATH];
-  WCHAR   szFileName[MAX_PATH];
-  WCHAR   szFileTitle[MAX_PATH];
-  WCHAR   szFilter[2 * MAX_STRING_LEN + 100];
-  WCHAR   szMarginTop[MAX_PATH];
-  WCHAR   szMarginBottom[MAX_PATH];
-  WCHAR   szMarginLeft[MAX_PATH];
-  WCHAR   szMarginRight[MAX_PATH];
-  WCHAR   szHeader[MAX_PATH];
-  WCHAR   szFooter[MAX_PATH];
+  __WCHAR   szFindText[MAX_PATH];
+  __WCHAR   szFileName[MAX_PATH];
+  __WCHAR   szFileTitle[MAX_PATH];
+  __WCHAR   szFilter[2 * MAX_STRING_LEN + 100];
+  __WCHAR   szMarginTop[MAX_PATH];
+  __WCHAR   szMarginBottom[MAX_PATH];
+  __WCHAR   szMarginLeft[MAX_PATH];
+  __WCHAR   szMarginRight[MAX_PATH];
+  __WCHAR   szHeader[MAX_PATH];
+  __WCHAR   szFooter[MAX_PATH];
 
   FINDREPLACE find;
 } LILYPAD_GLOBALS;
 
 extern LILYPAD_GLOBALS Globals;
 
-VOID SetFileName(LPCWSTR szFileName);
+VOID SetFileName(__LPCWSTR szFileName);

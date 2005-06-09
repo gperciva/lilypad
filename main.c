@@ -22,8 +22,6 @@
  *
  */
 
-#define UNICODE
-
 #include <windows.h>
 #include <stdio.h>
 
@@ -40,7 +38,7 @@ static ATOM aFINDMSGSTRING;
  *
  *  Sets Global File Name.
  */
-VOID SetFileName(LPCWSTR szFileName)
+VOID SetFileName(__LPCWSTR szFileName)
 {
     lstrcpy(Globals.szFileName, szFileName);
     Globals.szFileTitle[0] = 0;
@@ -98,9 +96,9 @@ static int LILYPAD_MenuCommand(WPARAM wParam)
  */
 static VOID LILYPAD_InitData(VOID)
 {
-    LPWSTR p = Globals.szFilter;
-    static const WCHAR ly_files[] = { '*','.','l','y',0 };
-    static const WCHAR all_files[] = { '*','.','*',0 };
+    __LPWSTR p = Globals.szFilter;
+    static const __WCHAR ly_files[] = { '*','.','l','y',0 };
+    static const __WCHAR all_files[] = { '*','.','*',0 };
 
     LoadString(Globals.hInstance, STRING_LILYPOND_FILES_LY, p, MAX_STRING_LEN);
     p += lstrlen(p) + 1;
@@ -145,7 +143,7 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
 
     case WM_CREATE:
     {
-        static const WCHAR editW[] = { 'e','d','i','t',0 };
+        static const __WCHAR editW[] = { 'e','d','i','t',0 };
         RECT rc;
         GetClientRect(hWnd, &rc);
         Globals.hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, editW, NULL,
@@ -191,7 +189,7 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
 
     case WM_DROPFILES:
     {
-        WCHAR szFileName[MAX_PATH];
+        __WCHAR szFileName[MAX_PATH];
         HANDLE hDrop = (HANDLE) wParam;
 
         DragQueryFile(hDrop, 0, szFileName, SIZEOF(szFileName));
@@ -210,11 +208,11 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
     return 0;
 }
 
-static int AlertFileDoesNotExist(LPCWSTR szFileName)
+static int AlertFileDoesNotExist(__LPCWSTR szFileName)
 {
    int nResult;
-   WCHAR szMessage[MAX_STRING_LEN];
-   WCHAR szResource[MAX_STRING_LEN];
+   __WCHAR szMessage[MAX_STRING_LEN];
+   __WCHAR szResource[MAX_STRING_LEN];
 
    LoadString(Globals.hInstance, STRING_DOESNOTEXIST, szResource, SIZEOF(szResource));
    wsprintf(szMessage, szResource, szFileName);
@@ -227,9 +225,9 @@ static int AlertFileDoesNotExist(LPCWSTR szFileName)
    return(nResult);
 }
 
-static void HandleCommandLine(LPWSTR cmdline)
+static void HandleCommandLine(__LPWSTR cmdline)
 {
-    WCHAR delimiter;
+    __WCHAR delimiter;
     int opt_print=0;
     int column=0;
     int line=0;
@@ -241,16 +239,16 @@ static void HandleCommandLine(LPWSTR cmdline)
     /* skip executable name */
     delimiter = (*cmdline == '"' ? '"' : ' ');
 
-    if (*cmdline == delimiter) cmdline++;
-
-    while (*cmdline && *cmdline != delimiter)
+    if (*cmdline == delimiter)
       cmdline++;
+
+    while (*cmdline && *cmdline != delimiter) cmdline++;
     if (*cmdline == delimiter) cmdline++;
 
     while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/'
 	   || *cmdline == '+')
     {
-        WCHAR option;
+        __WCHAR option;
 
 	if (*cmdline++ == '+')
 	{
@@ -293,9 +291,9 @@ static void HandleCommandLine(LPWSTR cmdline)
     if (*cmdline)
     {
         /* file name is passed in the command line */
-        LPCWSTR file_name;
+        __LPCWSTR file_name;
         BOOL file_exists;
-        WCHAR buf[MAX_PATH];
+        __WCHAR buf[MAX_PATH];
 
         if (cmdline[0] == '"')
         {
@@ -310,7 +308,7 @@ static void HandleCommandLine(LPWSTR cmdline)
         }
         else
         {
-            static const WCHAR lyW[] = { '.','l','y',0 };
+            static const __WCHAR lyW[] = { '.','l','y',0 };
 
             /* try to find file with ".ly" extension */
             if (!lstrcmp(lyW, cmdline + lstrlen(cmdline) - lstrlen(lyW)))
@@ -359,8 +357,8 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     MSG        msg;
     HACCEL      hAccel;
     WNDCLASSEX class;
-    static const WCHAR className[] = {'N','P','C','l','a','s','s',0};
-    static const WCHAR winName[]   = {'L','i','l','y','P','a','d',0};
+    static const __WCHAR className[] = {'N','P','C','l','a','s','s',0};
+    static const __WCHAR winName[]   = {'L','i','l','y','P','a','d',0};
 
     aFINDMSGSTRING = RegisterWindowMessage(FINDMSGSTRING);
 
