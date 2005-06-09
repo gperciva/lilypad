@@ -20,20 +20,23 @@ RC_SRCS = rsrc.rc
 
 ### Dependencies:
 
-ALL_OBJS := $(OBJS)
-WRC := @WCR@
+LIBWINE =
+LIBPORT =
+ALL_OBJS = $(OBJS)
+WRC = @WRC@
 CPPFLAGS = -DUNICODE @CPPFLAGS@
-RC := $(WCR) $(CPPFLAGS)
+RC = $(WRC) $(CPPFLAGS)
 
 ifeq ($(MODULE),lilypad.exe)
+
 all: lilypad-ascii.exe
 install:: install-lilypad-ascii
-endif
 
 lilypad-ascii.exe: lilypad.exe
 	rm -f $(OBJS)
 	$(MAKE) MODULE=$@ CPPFLAGS=-UUNICODE
 	touch lilypad.exe
+endif
 
 install-lilypad-ascii:
 	$(MAKE) MODULE=lilypad-ascii.exe install

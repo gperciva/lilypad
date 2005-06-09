@@ -1,6 +1,8 @@
 2005-06-09  Jan Nieuwenhuizen  <janneke@gnu.org>
 
-	* configure.in: Version 0.0.5.
+	* configure.in: Version 0.0.6.
+
+	* main.c: Simplify commandline parsing after yet another bug.
 
 	* Makefile.in (all): Add lilypad-ascii.exe target.
 

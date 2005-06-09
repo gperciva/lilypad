@@ -3,13 +3,12 @@ AC_PREREQ(2.54)
 
 m4_define([major_version], [0])
 m4_define([minor_version], [0])
-m4_define([patch_level], [5])
+m4_define([patch_level], [6])
 m4_define([version],
           [major_version.minor_version.patch_level])
 
 AC_INIT(regex, [version], [http://lilypond.org/download/mingw])
 AC_CONFIG_SRCDIR([ChangeLog])
-AC_CONFIG_HEADER([config.h])
 
 AC_CYGWIN
 AC_MINGW32

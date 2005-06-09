@@ -225,6 +225,19 @@ static int AlertFileDoesNotExist(__LPCWSTR szFileName)
    return(nResult);
 }
 
+static void
+DebugBox(__LPCWSTR id, __LPWSTR message)
+{
+   __WCHAR szMessage[MAX_STRING_LEN];
+   __WCHAR szCaption[MAX_STRING_LEN];
+
+   wsprintf(szCaption, "Debug: %s", id);
+   wsprintf(szMessage, "Debug: %s", message);
+
+   /* Display Modal Dialog */
+   MessageBox(Globals.hMainWnd, szMessage, szCaption, MB_ICONEXCLAMATION);
+}
+
 static void HandleCommandLine(__LPWSTR cmdline)
 {
     __WCHAR delimiter;
@@ -234,23 +247,25 @@ static void HandleCommandLine(__LPWSTR cmdline)
 
     /* skip white space */
     while (*cmdline == ' ')
-      cmdline++;
+	cmdline++;
 
     /* skip executable name */
     delimiter = (*cmdline == '"' ? '"' : ' ');
 
     if (*cmdline == delimiter)
-      cmdline++;
+	cmdline++;
 
-    while (*cmdline && *cmdline != delimiter) cmdline++;
-    if (*cmdline == delimiter) cmdline++;
+    while (*cmdline && *cmdline != delimiter)
+	cmdline++;
 
-    while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '/'
-	   || *cmdline == '+')
+    if (*cmdline == delimiter)
+	cmdline++;
+
+    while (*cmdline == ' ' || *cmdline == '-' || *cmdline == '+')
     {
-        __WCHAR option;
+        __WCHAR c = *cmdline++;
 
-	if (*cmdline++ == '+')
+	if (c == '+')
 	{
 	    while (*cmdline >= '0' && *cmdline <= '9')
 	    {
@@ -258,34 +273,24 @@ static void HandleCommandLine(__LPWSTR cmdline)
 		line += *((char *) cmdline) - '0';
 		cmdline++;
 	    }
-	    if (*cmdline++ == ':')
+	   if (*cmdline == ':')
+	     {
+		 cmdline++;
 		while (*cmdline >= '0' && *cmdline <= '9')
 		{
 		    column *= 10;
 		    column += *((char *) cmdline) - '0';
 		    cmdline++;
 		}
-	    while (*cmdline == ' ')
-	        cmdline++;
-	    continue;
+	     }
 	}
-
-        if (*cmdline == ' ')
-	    continue;
-
-        option = *cmdline;
-        if (option)
+	else if (c == '-')
+	{
+	    if (*cmdline == 'p' || *cmdline == 'P')
+		opt_print = 1;
+	    /* skipping unknown option */
 	    cmdline++;
-        while (*cmdline == ' ')
-	    cmdline++;
-
-        switch(option)
-        {
-            case 'p':
-            case 'P':
-                opt_print=1;
-                break;
-        }
+	 }
     }
 
     if (*cmdline)
