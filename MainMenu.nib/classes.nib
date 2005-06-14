@@ -1,7 +1,7 @@
 {
     IBClasses = (
         {
-            ACTIONS = {compileFile = id; }; 
+            ACTIONS = {compileFile = id; updateSyntax = id; }; 
             CLASS = FirstResponder; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 

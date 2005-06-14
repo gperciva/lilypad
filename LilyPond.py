@@ -67,30 +67,60 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
             self.compileMe ()
         else:
             self.saveDocument_ (None)
-            
+
+    def updateSyntax_(self, sender):
+        if self.fileName():
+            self.updateMySyntax ()
+        else:
+            self.saveDocument_ (None)
+
+    def createProcessLog (self):
+        if not self.processLogWindowController:
+            self.processLogWindowController = ProcessLogWindowController()
+        else:
+            self.processLogWindowController.showWindow_ (None)
 
     def compileDidSaveSelector_ (doc, didSave, info):
         print "I'm here"
         if didSave:
             doc.compileMe ()
+
+    def revert_ (self, sender):
+        self.readFromUTF8 (self.fileName ())
+
+    def updateMySyntax (self):
+        env = os.environ.copy()
+        bundle =  NSBundle.mainBundle ()
+        appdir = NSBundle.mainBundle().bundlePath()
+        prefix = appdir + '/Contents/Resources'
+        env['LILYPONDPREFIX'] = prefix + '/share/lilypond/current' 
             
+        self.writeToFile_ofType_(self.fileName (), None)
+        binary = prefix + '/bin/convert-ly'
+
+        print 'bin', binary
+        pyproc = subprocess.Popen ([binary, '-e', self.fileName ()],
+                                   env = env,
+                                   stderr = subprocess.STDOUT,
+                                   stdout = subprocess.PIPE,
+                                   )
+        self.createProcessLog ()
+        wc = self.processLogWindowController
+        wc.setWindowTitle_ ('convert-ly -- ' + self.fileName())
+        wc.runProcessWithCallback (pyproc, self.revert_)
+        
     def compileMe (self):
         bundle =  NSBundle.mainBundle ()         
         appdir = NSBundle.mainBundle().bundlePath()
-
-        call = lilycall.Call (appdir, [self.fileName()])
+        process = call = lilycall.Call (appdir, [self.fileName()])
         call.reroute_output = 1
         
+        self.createProcessLog ()
         pyproc = call.get_process()
-
-        if not self.processLogWindowController:
-            self.processLogWindowController = ProcessLogWindowController()
-        else:
-            self.processLogWindowController.showWindow_ (None)
-            
         wc = self.processLogWindowController
         wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
         wc.runProcessWithCallback (pyproc, lambda y: call.open_pdfs ())
+
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()

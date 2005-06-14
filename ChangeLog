@@ -1,3 +1,10 @@
+2005-06-15  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* TinyTinyDocument.nib: switch off spell checking.
+
+	* LilyPond.py (TinyTinyDocument.updateMySyntax): run convert-ly
+	from Compile > Update Syntax.
+
 2005-06-14  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* Welcome-to-LilyPond-MacOS.ly: new file MacOS specific Welcome to
