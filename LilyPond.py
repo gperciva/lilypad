@@ -1,4 +1,4 @@
-"""TinyTinyEdit -- A minimal Document-based Cocoa application."""
+"""LilyPond.py -- A minimal Document-based Cocoa application."""
 
 
 from PyObjCTools import NibClassBuilder, AppHelper

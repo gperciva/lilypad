@@ -1,0 +1,31 @@
+2005-06-14  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* Welcome-to-LilyPond-MacOS.ly: new file MacOS specific Welcome to
+	LilyPond.
+
+	* lilycall.py: move from ../
+
+	* LilyPond.py: rename from ClickEdit.py
+	(TinyTinyDocument.compileFile_): new method.
+	(TinyTinyDocument.compileMe): new method. Create
+	ProcessLogWindowController
+
+2005-06-13  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* ProcessLog.py: new file: NSText bridge for calling a command.
+
+2005-06-10  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* URLHandlerClass.py (URLHandlerClass.openURL): unquote textedit URI
+
+2005-06-08  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* URLHandlerClass.py (URLHandlerClass.charCount): update for a:b:c
+	URLs.
+
+2005-05-24  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* MainMenu.nib: remove superfluous formatting commands.
+
+	* URLHandlerClass.py: simplify, use NSDocument::textView
+
