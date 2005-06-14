@@ -21,15 +21,15 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
     # The following outlets are added to the class:
     # textView
 
-    path = None
-
+    startupPath = None  # fallback if instance has no startupPath.
+    
     def windowNibName(self):
         return "TinyTinyDocument"
 
     def readFromFile_ofType_(self, path, tp):
         if self.textView is None:
             # we're not yet fully loaded
-            self.path = path
+            self.startupPath = path
         else:
             # "revert"
             self.readFromUTF8(path)
@@ -42,14 +42,11 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         f.write(text.encode("utf8"))
         f.close()
 
-        # UGH. Why do I have to do this by hand?!
-        self.path = path
-        
         return True
 
     def windowControllerDidLoadNib_(self, controller):
-        if self.path:
-            self.readFromUTF8 (self.path)
+        if self.startupPath:
+            self.readFromUTF8 (self.startupPath)
         else:
             appdir = NSBundle.mainBundle().bundlePath()
             prefix = appdir + "/Contents/Resources"
@@ -62,14 +59,15 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         self.textView.setString_(text)
 
     def compileFile_ (self, sender):
-        if self.path:
+        if 0:
+            self.saveDocumentWithDelegate_didSaveSelector_contextInfo_ (self,
+                                                                        "compileDidSaveSelector:",
+                                                                        None)
+        if self.fileName():
             self.compileMe ()
         else:
             self.saveDocument_ (None)
             
-        #self.saveDocumentWithDelegate_didSaveSelector_contextInfo_ (self,
-        #                                                            "compileDidSaveSelector:",
-        #                                                            None)
 
     def compileDidSaveSelector_ (doc, didSave, info):
         print "I'm here"
@@ -80,7 +78,7 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         bundle =  NSBundle.mainBundle ()         
         appdir = NSBundle.mainBundle().bundlePath()
 
-        call = lilycall.Call (appdir, [self.path])
+        call = lilycall.Call (appdir, [self.fileName()])
         call.reroute_output = 1
         
         pyproc = call.get_process()
@@ -91,7 +89,7 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
             self.processLogWindowController.showWindow_ (None)
             
         wc = self.processLogWindowController
-        wc.setWindowTitle_ ('LilyPond -- ' + self.path)
+        wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
         wc.runProcessWithCallback (pyproc, lambda y: call.open_pdfs ())
 
 if __name__ == "__main__":
