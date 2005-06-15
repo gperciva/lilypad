@@ -4,6 +4,9 @@
 	sensitive help.
 	(lily_version): new function
 	(open_url): new function
+	(TinyTinyDocument.windowControllerDidLoadNib_): 
+	only load welcome if there are no other files loaded.
+	(TinyTinyDocument.windowControllerDidLoadNib_): use firstStart boolean.
 
 	* setup.py (plist): set copyright, version and credits for app. 
 

@@ -3,7 +3,7 @@
 
 from PyObjCTools import NibClassBuilder, AppHelper
 from Foundation import NSBundle, NSURL
-from AppKit import NSWorkspace
+from AppKit import NSWorkspace, NSDocumentController
 
 NibClassBuilder.extractClasses("TinyTinyDocument")
 
@@ -19,6 +19,8 @@ import urllib
 
 from ProcessLog import ProcessLogWindowController
 
+firstStart = True
+
 # utility functions
 def open_url (url):
         workspace = NSWorkspace.sharedWorkspace ()
@@ -29,11 +31,18 @@ def open_url (url):
 def lily_version ():
         bundle =  NSBundle.mainBundle ()
         appdir = NSBundle.mainBundle().bundlePath()
-        pattern = appdir + '/Contents/Resources/share/lilypond/[0-9]*'
+	share = appdir + '/Contents/Resources/share/lilypond'
+
+	if not os.path.exists (share):
+		share = os.environ['HOME'] + '/Desktop/LilyPond.app/Contents/Resources/share/lilypond'
+		
+        pattern = share + '/[0-9]*'
+	
         versions = glob.glob (pattern)
         version = '2.2.31' 
         if versions:
             version = versions[0]
+	    version = os.path.split(version)[1]
         
         return tuple (string.split (version, '.'))
 
@@ -77,13 +86,16 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         return True
 
     def windowControllerDidLoadNib_(self, controller):
+        global firstStart
         if self.startupPath:
             self.readFromUTF8 (self.startupPath)
-        else:
-            appdir = NSBundle.mainBundle().bundlePath()
-            prefix = appdir + "/Contents/Resources"
-            self.readFromUTF8 (prefix + '/Welcome-to-LilyPond-MacOS.ly')
-
+        elif firstStart:
+	    appdir = NSBundle.mainBundle().bundlePath()
+	    prefix = appdir + "/Contents/Resources"
+	    self.readFromUTF8 (prefix + '/Welcome-to-LilyPond-MacOS.ly')
+	    
+	firstStart = False
+	    
     def readFromUTF8(self, path):
         f = file(path)
         text = unicode(f.read(), "utf8")
@@ -161,7 +173,6 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
             (maj,min,pat) = lily_version ()
             open_url ('http://lilypond.org/doc/v%s.%s' % (maj, min))
         else:
-            print r.location, r.length
             substr = tv.string()[r.location:r.location + r.length]
             google_lilypond (substr)
 
