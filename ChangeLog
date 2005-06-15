@@ -1,5 +1,14 @@
 2005-06-15  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
+	* LilyPond.py (google_lilypond): new function. Provide context
+	sensitive help.
+	(lily_version): new function
+	(open_url): new function
+
+	* setup.py (plist): set copyright, version and credits for app. 
+
+	* Credits.html (href): new file.
+
 	* TinyTinyDocument.nib: switch off spell checking.
 
 	* LilyPond.py (TinyTinyDocument.updateMySyntax): run convert-ly

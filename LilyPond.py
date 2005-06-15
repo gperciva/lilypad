@@ -2,8 +2,8 @@
 
 
 from PyObjCTools import NibClassBuilder, AppHelper
-from Foundation import NSBundle
-
+from Foundation import NSBundle, NSURL
+from AppKit import NSWorkspace
 
 NibClassBuilder.extractClasses("TinyTinyDocument")
 
@@ -12,8 +12,40 @@ import URLHandlerClass
 import lilycall
 import subprocess
 import os
+import glob
+import string
+import re
+import urllib
 
 from ProcessLog import ProcessLogWindowController
+
+# utility functions
+def open_url (url):
+        workspace = NSWorkspace.sharedWorkspace ()
+
+        nsurl = NSURL.URLWithString_ (url)
+        workspace.openURL_ (nsurl)
+
+def lily_version ():
+        bundle =  NSBundle.mainBundle ()
+        appdir = NSBundle.mainBundle().bundlePath()
+        pattern = appdir + '/Contents/Resources/share/lilypond/[0-9]*'
+        versions = glob.glob (pattern)
+        version = '2.2.31' 
+        if versions:
+            version = versions[0]
+        
+        return tuple (string.split (version, '.'))
+
+def google_lilypond (str):
+        (maj,min,pat) = lily_version ()
+
+        url = '%s site:lilypond.org v%s.%s' % (str, maj, min)
+        url = re.sub (' ', '+', url)
+        url = urllib.quote (url, safe='+')
+        url = 'http://www.google.com/search?q=%s' % url
+        open_url (url)
+
 
 # class defined in TinyTinyDocument.nib
 class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
@@ -98,7 +130,6 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         self.writeToFile_ofType_(self.fileName (), None)
         binary = prefix + '/bin/convert-ly'
 
-        print 'bin', binary
         pyproc = subprocess.Popen ([binary, '-e', self.fileName ()],
                                    env = env,
                                    stderr = subprocess.STDOUT,
@@ -121,6 +152,21 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
         wc.runProcessWithCallback (pyproc, lambda y: call.open_pdfs ())
 
+
+    def contextHelp_ (self, sender):
+        tv = self.textView
+        r = tv.selectedRange ()
+        
+        if r.length == 0:
+            (maj,min,pat) = lily_version ()
+            open_url ('http://lilypond.org/doc/v%s.%s' % (maj, min))
+        else:
+            print r.location, r.length
+            substr = tv.string()[r.location:r.location + r.length]
+            google_lilypond (substr)
+
+        
+#        subprocess.call (['/usr/bin/open', url])
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()
