@@ -179,8 +179,6 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
             substr = tv.string()[r.location:r.location + r.length]
             google_lilypond (substr)
 
-        
-#        subprocess.call (['/usr/bin/open', url])
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()

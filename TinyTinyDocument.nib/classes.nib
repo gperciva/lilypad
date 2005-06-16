@@ -11,7 +11,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {compileFile = id; }; 
+            ACTIONS = {}; 
             CLASS = TinyTinyDocument; 
             LANGUAGE = ObjC; 
             OUTLETS = {

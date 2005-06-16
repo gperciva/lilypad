@@ -1,5 +1,8 @@
 2005-06-16  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
+	* MainMenu.nib/classes.nib (Module): add Find functionality:
+	use performFindPanelAction with numeric tags for menu entries.
+
 	* LilyPond.py (TinyTinyDocument.init): init
 	ProcessLogWindowController to None.
 
