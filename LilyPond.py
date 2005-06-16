@@ -1,9 +1,8 @@
 """LilyPond.py -- A minimal Document-based Cocoa application."""
 
-
 from PyObjCTools import NibClassBuilder, AppHelper
 from Foundation import NSBundle, NSURL
-from AppKit import NSWorkspace, NSDocumentController
+from AppKit import NSWorkspace, NSDocumentController, NSDocument
 
 NibClassBuilder.extractClasses("TinyTinyDocument")
 
@@ -63,6 +62,10 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
     # textView
 
     startupPath = None  # fallback if instance has no startupPath.
+    def init (self):
+	self = NSDocument.init (self)
+	self.processLogWindowController = None
+	return self
     
     def windowNibName(self):
         return "TinyTinyDocument"
