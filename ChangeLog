@@ -1,3 +1,16 @@
+2005-06-17  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* LilyPond.py (TinyTinyDocument.compileMe): CallBinder: closure
+	for lilycall + document callbacks.
+
+	* ProcessLog.py (ProcessLogWindowController.addText): new function.
+	(ProcessLogWindowController.finish): stop throbber before callback.
+
+	* lilycall.py (Call.get_process): new function.
+	(check_fontconfig): symlink /System/Library/Fonts to
+	prefix/share/SystemFonts.
+	(Call.get_fc_cache_process): run fc-cache.
+
 2005-06-16  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* MainMenu.nib/classes.nib (Module): add Find functionality:

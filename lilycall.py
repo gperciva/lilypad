@@ -16,6 +16,9 @@ debug = 0
 ################################################################
 # general utils
 
+def file_is_newer (f1, f2):
+	return os.stat (f1).st_mtime >  os.stat (f2).st_mtime
+
 def writable_directory (dir):
 	writable = 0
 	try:
@@ -67,6 +70,35 @@ def set_pango_paths (appdir):
 	open (pango_modules_file, 'w').write (pango_conf)
 
 
+def check_fontconfig (appdir):
+	prefix = appdir + '/Contents/Resources' 
+	my_sysfont_dir = prefix + '/share/SystemFonts'
+	sysfont_dir = '/System/Library/Fonts'
+
+	need_fc_update = 0
+	if not os.path.exists (my_sysfont_dir):
+	    os.mkdir (my_sysfont_dir)
+	    need_fc_update = 1
+	    
+	if need_fc_update or file_is_newer (sysfont_dir, my_sysfont_dir):
+	    files = os.listdir (sysfont_dir)
+	    need_fc_update = 1
+	    for f in files:
+		    if not os.path.exists (my_sysfont_dir + '/' + f): 
+			    os.symlink ('%s/%s' % (sysfont_dir, f),
+					'%s/%s' % (my_sysfont_dir, f))
+
+	local_fc_conf = open (prefix + '/etc/fonts/local.conf','w')
+	local_fc_conf.write ('''<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<!-- /etc/fonts/local.conf file for local customizations -->
+<fontconfig>
+<dir>%s
+</dir>
+</fontconfig>''' %  my_sysfont_dir)
+	return need_fc_update
+
+
 def get_env (prefix):
 	p = ''
 	try:
@@ -82,7 +114,6 @@ def get_env (prefix):
 	env['FONTCONFIG_FILE'] = prefix + '/etc/fonts/fonts.conf'
 	env['GS_LIB'] = prefix + '/share/ghostscript/8.15/lib/'
 	env['PANGO_RC_FILE'] = prefix + '/etc/pango/pangorc'
-
 	return env
 
 
@@ -134,17 +165,21 @@ class Call:
 
 	def __init__ (self, appdir, args):
 		self.check_app_dir (appdir)
+		self.appdir = appdir
 		self.env = get_env (appdir + '/Contents/Resources')
 		self.args = get_command_line (appdir, args)
+		self.executable = self.args[0]
+		self.args[0] = os.path.split (self.args[0])[1]
 		self.cwd = get_dest_dir (self.args[1:])
+		self.need_fc_update = check_fontconfig (appdir)
 		set_pango_paths (appdir);
 		self.reroute_output = False
 
 	def print_env (self):
 		for (k,v) in self.env.items ():
 			print 'export %s="%s"' % (k,v)
-		
-	def get_process (self):
+
+	def get_process (self, executable, args):
 		out = None
 		err = None
 		if self.reroute_output:
@@ -153,7 +188,10 @@ class Call:
 
 		if debug:
 			print self.__dict__
-		process = subprocess.Popen (self.args,
+			print 'args: ', args
+			print 'executable: ', executable
+		process = subprocess.Popen (args,
+					    executable = executable,
 					    cwd = self.cwd,
 					    env = self.env,
 					    stdout = out,
@@ -161,6 +199,27 @@ class Call:
 					    shell = False)
 		
 		return process
+	
+	def get_lilypond_process (self):
+		return self.get_process (self.executable, self.args)
+
+	def get_fc_cache_process (self):
+		if not self.need_fc_update:
+			return None
+
+		prefix = self.appdir + '/Contents/Resources'
+		binary = prefix + '/bin/fc-cache'
+		args = ['/Library/Fonts/',
+			prefix + '/share/SystemFonts',
+			prefix + '/share/lilypond/current/fonts/',
+			'/usr/share/fonts',
+			'/Library/Fonts',
+			'~/.fonts']
+		args = filter (lambda x: os.path.exists (x), args)
+		args = ['fc-cache', '-v'] + args 
+		
+		p = self.get_process (binary, args)
+		return p
 	
 	def get_pdfs (self):
 		names = []
@@ -202,8 +261,13 @@ if __name__ == '__main__':
 	if call.error_string:
 		sys.stderr.write (call.error_string)
 		sys.exit (2)
-		
-	p = call.get_process ()
+
+	p = call.get_fc_cache_process ()
+	if p:
+		sys.stderr.write ('Rebuilding font cache')
+		p.wait ()
+	
+	p = call.get_lilypond_process ()
 	code = p.wait ()
 
 	if not sys.stdin.isatty (): # GUI

@@ -124,12 +124,13 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
 
     def finish (self):
         self.updateLog_(None)
+        self.cancelButton.setEnabled_ (False)
+        self.throbber.stopAnimation_ (self)
+
         cb = self.finish_callback
         if cb <> None:
             cb (self)
 
-        self.cancelButton.setEnabled_ (False)
-        self.throbber.stopAnimation_ (self)
         
     def clearLog_ (self, sender):
         tv = self.textView
@@ -139,9 +140,8 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
         range.length = ts_len
         tv.replaceCharactersInRange_withString_ (range, '')
         
-    def updateLog_ (self, sender):
+    def addText (self, str):
         tv = self.textView
-        str = self.processLog.getNewOutput ()
         ts_len = tv.textStorage().length ()
         
         range = NSRange()
@@ -150,7 +150,10 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
         tv.replaceCharactersInRange_withString_ (range, str)
         range.length = len (str)
         tv.scrollRangeToVisible_ (range)
-       
+        
+    def updateLog_ (self, sender):
+        str = self.processLog.getNewOutput ()
+        self.addText (str)
 
 
 if __name__ == "__main__":

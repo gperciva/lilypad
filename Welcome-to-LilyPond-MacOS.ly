@@ -10,7 +10,7 @@ Now to take it for the first test run.
 
   2. Select
 
-       Compile > Run LilyPond
+       Compile > Typeset file
 
   from the menu.
 
