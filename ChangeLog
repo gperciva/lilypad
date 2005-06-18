@@ -1,7 +1,15 @@
+2005-06-18  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (Call.open_pdfs): remove stray p.
+
 2005-06-17  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_env): set FONTCONFIG_PATH, so local.conf is found.
+	(check_fontconfig): set fonts.cache-1
 
 	* LilyPond.py (TinyTinyDocument.compileMe): CallBinder: closure
 	for lilycall + document callbacks.
+	(TinyTinyDocument.compileMe): check need_fc_update.
 
 	* ProcessLog.py (ProcessLogWindowController.addText): new function.
 	(ProcessLogWindowController.finish): stop throbber before callback.

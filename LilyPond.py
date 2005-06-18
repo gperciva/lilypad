@@ -165,32 +165,13 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         call = lilycall.Call (appdir, [self.fileName()])
         call.reroute_output = 1
         self.createProcessLog ()
-	class CallBinder:
-		def __init__ (self, call, document):
-			self.call = call
-			self.doc = document
-		def fcProcess (self, data = None):
-			pyproc = call.get_fc_cache_process ()
-			if not pyproc:
-				return self.lpProcess()
-
-			wc = self.doc.processLogWindowController
-			wc.setWindowTitle_ ('Font cache updater')
-			wc.addText ('\nCaching font details.\nThis may take a few minutes.\n\n\n') 
-			wc.runProcessWithCallback (pyproc, self.lpProcess)
-			
-		def lpProcess (self, data = None):
-			wc = self.doc.processLogWindowController
-			wc.setWindowTitle_ ('LilyPond -- ' + self.doc.fileName())
-			pyproc = call.get_lilypond_process()
-			wc.runProcessWithCallback (pyproc, self.open_pdfs)
-
-		def open_pdfs (self, data = None):
-			self.call.open_pdfs ()
-
-	cb = CallBinder(call, self)
-	cb.fcProcess ()
+	wc = self.processLogWindowController
+	if call.need_fc_update:
+		wc.addText ('\nCaching font details.\nThis may take a few minutes.\n\n\n') 
 	
+	wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
+	pyproc = call.get_lilypond_process()
+	wc.runProcessWithCallback (pyproc, call.open_pdfs)
 
     def contextHelp_ (self, sender):
         tv = self.textView

@@ -75,29 +75,15 @@ def check_fontconfig (appdir):
 	my_sysfont_dir = prefix + '/share/SystemFonts'
 	sysfont_dir = '/System/Library/Fonts'
 
-	need_fc_update = 0
-	if not os.path.exists (my_sysfont_dir):
-	    os.mkdir (my_sysfont_dir)
-	    need_fc_update = 1
-	    
-	if need_fc_update or file_is_newer (sysfont_dir, my_sysfont_dir):
-	    files = os.listdir (sysfont_dir)
-	    need_fc_update = 1
-	    for f in files:
-		    if not os.path.exists (my_sysfont_dir + '/' + f): 
-			    os.symlink ('%s/%s' % (sysfont_dir, f),
-					'%s/%s' % (my_sysfont_dir, f))
-
+	fc_cache = (prefix + '/font.cache-1')
 	local_fc_conf = open (prefix + '/etc/fonts/local.conf','w')
 	local_fc_conf.write ('''<?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <!-- /etc/fonts/local.conf file for local customizations -->
 <fontconfig>
-<dir>%s
-</dir>
-</fontconfig>''' %  my_sysfont_dir)
-	return need_fc_update
-
+<cache>%s</cache> 
+</fontconfig>''' % fc_cache)
+	return not os.path.exists (fc_cache)
 
 def get_env (prefix):
 	p = ''
@@ -108,12 +94,12 @@ def get_env (prefix):
 
 	env = {} 
 	env['DYLD_LIBRARY_PATH'] = prefix + '/lib' + ':' + p
-	env['PATH'] = prefix + '/bin/' + ':' + os.environ['PATH']
+	env['FONTCONFIG_PATH'] = prefix + '/etc/fonts/'
+	env['GS_LIB'] = prefix + '/share/ghostscript/8.15/lib/'
 	env['GUILE_LOAD_PATH'] = prefix + '/share/guile/1.6'
 	env['LILYPONDPREFIX'] = prefix + '/share/lilypond/current'
-	env['FONTCONFIG_FILE'] = prefix + '/etc/fonts/fonts.conf'
-	env['GS_LIB'] = prefix + '/share/ghostscript/8.15/lib/'
 	env['PANGO_RC_FILE'] = prefix + '/etc/pango/pangorc'
+	env['PATH'] = prefix + '/bin/' + ':' + os.environ['PATH']
 	return env
 
 
@@ -202,24 +188,6 @@ class Call:
 	
 	def get_lilypond_process (self):
 		return self.get_process (self.executable, self.args)
-
-	def get_fc_cache_process (self):
-		if not self.need_fc_update:
-			return None
-
-		prefix = self.appdir + '/Contents/Resources'
-		binary = prefix + '/bin/fc-cache'
-		args = ['/Library/Fonts/',
-			prefix + '/share/SystemFonts',
-			prefix + '/share/lilypond/current/fonts/',
-			'/usr/share/fonts',
-			'/Library/Fonts',
-			'~/.fonts']
-		args = filter (lambda x: os.path.exists (x), args)
-		args = ['fc-cache', '-v'] + args 
-		
-		p = self.get_process (binary, args)
-		return p
 	
 	def get_pdfs (self):
 		names = []
@@ -262,10 +230,8 @@ if __name__ == '__main__':
 		sys.stderr.write (call.error_string)
 		sys.exit (2)
 
-	p = call.get_fc_cache_process ()
-	if p:
-		sys.stderr.write ('Rebuilding font cache')
-		p.wait ()
+	if call.need_fc_update:
+		sys.stderr.write ('Rebuilding font cache\nThis may take a few minutes.')
 	
 	p = call.get_lilypond_process ()
 	code = p.wait ()
