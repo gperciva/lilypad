@@ -163,7 +163,7 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
 	    appdir = NSBundle.mainBundle().bundlePath()
 	
         call = lilycall.Call (appdir, [self.fileName()])
-        call.reroute_output = 1
+	call.set_gui_options ()
         self.createProcessLog ()
 	wc = self.processLogWindowController
 	if call.need_fc_update:

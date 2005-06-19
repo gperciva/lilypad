@@ -103,11 +103,8 @@ def get_env (prefix):
 	return env
 
 
-def get_command_line (appdir, args):
-	binary = appdir + '/Contents/Resources/bin/lilypond'
-	new_args = [binary,
-		'-ddelete-intermediate-files']
-
+def get_gui_command_line (appdir, args):
+	new_args = ['-ddelete-intermediate-files']
 
 	cwd = os.getcwd ()
 	for a in args:
@@ -153,13 +150,20 @@ class Call:
 		self.check_app_dir (appdir)
 		self.appdir = appdir
 		self.env = get_env (appdir + '/Contents/Resources')
-		self.args = get_command_line (appdir, args)
-		self.executable = self.args[0]
-		self.args[0] = os.path.split (self.args[0])[1]
-		self.cwd = get_dest_dir (self.args[1:])
+		self.executable = appdir + '/Contents/Resources/bin/lilypond'
+		self.args = [self.executable] + args
+		self.cwd = '.'
+		
 		self.need_fc_update = check_fontconfig (appdir)
 		set_pango_paths (appdir);
 		self.reroute_output = False
+
+	def set_gui_options (self):
+		self.args = ([self.args[0]]
+			     + get_gui_command_line (self.appdir, self.args[1:]))
+		
+		self.cwd = get_dest_dir (self.args[1:])
+		self.reroute_output = 1
 
 	def print_env (self):
 		for (k,v) in self.env.items ():
@@ -173,9 +177,11 @@ class Call:
 			err = subprocess.STDOUT
 
 		if debug:
-			print self.__dict__
+			self.print_env ()
 			print 'args: ', args
 			print 'executable: ', executable
+
+		self.args[0] = os.path.split (self.args[0])[1]
 		process = subprocess.Popen (args,
 					    executable = executable,
 					    cwd = self.cwd,
@@ -222,9 +228,6 @@ if __name__ == '__main__':
 		argv.remove ('--debug')
 		
 	call = Call(appdir_dir, argv)
-
-	if debug:
-		call.print_env ()
 
 	if call.error_string:
 		sys.stderr.write (call.error_string)
