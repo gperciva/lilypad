@@ -1,5 +1,7 @@
 2005-06-23  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
+	* lilycall.py (Call.__init__): return if error found.
+
 	* LilyPond.py (TinyTinyDocument.compileMe): report errorstring if
 	lilycall finds one.
 	

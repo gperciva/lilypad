@@ -148,6 +148,9 @@ class Call:
 
 	def __init__ (self, appdir, args):
 		self.check_app_dir (appdir)
+		if self.error_string:
+			return 
+		
 		self.appdir = appdir
 		self.env = get_env (appdir + '/Contents/Resources')
 		self.executable = appdir + '/Contents/Resources/bin/lilypond'
