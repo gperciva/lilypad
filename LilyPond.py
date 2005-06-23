@@ -166,6 +166,10 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
 	call.set_gui_options ()
         self.createProcessLog ()
 	wc = self.processLogWindowController
+	if call.error_string:
+		wc.addText (call.error_string)
+		return None
+	
 	if call.need_fc_update:
 		wc.addText ('\nCaching font details.\nThis may take a few minutes.\n\n\n') 
 	

@@ -1,3 +1,8 @@
+2005-06-23  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* LilyPond.py (TinyTinyDocument.compileMe): report errorstring if
+	lilycall finds one.
+	
 2005-06-19  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* lilycall.py (Call.set_gui_options): new function. Don't munge
