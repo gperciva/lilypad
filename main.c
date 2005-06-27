@@ -380,7 +380,16 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     class.lpszMenuName  = MAKEINTRESOURCE(MAIN_MENU);
     class.lpszClassName = className;
 
-    if (!RegisterClassEx(&class)) return FALSE;
+       /* if system calls fail, there is no unicode support */
+    if (!RegisterClassEx (&class))
+      {
+#ifdef UNICODE
+	if (GetLastError () == ERROR_CALL_NOT_IMPLEMENTED)
+	  ExitProcess (3);
+#endif UNICODE
+       /* FIXME: what happens here? */
+       return FALSE;
+     }
 
     /* Setup windows */
 
