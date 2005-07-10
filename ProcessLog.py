@@ -76,7 +76,7 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
     def initEmpty_(self):
         self = self.initWithWindowNibName_("ProcessLog")
         self.setWindowTitle_('Process')
-
+        self.close_callback = None
         self.processLog = ProcessLog.alloc().init_()
         self.window().makeFirstResponder_(self.textView)
         self.showWindow_(self)
@@ -89,6 +89,14 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
         return self
 
     def windowWillClose_(self, notification):
+
+        ## UGH.
+        if self.close_callback:
+            self.close_callback (self)
+        self.cancelProcess_ (self)
+        self.suicide()
+        
+    def suicide (self):
         # see comment in self.initWithObject_()
         self.autorelease()
 

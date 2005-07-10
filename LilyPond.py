@@ -3,9 +3,9 @@
 from PyObjCTools import NibClassBuilder, AppHelper
 from Foundation import NSBundle, NSURL
 from AppKit import NSWorkspace, NSDocumentController, NSDocument
+import AppKit
 
 NibClassBuilder.extractClasses("TinyTinyDocument")
-
 
 import URLHandlerClass
 import lilycall
@@ -121,9 +121,20 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         else:
             self.saveDocument_ (None)
 
+    def processLogClosed_ (self, data):
+	    self.processLogWindowController = None
+	    
     def createProcessLog (self):
         if not self.processLogWindowController:
-            self.processLogWindowController = ProcessLogWindowController()
+            wc = ProcessLogWindowController()
+	    self.processLogWindowController = wc
+	    center = NSWorkspace.sharedWorkspace().notificationCenter()
+	    notification = AppKit.NSWindowWillCloseNotification
+#	    center.addObserver_selector_name_object_(self, "processLogClosed:",
+#						     notification,
+#						     wc.window ())
+
+	    wc.close_callback = self.processLogClosed_
         else:
             self.processLogWindowController.showWindow_ (None)
 
@@ -163,12 +174,14 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
 	    appdir = NSBundle.mainBundle().bundlePath()
 	
         call = lilycall.Call (appdir, [self.fileName()])
-	call.set_gui_options ()
+
         self.createProcessLog ()
 	wc = self.processLogWindowController
 	if call.error_string:
 		wc.addText (call.error_string)
 		return None
+	
+	call.set_gui_options ()
 	
 	if call.need_fc_update:
 		wc.addText ('\nCaching font details.\nThis may take a few minutes.\n\n\n') 

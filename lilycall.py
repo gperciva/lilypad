@@ -83,7 +83,11 @@ def check_fontconfig (appdir):
 <fontconfig>
 <cache>%s</cache> 
 </fontconfig>''' % fc_cache)
-	return not os.path.exists (fc_cache)
+	need_update = not os.path.exists (fc_cache)
+	if need_update:
+		open (fc_cache, 'w').write ('')
+
+	return need_update
 
 def get_env (prefix):
 	p = ''
