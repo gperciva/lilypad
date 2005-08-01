@@ -1,3 +1,10 @@
+2005-08-01  Jan Nieuwenhuizen  <janneke@gnu.org>
+
+	* configure.in: Version 0.0.7.
+	
+	* dialog.c (DoSaveFile): Allow files to get shorter: call
+	SetEndOfFile (Heikki Junes).`
+
 2005-06-09  Jan Nieuwenhuizen  <janneke@gnu.org>
 
 	* configure.in: Version 0.0.6.

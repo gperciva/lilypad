@@ -3,7 +3,7 @@ AC_PREREQ(2.54)
 
 m4_define([major_version], [0])
 m4_define([minor_version], [0])
-m4_define([patch_level], [6])
+m4_define([patch_level], [7])
 m4_define([version],
           [major_version.minor_version.patch_level])
 
@@ -38,7 +38,7 @@ LDPATH=
 MAKE_PROG_RULES="include Makeprog.rules"
 MAKE_RULES="include Make.rules"
 INSTALL_PROGRAM='$(TOPSRCDIR)/install-sh'
-MKINSTALLDIRS='$(TOPSRCDIR)/mkinstalldirs -m755'
+MKINSTALLDIRS='$(TOPSRCDIR)/mkinstalldirs'
 SET_MAKE=
 
 AC_CHECK_PROGS(WINDRES, $target-windres windres, no)
