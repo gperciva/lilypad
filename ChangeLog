@@ -1,3 +1,7 @@
+2005-10-12  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* setup.py (plist): typo.
+
 2005-06-27  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* lilycall.py (check_fontconfig): create cache file if not

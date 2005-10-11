@@ -5,7 +5,7 @@ import os
 
 plist = dict( 
    NSAppleScriptEnabled = 'YES',
-   CFBundleIndentifier = 'org.lilypond.lilypond',
+   CFBundleIdentifier = 'org.lilypond.lilypond',
    LSMinimumSystemVersion = "10.2",
    CFBundleURLTypes = [
 	dict(CFBundleURLSchemes = ['textedit'],
