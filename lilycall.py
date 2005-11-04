@@ -96,7 +96,10 @@ def get_env (prefix):
 	except KeyError:
 		pass
 
-	env = {} 
+	env = {}
+
+	
+	# need this for GUILE
 	env['DYLD_LIBRARY_PATH'] = prefix + '/lib' + ':' + p
 	env['FONTCONFIG_PATH'] = prefix + '/etc/fonts/'
 	env['GS_LIB'] = prefix + '/share/ghostscript/8.15/lib/'
