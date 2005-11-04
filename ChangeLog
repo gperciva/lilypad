@@ -1,3 +1,7 @@
+2005-11-04  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_env): opps. need to copy HOME too.
+
 2005-10-12  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* setup.py (plist): typo.

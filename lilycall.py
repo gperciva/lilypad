@@ -106,6 +106,7 @@ def get_env (prefix):
 	env['GUILE_LOAD_PATH'] = prefix + '/share/guile/1.6'
 	env['LILYPONDPREFIX'] = prefix + '/share/lilypond/current'
 	env['PANGO_RC_FILE'] = prefix + '/etc/pango/pangorc'
+	env['HOME'] = os.environ['HOME']
 	env['PATH'] = prefix + '/bin/' + ':' + os.environ['PATH']
 	return env
 
