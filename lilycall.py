@@ -40,36 +40,6 @@ def quote_quotes (str):
 ################################################################
 # lily call utils
 
-def set_pango_paths (appdir):
-	prefix = appdir + '/Contents/Resources' 
-	pango_modules_file = prefix + '/etc/pango/pango.modules'
-	
-	pangorc = ('''[Pango]\nModuleFiles = "%s"\nModulesPath = "%s/lib/pango/1.4.0/modules"\n'''
-		   % (quote_quotes (pango_modules_file),
-		      quote_quotes (prefix)))
-
-	pangorc_file = prefix + '/etc/pango/pangorc'
-
-	if debug:
-		print 'writing ', pangorc_file
-		
-	open (pangorc_file, 'w'). write(pangorc)
-
-	pango_conf = open (pango_modules_file + '.in').read ()
-	pango_conf = re.sub ('//', '/', pango_conf)
-
-	ls = string.split (pango_conf, '\n')
-	pango_conf = ''
-	for l in ls: 
-	   l = re.sub (r'^[^#].*build\.app(.*\.so)', r'"%s\1"' % appdir, l)
-	   pango_conf += l + '\n'
-
-	if debug:
-		print 'writing ', pango_modules_file
-
-	open (pango_modules_file, 'w').write (pango_conf)
-
-
 def check_fontconfig (appdir):
 	prefix = appdir + '/Contents/Resources' 
 	my_sysfont_dir = prefix + '/share/SystemFonts'
@@ -108,6 +78,7 @@ def get_env (prefix):
 	env['PANGO_RC_FILE'] = prefix + '/etc/pango/pangorc'
 	env['HOME'] = os.environ['HOME']
 	env['PATH'] = prefix + '/bin/' + ':' + os.environ['PATH']
+	env['PANGO_PREFIX'] = prefix
 	return env
 
 
@@ -166,7 +137,6 @@ class Call:
 		self.cwd = '.'
 		
 		self.need_fc_update = check_fontconfig (appdir)
-		set_pango_paths (appdir);
 		self.reroute_output = False
 
 	def set_gui_options (self):
