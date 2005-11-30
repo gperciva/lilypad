@@ -51,8 +51,10 @@ def check_fontconfig (appdir):
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <!-- /etc/fonts/local.conf file for local customizations -->
 <fontconfig>
+<dir>%s</dir>
 <cache>%s</cache> 
-</fontconfig>''' % fc_cache)
+</fontconfig>''' % (appdir + '/Contents/Resources/share/fonts/',  fc_cache))
+	
 	need_update = not os.path.exists (fc_cache)
 	if need_update:
 		open (fc_cache, 'w').write ('')
