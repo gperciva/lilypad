@@ -85,7 +85,7 @@ def get_env (prefix):
 
 
 def get_gui_command_line (appdir, args):
-	new_args = ['-ddelete-intermediate-files']
+	new_args = ['']
 
 	cwd = os.getcwd ()
 	for a in args:
