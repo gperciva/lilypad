@@ -8,7 +8,6 @@ import AppKit
 NibClassBuilder.extractClasses("TinyTinyDocument")
 
 import URLHandlerClass
-import lilycall
 import subprocess
 import os
 import glob
@@ -19,6 +18,7 @@ import urllib
 from ProcessLog import ProcessLogWindowController
 
 firstStart = True
+debug = False
 
 # utility functions
 def open_url (url):
@@ -38,7 +38,7 @@ def lily_version ():
         pattern = share + '/[0-9]*'
 	
         versions = glob.glob (pattern)
-        version = '2.2.31' 
+        version = '2.8.0' 
         if versions:
             version = versions[0]
 	    version = os.path.split(version)[1]
@@ -172,24 +172,32 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
 	    appdir = os.environ['LILYPOND_DEBUG_APPDIR']
 	except KeyError:
 	    appdir = NSBundle.mainBundle().bundlePath()
-	
-        call = lilycall.Call (appdir, [self.fileName()])
+	executable = appdir + '/Contents/Resources/bin/lilypond'
+	args = [executable]
+	if debug:
+		args += ['--verbose']
+	args += [self.fileName()]
+	dest = os.path.split (self.fileName())[0]
+        call = subprocess.Popen (executable = executable,
+				 args = args,
+				 cwd = dest,
+				 stdout = subprocess.PIPE,
+				 stderr = subprocess.STDOUT,
+				 shell = False)
+		
 
         self.createProcessLog ()
 	wc = self.processLogWindowController
-	if call.error_string:
-		wc.addText (call.error_string)
-		return None
-	
-	call.set_gui_options ()
-	
-	if call.need_fc_update:
-		wc.addText ('\nCaching font details.\nThis may take a few minutes.\n\n\n') 
-	
 	wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
-	pyproc = call.get_lilypond_process()
-	wc.runProcessWithCallback (pyproc, call.open_pdfs)
-
+	wc.runProcessWithCallback (call, self.open_pdf)
+	
+    def open_pdf (self, data):
+	pdf_file = os.path.splitext (self.fileName())[0] + '.pdf'
+	if os.path.exists (pdf_file):
+		b = '/usr/bin/open'
+		args = [b, pdf_file]
+		os.spawnv (os.P_NOWAIT, b, args)
+	
     def contextHelp_ (self, sender):
         tv = self.textView
         r = tv.selectedRange ()

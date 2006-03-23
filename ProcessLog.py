@@ -6,7 +6,6 @@ from PyObjCTools import NibClassBuilder, AppHelper
 import subprocess
 import os
 import signal
-import lilycall
 
 NibClassBuilder.extractClasses("ProcessLog")
 
