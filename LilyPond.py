@@ -151,7 +151,7 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         bundle =  NSBundle.mainBundle ()
         appdir = NSBundle.mainBundle().bundlePath()
         prefix = appdir + '/Contents/Resources'
-        env['LILYPONDPREFIX'] = prefix + '/share/lilypond/current' 
+        env['LILYPOND_DATADIR'] = prefix + '/share/lilypond/current' 
             
         self.writeToFile_ofType_(self.fileName (), None)
         binary = prefix + '/bin/convert-ly'

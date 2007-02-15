@@ -76,7 +76,7 @@ def get_env (prefix):
 	env['FONTCONFIG_PATH'] = prefix + '/etc/fonts/'
 	env['GS_LIB'] = prefix + '/share/ghostscript/8.15/lib/'
 	env['GUILE_LOAD_PATH'] = prefix + '/share/guile/1.6'
-	env['LILYPONDPREFIX'] = prefix + '/share/lilypond/current'
+	env['LILYPOND_DATADIR'] = prefix + '/share/lilypond/current'
 	env['PANGO_RC_FILE'] = prefix + '/etc/pango/pangorc'
 	env['HOME'] = os.environ['HOME']
 	env['PATH'] = prefix + '/bin/' + ':' + os.environ['PATH']
