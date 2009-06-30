@@ -1,21 +1,19 @@
 import objc
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
 import subprocess
 import os
 import signal
 
-NibClassBuilder.extractClasses("ProcessLog")
-
 debug = 1
 
 # class defined in ProcessLog.nib
-class ProcessLog(NibClassBuilder.AutoBaseClass):
+class ProcessLog(NSObject):
     
-    def init_(self):
-        self = self.init()
+    def init(self):
+        self = super(ProcessLog, self).init()
 
         self.process = None
         self.out_str = '' 
@@ -36,7 +34,7 @@ class ProcessLog(NibClassBuilder.AutoBaseClass):
         size = 1024
         str = ''
         while True:
-            s = os.read (fd, size)
+            s = unicode(os.read (fd, size), "utf-8")
             str += s
             if (len (s) == size):
                 size *= 2
@@ -57,7 +55,7 @@ class ProcessLog(NibClassBuilder.AutoBaseClass):
         return self.process.poll() == None
  
 # class defined in ProcessLog.nib
-class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
+class ProcessLogWindowController(NSWindowController):
     # the actual base class is NSWindowController
     # The following outlets are added to the class:
     
@@ -66,17 +64,19 @@ class ProcessLogWindowController (NibClassBuilder.AutoBaseClass):
     # processLog
     # cancelButton
     # throbber
-
+    textView = objc.IBOutlet()
+    cancelButton = objc.IBOutlet()
+    throbber = objc.IBOutlet()
 
     def __new__(cls):
         # "Pythonic" constructor
-        return cls.alloc().initEmpty_()
+        return cls.alloc().initEmpty()
 
-    def initEmpty_(self):
+    def initEmpty(self):
         self = self.initWithWindowNibName_("ProcessLog")
         self.setWindowTitle_('Process')
         self.close_callback = None
-        self.processLog = ProcessLog.alloc().init_()
+        self.processLog = ProcessLog.alloc().init()
         self.window().makeFirstResponder_(self.textView)
         self.showWindow_(self)
         

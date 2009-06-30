@@ -1,5 +1,4 @@
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 import os
 
@@ -17,7 +16,7 @@ plist = dict(
    CFBundleShortVersionString = open ('VERSION').read (),
    CFBundleVersion = ('Build from '
 		      + os.popen ('date +"%d-%m-%Y %H:%M"').read ()),
-   NSHumanReadableCopyright = "(c) 2005 LilyPond Software Design\nLicensed under the GNU General Public License\nLilyPond comes with NO WARRANTY", 
+   NSHumanReadableCopyright = "(c) 2009 LilyPond Software Design\nLicensed under the GNU General Public License\nLilyPond comes with NO WARRANTY", 
    CFBundleDocumentTypes = [
         dict(
             CFBundleTypeExtensions=["ly",],
@@ -38,13 +37,14 @@ setup(
 		'ProcessLog.nib',
 		'lilycall.py',
 		'ProcessLog.py',
+		'/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/shutil.py',
 		'Credits.html',
-		'/sw/lib/python2.4/subprocess.py',
 		'URLHandle.scriptSuite',
 		'URLHandle.scriptTerminology',
 		'Welcome-to-LilyPond-MacOS.ly'
 		],
     options=dict(py2app=dict(plist=plist)),
+    setup_requires=["py2app"],
 )
 
 

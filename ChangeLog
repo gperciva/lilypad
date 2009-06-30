@@ -1,3 +1,27 @@
+2009-06-25  Christian Hitz  <christian@klarinett.li>
+
+	* ProcessLog.py, LilyPond.py, MainMenu.py: replace deprecated
+	NibClassBuilder
+
+2009-06-20  Christian Hitz  <christian@klarinett.li>
+
+	* ProcessLog.py (getNewOutput): interpret output from LilyPond as
+	UTF-8
+
+	* LilyPond.py (getLilypondDirectory): new function. Unify the
+	current LilyPond diretcory determination.
+	(TinyTinyDocument.windowControllerDidLoadNib_): use new utility
+	function
+	(TinyTinyDocument.updateMySyntax): use new utility function
+	(TinyTinyDocument.compileMe): use new utility function
+
+	* LilyPond.py (lily_version): get version from currently used
+	binary
+
+	* Credits.html: update doc link.
+
+	* Welcome-to-LilyPond-MacOS.ly: update version.
+
 2006-03-17  Han-Wen Nienhuys  <hanwen@xs4all.nl>
 
 	* lilycall.py (get_gui_command_line): don't do delete intermediate

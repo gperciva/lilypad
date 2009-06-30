@@ -1,11 +1,9 @@
 """LilyPond.py -- A minimal Document-based Cocoa application."""
 
-from PyObjCTools import NibClassBuilder, AppHelper
-from Foundation import NSBundle, NSURL
-from AppKit import NSWorkspace, NSDocumentController, NSDocument
+from PyObjCTools import AppHelper
+from Foundation import *
+from AppKit import NSWorkspace, NSDocumentController, NSDocument, NSMenu, NSLog
 import AppKit
-
-NibClassBuilder.extractClasses("TinyTinyDocument")
 
 import URLHandlerClass
 import subprocess
@@ -22,48 +20,58 @@ debug = False
 
 # utility functions
 def open_url (url):
-        workspace = NSWorkspace.sharedWorkspace ()
+    workspace = NSWorkspace.sharedWorkspace ()
 
-        nsurl = NSURL.URLWithString_ (url)
-        workspace.openURL_ (nsurl)
+    nsurl = NSURL.URLWithString_ (url)
+    workspace.openURL_ (nsurl)
 
 def lily_version ():
-        bundle =  NSBundle.mainBundle ()
-        appdir = NSBundle.mainBundle().bundlePath()
-	share = appdir + '/Contents/Resources/share/lilypond'
+    prefix = getLilypondDirectory()
+    executable = getLilypondDirectory() + '/bin/lilypond'
+    args = [executable]
+    args += ['--version']
+    call = subprocess.Popen (executable = executable,
+                             args = args,
+                             stdout = subprocess.PIPE,
+                             stderr = subprocess.STDOUT,
+                             shell = False)
 
-	if not os.path.exists (share):
-		share = os.environ['HOME'] + '/Desktop/LilyPond.app/Contents/Resources/share/lilypond'
-		
-        pattern = share + '/[0-9]*'
-	
-        versions = glob.glob (pattern)
-        version = '2.8.0' 
-        if versions:
-            version = versions[0]
-	    version = os.path.split(version)[1]
-        
-        return tuple (string.split (version, '.'))
+    (stdoutdata, stderrdata) = call.communicate()
+
+    versionline = stdoutdata.splitlines()[0]
+    version = versionline.split(' ')[2]
+    return tuple (version.split('.'))
 
 def google_lilypond (str):
-        (maj,min,pat) = lily_version ()
+    (maj,min,pat) = lily_version ()
 
-        url = '%s site:lilypond.org v%s.%s' % (str, maj, min)
-        url = re.sub (' ', '+', url)
-        url = urllib.quote (url, safe='+')
-        url = 'http://www.google.com/search?q=%s' % url
-        open_url (url)
+    url = '%s site:lilypond.org v%s.%s' % (str, maj, min)
+    url = re.sub (' ', '+', url)
+    url = urllib.quote (url, safe='+')
+    url = 'http://www.google.com/search?q=%s' % url
+    open_url (url)
+
+def getLilypondDirectory():
+    bundle =  NSBundle.mainBundle ()
+    try:
+        appdir = os.environ['LILYPOND_DEBUG_APPDIR']
+    except KeyError:
+        appdir = NSBundle.mainBundle().bundlePath()
+
+    appdir += '/Contents/Resources'
+    return appdir
 
 
 # class defined in TinyTinyDocument.nib
-class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
+class TinyTinyDocument(NSDocument):
     # the actual base class is NSDocument
     # The following outlets are added to the class:
     # textView
+    textView = objc.IBOutlet()
 
     startupPath = None  # fallback if instance has no startupPath.
-    def init (self):
-	self = NSDocument.init (self)
+    def init(self):
+	self = super(TinyTinyDocument, self).init()
 	self.processLogWindowController = None
 	return self
     
@@ -93,12 +101,11 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         if self.startupPath:
             self.readFromUTF8 (self.startupPath)
         elif firstStart:
-	    appdir = NSBundle.mainBundle().bundlePath()
-	    prefix = appdir + "/Contents/Resources"
-	    self.readFromUTF8 (prefix + '/Welcome-to-LilyPond-MacOS.ly')
-	    
-	firstStart = False
-	    
+            prefix = getLilypondDirectory()
+            self.readFromUTF8 (prefix + '/Welcome-to-LilyPond-MacOS.ly')
+
+        firstStart = False
+
     def readFromUTF8(self, path):
         f = file(path)
         text = unicode(f.read(), "utf8")
@@ -106,10 +113,9 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         self.textView.setString_(text)
 
     def compileFile_ (self, sender):
-        if 0:
-            self.saveDocumentWithDelegate_didSaveSelector_contextInfo_ (self,
-                                                                        "compileDidSaveSelector:",
-                                                                        None)
+#        self.saveDocumentWithDelegate_didSaveSelector_contextInfo_ (self,
+#                                                                    "compileDidSaveSelector:",
+#                                                                    0)
         if self.fileName():
             self.compileMe ()
         else:
@@ -122,41 +128,41 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
             self.saveDocument_ (None)
 
     def processLogClosed_ (self, data):
-	    self.processLogWindowController = None
-	    
+        self.processLogWindowController = None
+
     def createProcessLog (self):
         if not self.processLogWindowController:
             wc = ProcessLogWindowController()
-	    self.processLogWindowController = wc
-	    center = NSWorkspace.sharedWorkspace().notificationCenter()
-	    notification = AppKit.NSWindowWillCloseNotification
-#	    center.addObserver_selector_name_object_(self, "processLogClosed:",
-#						     notification,
-#						     wc.window ())
+            self.processLogWindowController = wc
+            center = NSWorkspace.sharedWorkspace().notificationCenter()
+            notification = AppKit.NSWindowWillCloseNotification
+#            center.addObserver_selector_name_object_(self, "processLogClosed:",
+#                                                     notification,
+#                                                     wc.window ())
 
-	    wc.close_callback = self.processLogClosed_
+            wc.close_callback = self.processLogClosed_
         else:
             self.processLogWindowController.showWindow_ (None)
 
-    def compileDidSaveSelector_ (doc, didSave, info):
-        print "I'm here"
-        if didSave:
-            doc.compileMe ()
+#    @objc.signature('v@:@cv')
+#    def compileDidSaveSelector_(self, doc, didSave, info):
+#        NSLog("I'm here")
+#        if didSave:
+#            doc.compileMe ()
 
     def revert_ (self, sender):
         self.readFromUTF8 (self.fileName ())
 
     def updateMySyntax (self):
         env = os.environ.copy()
-        bundle =  NSBundle.mainBundle ()
-        appdir = NSBundle.mainBundle().bundlePath()
-        prefix = appdir + '/Contents/Resources'
+        prefix = getLilypondDirectory()
+        localPython = NSBundle.mainBundle().bundlePath() + '/Contents/MacOS/python'
         env['LILYPOND_DATADIR'] = prefix + '/share/lilypond/current' 
             
         self.writeToFile_ofType_(self.fileName (), None)
         binary = prefix + '/bin/convert-ly'
 
-        pyproc = subprocess.Popen ([binary, '-e', self.fileName ()],
+        pyproc = subprocess.Popen ([localPython, binary, '-e', self.fileName ()],
                                    env = env,
                                    stderr = subprocess.STDOUT,
                                    stdout = subprocess.PIPE,
@@ -167,37 +173,32 @@ class TinyTinyDocument(NibClassBuilder.AutoBaseClass):
         wc.runProcessWithCallback (pyproc, self.revert_)
         
     def compileMe (self):
-        bundle =  NSBundle.mainBundle ()
-	try:
-	    appdir = os.environ['LILYPOND_DEBUG_APPDIR']
-	except KeyError:
-	    appdir = NSBundle.mainBundle().bundlePath()
-	executable = appdir + '/Contents/Resources/bin/lilypond'
-	args = [executable]
-	if debug:
-		args += ['--verbose']
-	args += [self.fileName()]
-	dest = os.path.split (self.fileName())[0]
+        executable = getLilypondDirectory() + '/bin/lilypond'
+        args = [executable]
+        if debug:
+                args += ['--verbose']
+        args += [self.fileName()]
+        dest = os.path.split (self.fileName())[0]
         call = subprocess.Popen (executable = executable,
-				 args = args,
-				 cwd = dest,
-				 stdout = subprocess.PIPE,
-				 stderr = subprocess.STDOUT,
-				 shell = False)
-		
+                                 args = args,
+                                 cwd = dest,
+                                 stdout = subprocess.PIPE,
+                                 stderr = subprocess.STDOUT,
+                                 shell = False)
+
 
         self.createProcessLog ()
-	wc = self.processLogWindowController
-	wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
-	wc.runProcessWithCallback (call, self.open_pdf)
-	
+        wc = self.processLogWindowController
+        wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
+        wc.runProcessWithCallback (call, self.open_pdf)
+
     def open_pdf (self, data):
-	pdf_file = os.path.splitext (self.fileName())[0] + '.pdf'
-	if os.path.exists (pdf_file):
-		b = '/usr/bin/open'
-		args = [b, pdf_file]
-		os.spawnv (os.P_NOWAIT, b, args)
-	
+        pdf_file = os.path.splitext (self.fileName())[0] + '.pdf'
+        if os.path.exists (pdf_file):
+                b = '/usr/bin/open'
+                args = [b, pdf_file]
+                os.spawnv (os.P_NOWAIT, b, args)
+
     def contextHelp_ (self, sender):
         tv = self.textView
         r = tv.selectedRange ()

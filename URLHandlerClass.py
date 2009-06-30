@@ -1,14 +1,11 @@
-
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 from Foundation import *
 from AppKit import *
 import re
 import string
 import urllib
 
-NibClassBuilder.extractClasses("MainMenu")
-
-class URLHandlerClass(NibClassBuilder.AutoBaseClass):  
+class URLHandlerClass(NSScriptCommand):
     def performDefaultImplementation(self):
         urlString = self.directParameter()
         self.openURL(urlString)
@@ -42,7 +39,7 @@ class URLHandlerClass(NibClassBuilder.AutoBaseClass):
         lineChars = sum (map (lambda x: len (x) + 1, lines[:line]))
         if line < len (lines):
             lineChars += min (char, len (lines[line]))
-        return lineChars
+        return lineChars + 1
         
     def jumpFile (self, path, line, char):
         NSLog ("Jumping to %s %d %d\n" % (path, line, char))
