@@ -3,7 +3,7 @@ AC_PREREQ(2.54)
 
 m4_define([major_version], [0])
 m4_define([minor_version], [0])
-m4_define([patch_level], [7])
+m4_define([patch_level], [8])
 m4_define([version],
           [major_version.minor_version.patch_level])
 
