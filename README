@@ -1,7 +1,15 @@
+This is a simple text editing application, called LilyPad, that is
+shipped with the LilyPond Windows installers.
 
+It is written in C, using the Windows API.
 
-Taken from wine CVS 2005-05-15
+The application itself is a "fork" of the Wine Notepad, extracted
+from Wine's CVS repo on 2005-05-15.
 
+The following commands provide hints about the changes that were
+made from the original Wine Notepad:
+
+######
 
 cp -prv ~/cvs/wine/wine/programs/notepad lilypad
 cp ~/cvs/wine/wine/programs/Makeprog.rules.in lilypad
