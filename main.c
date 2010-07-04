@@ -374,11 +374,16 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     class.cbSize        = sizeof(class);
     class.lpfnWndProc   = LILYPAD_WndProc;
     class.hInstance     = Globals.hInstance;
+
+    /* TODO: Create large 32x32 icon for ALT+TAB display */
     class.hIcon         = LoadIcon(0, IDI_APPLICATION);
     class.hCursor       = LoadCursor(0, IDC_ARROW);
     class.hbrBackground = (HBRUSH)(COLOR_WINDOW);
     class.lpszMenuName  = MAKEINTRESOURCE(MAIN_MENU);
     class.lpszClassName = className;
+    /* TODO: Create small 16x16 icon for taskbar
+     * and upper-left corner of window */
+    /* class.hIconSm    = LoadIcon(0, IDI_APPLICATION); */
 
        /* if system calls fail, there is no unicode support */
     if (!RegisterClassEx (&class))
