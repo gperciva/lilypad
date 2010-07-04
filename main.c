@@ -378,7 +378,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     /* TODO: Create large 32x32 icon for ALT+TAB display */
     class.hIcon         = LoadIcon(0, IDI_APPLICATION);
     class.hCursor       = LoadCursor(0, IDC_ARROW);
-    class.hbrBackground = (HBRUSH)(COLOR_WINDOW);
+    class.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     class.lpszMenuName  = MAKEINTRESOURCE(MAIN_MENU);
     class.lpszClassName = className;
     /* TODO: Create small 16x16 icon for taskbar
