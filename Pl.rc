@@ -104,7 +104,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 mm"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 mm"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 mm"     /* FIXME */
 
-STRING_NOTEPAD, "LilyPad"
+STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "B£¥D"
 STRING_WARNING,                                 "OSTRZE¯ENIE"
 STRING_INFO,                                    "Informacja"

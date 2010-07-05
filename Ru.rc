@@ -99,7 +99,7 @@ STRING_PAGESETUP_RIGHTVALUE,    "20 לל"     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,              "25 לל"     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE,   "25 לל"     /* FIXME */
 
-STRING_NOTEPAD, "LilyPad"
+STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "ÎØÈÁÊÀ"
 STRING_WARNING,                                 "ÂÍÈÌÀÍÈÅ"
 STRING_INFO,                                    "Èםפמנלאצטÿ"

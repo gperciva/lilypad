@@ -101,7 +101,7 @@ STRING_PAGESETUP_RIGHTVALUE,  "20 มม."     /* FIXME */
 STRING_PAGESETUP_TOPVALUE,    "25 มม."     /* FIXME */
 STRING_PAGESETUP_BOTTOMVALUE, "25 มม."     /* FIXME */
 
-STRING_NOTEPAD, "LilyPad"
+STRING_LILYPAD, "LilyPad"
 STRING_ERROR,         "ความปิด"
 STRING_WARNING,       "คําตือน"
 STRING_INFO,          "รายละเอียด"

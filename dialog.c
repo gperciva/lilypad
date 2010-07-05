@@ -61,14 +61,14 @@ static void UpdateWindowCaption(void)
   __WCHAR szLilyPad[MAX_STRING_LEN];
   static const __WCHAR hyphenW[] = { ' ','-',' ',0 };
 
-  LoadString(Globals.hInstance, STRING_NOTEPAD, szCaption, SIZEOF(szCaption));
+  LoadString(Globals.hInstance, STRING_LILYPAD, szCaption, SIZEOF(szCaption));
 
   if (Globals.szFileTitle[0] != '\0')
     lstrcpy (szCaption, Globals.szFileTitle);
   else
     LoadString(Globals.hInstance, STRING_UNTITLED, szCaption, SIZEOF(szCaption));
 
-  LoadString(Globals.hInstance, STRING_NOTEPAD, szLilyPad, SIZEOF(szLilyPad));
+  LoadString(Globals.hInstance, STRING_LILYPAD, szLilyPad, SIZEOF(szLilyPad));
   lstrcat(szCaption, hyphenW);
   lstrcat(szCaption, szLilyPad);
 
@@ -707,7 +707,7 @@ VOID DIALOG_HelpAboutWine(VOID)
     static const __WCHAR lilypadW[] = { 'L','i','l','y','P','a','d','\n',0 };
     __WCHAR szLilyPad[MAX_STRING_LEN];
 
-    LoadString(Globals.hInstance, STRING_NOTEPAD, szLilyPad, SIZEOF(szLilyPad));
+    LoadString(Globals.hInstance, STRING_LILYPAD, szLilyPad, SIZEOF(szLilyPad));
     ShellAbout(Globals.hMainWnd, szLilyPad, lilypadW, 0);
 }
 
