@@ -1,28 +1,29 @@
 This is a simple text editing application, called LilyPad, that is
-shipped with the LilyPond Windows installers.
+shipped with the LilyPond Windows installers.  It is written in C
+using the Windows API, and is a "fork" of the Wine Notepad,
+extracted from Wine's CVS repo on 2005-05-15.
 
-It is written in C, using the Windows API.
+Follow these steps to build LilyPad from this repo:
 
-The application itself is a "fork" of the Wine Notepad, extracted
-from Wine's CVS repo on 2005-05-15.
+* Run
 
-The following commands provide hints about the changes that were
-made from the original Wine Notepad:
+    ./autogen.sh
 
-######
+* Create a tarball of the source (FIXME: need a `dist' target)
 
-cp -prv ~/cvs/wine/wine/programs/notepad lilypad
-cp ~/cvs/wine/wine/programs/Makeprog.rules.in lilypad
-cp ~/cvs/wine/wine/Make.rules.in lilypad
+* Modify the LilyPad GUB (http://lilypond.org/gub) spec to
+prepare for cross compilation.  The spec is currently located in
+gub/specs/lilypad.py.  For example, assign the path of the tarball
+to the source variable:
 
-diff -purNX.cvsignore ~janneke/cvs/wine/wine/programs/notepad . > lilypad-0.0.0-1.patch
+    source = 'file:///home/user/lilypad-0.0.something.tar.bz2'
 
-for i in *[ch]; do sed -i~ -e 's/TEXT_/LILYPOND_/' -e 's/TXT/LY/g' -e 's/txt/ly/g' -e "s/'t','x','t'/'l','y'/g" $i; done
+* Build (and install) LilyPad:
 
-for i in *.rc; do sed -i~ -e 's/[Tt]ext/LilyPond/g' -e 's/[Tt]ekst/LilyPond/g' -e 's/[Tt]est/LilyPond/g' -e 's/[Tt]eks/LilyPond/g' $i; done
+    bin/gub mingw::lilypad
 
-# for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'n','o','t','e','p','a','d'/'l','i','l','y','p','a','d'/g" $i; done
+* You'll find LilyPad here:
 
-for i in *[ch]; do sed -i~ -e 's/NOTEPAD_/LILYPAD_/' -e 's/Notepad/LilyPad/g' -e 's/ notepad/ lilypad/g' -e "s/'N','o','t','e','p','a','d'/'L','i','l','y','P','a','d'/g" $i; done
-
-for i in *rc; do sed -i~ -e 's/STRING_NOTEPAD,.*/STRING_NOTEPAD, "LilyPad"/' $i; done
+    $ ls target/mingw/root/usr/bin | grep lilypad
+    lilypad-ascii.exe
+    lilypad.exe
