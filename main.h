@@ -56,6 +56,8 @@ typedef struct
   __WCHAR   szFooter[MAX_PATH];
 
   FINDREPLACE find;
+  HGLOBAL hDevMode; /* printer mode */
+  HGLOBAL hDevNames; /* printer names */
 } LILYPAD_GLOBALS;
 
 extern LILYPAD_GLOBALS Globals;

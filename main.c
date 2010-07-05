@@ -139,6 +139,8 @@ static VOID LILYPAD_InitData(VOID)
     lstrcpy(p, all_files);
     p += lstrlen(p) + 1;
     *p = '\0';
+    Globals.hDevMode = NULL;
+    Globals.hDevNames = NULL;
 }
 
 /***********************************************************************
