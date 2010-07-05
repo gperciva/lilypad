@@ -391,7 +391,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
 #ifdef UNICODE
 	if (GetLastError () == ERROR_CALL_NOT_IMPLEMENTED)
 	  ExitProcess (3);
-#endif UNICODE
+#endif
        /* FIXME: what happens here? */
        return FALSE;
      }
