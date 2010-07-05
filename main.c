@@ -362,7 +362,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     MSG        msg;
     HACCEL      hAccel;
     WNDCLASSEX class;
-    static const __WCHAR className[] = {'N','P','C','l','a','s','s',0};
+    static const __WCHAR className[] = {'L','i','l','y','P','a','d',0};
     static const __WCHAR winName[]   = {'L','i','l','y','P','a','d',0};
 
     aFINDMSGSTRING = RegisterWindowMessage(FINDMSGSTRING);
