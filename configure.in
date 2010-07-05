@@ -10,9 +10,6 @@ m4_define([version],
 AC_INIT(lilypad, [version], [bug-lilypond@gnu.org])
 AC_CONFIG_SRCDIR([ChangeLog])
 
-AC_CYGWIN
-AC_MINGW32
-
 AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
 
 AC_MSG_CHECKING([for some Windows platform])
