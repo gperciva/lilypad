@@ -614,11 +614,7 @@ VOID DIALOG_EditWrap(VOID)
                          0, 0, rc.right, rc.bottom, Globals.hMainWnd,
                          NULL, Globals.hInstance, NULL);
     SendMessage(Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)FALSE);
-#ifdef UNICODE
-    SetWindowTextW(Globals.hEdit, pTemp);
-#else
-    SetWindowTextA(Globals.hEdit, pTemp);
-#endif
+    SetWindowText(Globals.hEdit, pTemp);
     SendMessage(Globals.hEdit, EM_SETMODIFY, (WPARAM)modify, 0);
     SetFocus(Globals.hEdit);
     HeapFree(GetProcessHeap(), 0, pTemp);
