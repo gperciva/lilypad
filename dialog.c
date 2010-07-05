@@ -52,30 +52,25 @@ VOID ShowLastError(void)
 
 /**
  * Sets the caption of the main window according to Globals.szFileTitle:
- *    LilyPad - (untitled)      if no file is open
- *    LilyPad - [filename]      if a file is given
+ *    Untitled - LilyPad     if no file is open
+ *    filename - LilyPad     if a file is given
  */
 static void UpdateWindowCaption(void)
 {
   __WCHAR szCaption[MAX_STRING_LEN];
-  __WCHAR szUntitled[MAX_STRING_LEN];
+  __WCHAR szLilyPad[MAX_STRING_LEN];
+  static const __WCHAR hyphenW[] = { ' ','-',' ',0 };
 
   LoadString(Globals.hInstance, STRING_NOTEPAD, szCaption, SIZEOF(szCaption));
 
-  if (Globals.szFileTitle[0] != '\0') {
-      static const __WCHAR bracket_lW[] = { ' ','-',' ','[',0 };
-      static const __WCHAR bracket_rW[] = { ']',0 };
-      lstrcat(szCaption, bracket_lW);
-      lstrcat(szCaption, Globals.szFileTitle);
-      lstrcat(szCaption, bracket_rW);
-  }
+  if (Globals.szFileTitle[0] != '\0')
+    lstrcpy (szCaption, Globals.szFileTitle);
   else
-  {
-      static const __WCHAR hyphenW[] = { ' ','-',' ',0 };
-      LoadString(Globals.hInstance, STRING_UNTITLED, szUntitled, SIZEOF(szUntitled));
-      lstrcat(szCaption, hyphenW);
-      lstrcat(szCaption, szUntitled);
-  }
+    LoadString(Globals.hInstance, STRING_UNTITLED, szCaption, SIZEOF(szCaption));
+
+  LoadString(Globals.hInstance, STRING_NOTEPAD, szLilyPad, SIZEOF(szLilyPad));
+  lstrcat(szCaption, hyphenW);
+  lstrcat(szCaption, szLilyPad);
 
   SetWindowText(Globals.hMainWnd, szCaption);
 }
