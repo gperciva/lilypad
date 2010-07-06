@@ -680,23 +680,7 @@ VOID DIALOG_HelpHelp(VOID)
     WinHelp(Globals.hMainWnd, helpfileW, HELP_HELPONHELP, 0);
 }
 
-VOID DIALOG_HelpLicense(VOID)
-{
-    TCHAR cap[20], text[1024];
-    LoadString(Globals.hInstance, IDS_LICENSE, text, 1024);
-    LoadString(Globals.hInstance, IDS_LICENSE_CAPTION, cap, 20);
-    MessageBox(Globals.hMainWnd, text, cap, MB_ICONINFORMATION | MB_OK);
-}
-
-VOID DIALOG_HelpNoWarranty(VOID)
-{
-    TCHAR cap[20], text[1024];
-    LoadString(Globals.hInstance, IDS_WARRANTY, text, 1024);
-    LoadString(Globals.hInstance, IDS_WARRANTY_CAPTION, cap, 20);
-    MessageBox(Globals.hMainWnd, text, cap, MB_ICONEXCLAMATION | MB_OK);
-}
-
-VOID DIALOG_HelpAboutWine(VOID)
+VOID DIALOG_HelpAboutLilyPad(VOID)
 {
     static const __WCHAR lilypadW[] = { 'L','i','l','y','P','a','d','\n',0 };
     __WCHAR szLilyPad[MAX_STRING_LEN];

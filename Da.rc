@@ -56,11 +56,7 @@ POPUP "&Hjælp" {
   MENUITEM "&Søg efter hjælp om...",    CMD_HELP_SEARCH
   MENUITEM "&Brug af Hjælp",    CMD_HELP_ON_HELP
   MENUITEM SEPARATOR
-  POPUP "&Om Notesblok..." {
-   MENUITEM "&Licens",          CMD_LICENSE
-   MENUITEM "&NO WARRANTY",     CMD_NO_WARRANTY
-   MENUITEM "&Om WINE",         CMD_ABOUT_WINE
-  }
+  MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
 

@@ -59,11 +59,7 @@ POPUP "&Hilfe" {
   MENUITEM "&Suchen...",        CMD_HELP_SEARCH
   MENUITEM "&Hilfe benutzen",   CMD_HELP_ON_HELP
   MENUITEM SEPARATOR
-  POPUP "Inf&o..." {
-   MENUITEM "&Lizenz",          CMD_LICENSE
-   MENUITEM "&KEINE GARANTIE",  CMD_NO_WARRANTY
-   MENUITEM "&Über Wine",       CMD_ABOUT_WINE
-  }
+  MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
 
