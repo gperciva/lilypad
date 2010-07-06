@@ -28,7 +28,7 @@
 
 #include "main.h"
 #include "dialog.h"
-#include "notepad_res.h"
+#include "lilypad_res.h"
 
 LILYPAD_GLOBALS Globals;
 static ATOM aFINDMSGSTRING;
@@ -491,8 +491,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
     class.lpfnWndProc   = LILYPAD_WndProc;
     class.hInstance     = Globals.hInstance;
 
-    /* TODO: Create large 32x32 icon for ALT+TAB display */
-    class.hIcon         = LoadIcon(0, IDI_APPLICATION);
+    class.hIcon         = LoadIcon(Globals.hInstance, MAKEINTRESOURCE(IDI_LILYPAD));
     class.hCursor       = LoadCursor(0, IDC_ARROW);
     class.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     class.lpszMenuName  = MAKEINTRESOURCE(MAIN_MENU);

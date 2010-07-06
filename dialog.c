@@ -704,9 +704,10 @@ VOID DIALOG_HelpAboutWine(VOID)
 {
     static const __WCHAR lilypadW[] = { 'L','i','l','y','P','a','d','\n',0 };
     __WCHAR szLilyPad[MAX_STRING_LEN];
+    HICON icon = LoadIcon(Globals.hInstance, MAKEINTRESOURCE(IDI_LILYPAD));
 
     LoadString(Globals.hInstance, STRING_LILYPAD, szLilyPad, SIZEOF(szLilyPad));
-    ShellAbout(Globals.hMainWnd, szLilyPad, lilypadW, 0);
+    ShellAbout(Globals.hMainWnd, szLilyPad, lilypadW, icon);
 }
 
 

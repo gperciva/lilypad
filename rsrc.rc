@@ -23,7 +23,7 @@
 #include "main.h"
 #include "winnls.h"
 #include "commctrl.h"
-#include "notepad_res.h"
+#include "lilypad_res.h"
 
 ID_ACCEL ACCELERATORS
 {
@@ -43,6 +43,8 @@ ID_ACCEL ACCELERATORS
     VK_INSERT, CMD_COPY, VIRTKEY, CONTROL
     VK_INSERT, CMD_PASTE, VIRTKEY, SHIFT
 }
+
+IDI_LILYPAD ICON "lilypad.ico"
 
 #include "Cs.rc"
 #include "Da.rc"

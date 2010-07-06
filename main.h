@@ -31,7 +31,7 @@
 
 #define SIZEOF(a) sizeof(a)/sizeof((a)[0])
 
-#include "notepad_res.h"
+#include "lilypad_res.h"
 
 #define MAX_STRING_LEN      255
 
