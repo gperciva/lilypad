@@ -252,11 +252,11 @@ void DoOpenFile(__LPCWSTR szFileName)
 	__LPWSTR p = (__LPWSTR)pTemp;
 	/* We need to strip BOM Unicode character, SetWindowTextW won't do it for us. */
 	if (*p == 0xFEFF || *p == 0xFFFE) p++;
-	SetWindowTextW(Globals.hEdit, p);
+	SetWindowText(Globals.hEdit, p);
     }
     else
 #endif
-	SetWindowTextA(Globals.hEdit, pTemp);
+	SetWindowText(Globals.hEdit, pTemp);
 
     HeapFree(GetProcessHeap(), 0, pTemp);
 
@@ -267,12 +267,7 @@ void DoOpenFile(__LPCWSTR szFileName)
     /*  If the file starts with .LOG, add a time/date at the end and set cursor after
      *  See http://support.microsoft.com/?kbid=260563
      */
-    if (
-#ifdef UNICODE
-	GetWindowTextW
-#else
-	GetWindowTextA
-#endif
+    if (GetWindowText
 	(Globals.hEdit, log, sizeof(log)/sizeof(log[0])) && !lstrcmp(log, dotlog))
     {
 	static const __WCHAR lfW[] = { '\r','\n',0 };
