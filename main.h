@@ -56,6 +56,7 @@ typedef struct
   __WCHAR   szFooter[MAX_PATH];
 
   FINDREPLACE find;
+  FINDREPLACE lastFind;
   HGLOBAL hDevMode; /* printer mode */
   HGLOBAL hDevNames; /* printer names */
 } LILYPAD_GLOBALS;
@@ -63,3 +64,4 @@ typedef struct
 extern LILYPAD_GLOBALS Globals;
 
 VOID SetFileName(__LPCWSTR szFileName);
+void LILYPAD_DoFind(FINDREPLACE *fr);
