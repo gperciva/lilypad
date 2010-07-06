@@ -55,7 +55,7 @@ VOID SetFileName(__LPCWSTR szFileName)
 static VOID LILYPAD_InitFont()
 {
     LOGFONT *lf = &Globals.lfFont;
-    static const WCHAR systemW[] = { 'S','y','s','t','e','m',0 };
+    static const __WCHAR systemW[] = { 'S','y','s','t','e','m',0 };
 
     lf->lfHeight        = -10;
     lf->lfWidth         = 0;
