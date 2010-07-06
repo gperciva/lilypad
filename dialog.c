@@ -187,10 +187,8 @@ BOOL DoCloseFile(void)
             case IDNO:      break;
 
             case IDCANCEL:  return(FALSE);
-                            break;
 
             default:        return(FALSE);
-                            break;
         } /* switch */
     } /* if */
 
