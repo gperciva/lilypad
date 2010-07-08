@@ -15,15 +15,11 @@ Makefile.in
 Makeprog.rules.in
 aclocal.m4
 autom4te.cache
-config.guess
 config.h.in
-config.sub
 configure
-install-sh
 libltdl
 ltmain.sh
 mingw
 missing
-mkinstalldirs
 notepad.exe.dbg.c
 rsrc.res
