@@ -279,19 +279,6 @@ static int AlertFileDoesNotExist(__LPCWSTR szFileName)
    return(nResult);
 }
 
-static void
-DebugBox(__LPCWSTR id, __LPWSTR message)
-{
-   __WCHAR szMessage[MAX_STRING_LEN];
-   __WCHAR szCaption[MAX_STRING_LEN];
-
-   wsprintf(szCaption, "Debug: %s", id);
-   wsprintf(szMessage, "Debug: %s", message);
-
-   /* Display Modal Dialog */
-   MessageBox(Globals.hMainWnd, szMessage, szCaption, MB_ICONEXCLAMATION);
-}
-
 static void HandleCommandLine(__LPWSTR cmdline)
 {
     __WCHAR delimiter;
