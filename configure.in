@@ -14,6 +14,24 @@ AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
 
 AC_CHECK_HEADERS(error.h)
 
+AC_CANONICAL_HOST
+case $host_os in
+  *mingw32*)
+    if test -z "$host_alias"; then
+      hostaliaswindres=
+    else
+      hostaliaswindres="$host_alias-windres";
+    fi
+    AC_PATH_PROGS([WRC], [windres $hostaliaswindres $host_os-windres])
+    if test "x$WRC" = "x"; then
+      AC_MSG_ERROR([windres could not be found.])
+    fi
+    ;;
+  *)
+    AC_MSG_ERROR([This package must be compiled for a mingw32 host.])
+    ;;
+esac
+
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 CFLAGS=
@@ -30,7 +48,6 @@ MKINSTALLDIRS='$(TOPSRCDIR)/mkinstalldirs'
 SET_MAKE=
 
 AC_CHECK_PROGS(WINDRES, $target-windres windres, no)
-AC_CHECK_PROGS(WRC, wrc, no)
 
 AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
@@ -46,6 +63,7 @@ AC_SUBST(MAKE_RULES)
 AC_SUBST(MKINSTALLDIRS)
 AC_SUBST(SET_MAKE)
 AC_SUBST(WINDRES)
+AC_SUBST(WRC)
 
 AC_CONFIG_FILES([
 Makefile
