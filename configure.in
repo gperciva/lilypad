@@ -12,15 +12,6 @@ AC_CONFIG_SRCDIR([ChangeLog])
 
 AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
 
-AC_MSG_CHECKING([for some Windows platform])
-if test "$CYGWIN$MINGW32" == "nono"; then
-    platform_windows=no
-else
-    platform_windows=yes
-fi
-AC_MSG_RESULT([$platform_windows])
-#AM_CONDITIONAL(PLATFORM_WINDOWS, test "$platform_windows" = "yes")
-
 AC_CHECK_HEADERS(error.h)
 
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
