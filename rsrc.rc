@@ -45,6 +45,7 @@ ID_ACCEL ACCELERATORS
 }
 
 IDI_LILYPAD ICON "lilypad.ico"
+IDB_LILYPAD BITMAP "lilypad.bmp"
 
 #include "Cs.rc"
 #include "Da.rc"
