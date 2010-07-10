@@ -19,6 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+#define IDC_STATIC              (-1)
 #define MAIN_MENU               0x201
 #define DIALOG_PAGESETUP        0x202
 #define ID_ACCEL                0x203
