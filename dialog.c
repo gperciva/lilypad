@@ -31,6 +31,7 @@
 
 static const __WCHAR helpfileW[] = { 'n','o','t','e','p','a','d','.','h','l','p',0 };
 
+static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 VOID ShowLastError(void)
@@ -682,14 +683,33 @@ VOID DIALOG_HelpHelp(VOID)
 
 VOID DIALOG_HelpAboutLilyPad(VOID)
 {
-    static const __WCHAR lilypadW[] = { 'L','i','l','y','P','a','d','\n',0 };
-    __WCHAR szLilyPad[MAX_STRING_LEN];
-    HICON icon = LoadIcon(Globals.hInstance, MAKEINTRESOURCE(IDI_LILYPAD));
-
-    LoadString(Globals.hInstance, STRING_LILYPAD, szLilyPad, SIZEOF(szLilyPad));
-    ShellAbout(Globals.hMainWnd, szLilyPad, lilypadW, icon);
+  DialogBox (Globals.hInstance, MAKEINTRESOURCE(DIALOG_ABOUTLILYPAD),
+	     Globals.hMainWnd, DIALOG_AboutLilyPadDlgProc);
 }
 
+static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+  switch (msg)
+    {
+    case WM_COMMAND:
+      switch (wParam)
+        {
+        case IDOK:
+          EndDialog (hDlg, IDOK);
+          return TRUE;
+        case IDCANCEL:
+          EndDialog (hDlg, IDCANCEL);
+          return TRUE;
+	default:
+	    break;
+	}
+      break;
+    case WM_INITDIALOG:
+      break;
+    }
+
+  return FALSE;
+}
 
 /***********************************************************************
  *

@@ -21,8 +21,9 @@
 
 #define IDC_STATIC              (-1)
 #define MAIN_MENU               0x201
-#define DIALOG_PAGESETUP        0x202
-#define ID_ACCEL                0x203
+#define DIALOG_ABOUTLILYPAD     0x202
+#define DIALOG_PAGESETUP        0x203
+#define ID_ACCEL                0x204
 
 #define IDI_LILYPAD             0x300
 
