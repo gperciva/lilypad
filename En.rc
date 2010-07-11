@@ -71,7 +71,7 @@ CAPTION "About LilyPad"
 FONT 8, "MS Sans Serif"
 {
 DEFPUSHBUTTON    "OK", IDOK, 66, 80, 50, 14
-CONTROL          "IDB_LILYPAD", IDC_STATIC, WC_STATIC, SS_BITMAP, 56, 5, 67, 62
+CONTROL          "IDB_LILYPAD", IDC_STATIC, WC_STATIC, SS_SUNKEN | SS_BITMAP, 56, 5, 67, 62
 }
 
 /* Dialog `Page setup' */
