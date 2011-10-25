@@ -5,7 +5,7 @@ import os
 plist = dict( 
    NSAppleScriptEnabled = 'YES',
    CFBundleIdentifier = 'org.lilypond.lilypond',
-   LSMinimumSystemVersion = "10.2",
+   LSMinimumSystemVersion = "10.3",
    CFBundleURLTypes = [
 	dict(CFBundleURLSchemes = ['textedit'],
 	     CFBundleURLName = "text editor via url", 
@@ -44,7 +44,7 @@ setup(
 		'Welcome-to-LilyPond-MacOS.ly'
 		],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=["py2app"],
+    setup_requires=["py2app", "pyobjc"],
 )
 
 
