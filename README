@@ -3,11 +3,18 @@ build-in editors for lilypond on OSX and windows).
 
 Notes:
 - this is the code which is used for our official GUB binaries.
-- does not contain work that Patrick did on 2010-01-19:
+
+- **DOES NOT** contain work that Patrick did on 2010-01-19:
     http://repo.or.cz/w/lilypad-macos.git
   the same commits appear in this repository:
     https://github.com/pnorcks/lilypad-macos
 
+- contains all code that Patrick wrote here:
+    http://repo.or.cz/w/lilypad-windows.git
+    https://github.com/pnorcks/lilypad-windows
+  **HOWEVER** gub only uses the lilypad-0.0.8 source tarball,
+  which means that Patrick's work since 2010-07-08 has not
+  appeared in any GUB release.
 
 
 
