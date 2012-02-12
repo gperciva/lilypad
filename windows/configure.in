@@ -1,0 +1,74 @@
+# -*-shell-script-*-
+AC_PREREQ(2.54)
+
+m4_define([major_version], [0])
+m4_define([minor_version], [0])
+m4_define([patch_level], [9])
+m4_define([version],
+          [major_version.minor_version.patch_level])
+
+AC_INIT(lilypad, [version], [bug-lilypond@gnu.org])
+AC_CONFIG_SRCDIR([ChangeLog])
+
+AM_CONDITIONAL(CROSS_COMPILING, [test $cross_compiling = yes])
+
+AC_CHECK_HEADERS(error.h)
+
+AC_CANONICAL_HOST
+case $host_os in
+  *mingw32*)
+    if test -z "$host_alias"; then
+      hostaliaswindres=
+    else
+      hostaliaswindres="$host_alias-windres";
+    fi
+    AC_PATH_PROGS([WRC], [windres $hostaliaswindres $host_os-windres])
+    if test "x$WRC" = "x"; then
+      AC_MSG_ERROR([windres could not be found.])
+    fi
+    ;;
+  *)
+    AC_MSG_ERROR([This package must be compiled for a mingw32 host.])
+    ;;
+esac
+
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+CFLAGS=
+DLLDEFS=
+DLLEXT=
+DLLFLAGS=
+EXTRACFLAGS=
+LDFLAGS=
+LDPATH=
+MAKE_PROG_RULES="include Makeprog.rules"
+MAKE_RULES="include Make.rules"
+INSTALL_PROGRAM='$(TOPSRCDIR)/install-sh'
+MKINSTALLDIRS='$(TOPSRCDIR)/mkinstalldirs'
+SET_MAKE=
+
+AC_CHECK_PROGS(WINDRES, $target-windres windres, no)
+
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(DLLDEFS)
+AC_SUBST(DLLEXT)
+AC_SUBST(DLLFLAGS)
+AC_SUBST(EXTRACFLAGS)
+AC_SUBST(INSTALL_PROGRAM)
+AC_SUBST(LDFLAGS)
+AC_SUBST(LDPATH)
+AC_SUBST(MAKE_PROG_RULES)
+AC_SUBST(MAKE_RULES)
+AC_SUBST(MKINSTALLDIRS)
+AC_SUBST(SET_MAKE)
+AC_SUBST(WINDRES)
+AC_SUBST(WRC)
+
+AC_CONFIG_FILES([
+Makefile
+Make.rules
+Makeprog.rules
+])
+
+AC_OUTPUT

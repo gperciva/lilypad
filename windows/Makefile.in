@@ -1,0 +1,41 @@
+TOPSRCDIR = @top_srcdir@
+TOPOBJDIR = ../..
+SRCDIR    = @srcdir@
+VPATH     = @srcdir@
+MODULE    = lilypad.exe
+APPMODE   = -mwindows
+IMPORTS   = comdlg32 shell32 shlwapi user32 gdi32 msvcrt advapi32 kernel32
+EXTRAINCL = -I$(TOPSRCDIR)/include/msvcrt
+EXTRADEFS = -DNO_LIBWINE_PORT
+MKINSTALLDIRS= @MKINSTALLDIRS@
+
+C_SRCS = \
+	dialog.c \
+	main.c
+
+RC_SRCS = rsrc.rc
+
+@MAKE_PROG_RULES@
+
+### Dependencies:
+
+LIBWINE =
+LIBPORT =
+ALL_OBJS = $(OBJS)
+WRC = @WRC@
+CPPFLAGS = -DUNICODE @CPPFLAGS@
+RC = $(WRC) $(CPPFLAGS)
+
+ifeq ($(MODULE),lilypad.exe)
+
+all: lilypad-ascii.exe
+install:: install-lilypad-ascii
+
+lilypad-ascii.exe: lilypad.exe
+	rm -f $(OBJS)
+	$(MAKE) MODULE=$@ CPPFLAGS=-UUNICODE
+	touch lilypad.exe
+endif
+
+install-lilypad-ascii:
+	$(MAKE) MODULE=lilypad-ascii.exe install

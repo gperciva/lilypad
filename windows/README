@@ -1,0 +1,29 @@
+This is a simple text editing application, called LilyPad, that is
+shipped with the LilyPond Windows installers.  It is written in C
+using the Windows API, and is a "fork" of the Wine Notepad,
+extracted from Wine's CVS repo on 2005-05-15.
+
+Follow these steps to build LilyPad from this repo:
+
+* Run
+
+    ./autogen.sh
+
+* Create a tarball of the source (FIXME: need a `dist' target)
+
+* Modify the LilyPad GUB (http://lilypond.org/gub) spec to
+prepare for cross compilation.  The spec is currently located in
+gub/specs/lilypad.py.  For example, assign the path of the tarball
+to the source variable:
+
+    source = 'file:///home/user/lilypad-0.0.something.tar.bz2'
+
+* Build (and install) LilyPad:
+
+    bin/gub mingw::lilypad
+
+* You'll find LilyPad here:
+
+    $ ls target/mingw/root/usr/bin | grep lilypad
+    lilypad-ascii.exe
+    lilypad.exe
