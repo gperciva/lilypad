@@ -1,0 +1,13 @@
+As of 2012 Feb 12, this is the latest repository for lilypad (the
+build-in editors for lilypond on OSX and windows).
+
+Notes:
+- this is the code which is used for our official GUB binaries.
+- does not contain work that Patrick did on 2010-01-19:
+    http://repo.or.cz/w/lilypad-macos.git
+  the same commits appear in this repository:
+    https://github.com/pnorcks/lilypad-macos
+
+
+
+
