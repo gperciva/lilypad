@@ -1,0 +1,154 @@
+2009-06-25  Christian Hitz  <christian@klarinett.li>
+
+	* ProcessLog.py, LilyPond.py, MainMenu.py: replace deprecated
+	NibClassBuilder
+
+2009-06-20  Christian Hitz  <christian@klarinett.li>
+
+	* ProcessLog.py (getNewOutput): interpret output from LilyPond as
+	UTF-8
+
+	* LilyPond.py (getLilypondDirectory): new function. Unify the
+	current LilyPond diretcory determination.
+	(TinyTinyDocument.windowControllerDidLoadNib_): use new utility
+	function
+	(TinyTinyDocument.updateMySyntax): use new utility function
+	(TinyTinyDocument.compileMe): use new utility function
+
+	* LilyPond.py (lily_version): get version from currently used
+	binary
+
+	* Credits.html: update doc link.
+
+	* Welcome-to-LilyPond-MacOS.ly: update version.
+
+2006-03-17  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_gui_command_line): don't do delete intermediate
+	files
+	
+2005-11-30  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* Credits.html: update doc link.
+
+	* lilycall.py (check_fontconfig): add
+	appdir/Contents/Resources/share/fonts
+
+2005-11-11  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_env): set PANGO_PREFIX.
+	
+2005-11-04  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_env): opps. need to copy HOME too.
+
+2005-10-12  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* setup.py (plist): typo.
+
+2005-06-27  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (check_fontconfig): create cache file if not
+	existing. This prevents spurious warnings on the 2nd run.
+
+2005-06-24  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* LilyPond.py (TinyTinyDocument.createProcessLog): set close
+	callback.
+	(TinyTinyDocument.processLogClosed_): remove PLWC reference upon
+	closing. This fixes closing compile window and rerunning it. 
+
+	* ProcessLog.py (ProcessLogWindowController.windowWillClose_):
+	hack: add close_callback.
+
+2005-06-23  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (Call.__init__): return if error found.
+
+	* LilyPond.py (TinyTinyDocument.compileMe): report errorstring if
+	lilycall finds one.
+	
+2005-06-19  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (Call.set_gui_options): new function. Don't munge
+	paths for non GUI calls.
+ 
+2005-06-18  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (Call.open_pdfs): remove stray p.
+
+2005-06-17  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* lilycall.py (get_env): set FONTCONFIG_PATH, so local.conf is found.
+	(check_fontconfig): set fonts.cache-1
+
+	* LilyPond.py (TinyTinyDocument.compileMe): CallBinder: closure
+	for lilycall + document callbacks.
+	(TinyTinyDocument.compileMe): check need_fc_update.
+
+	* ProcessLog.py (ProcessLogWindowController.addText): new function.
+	(ProcessLogWindowController.finish): stop throbber before callback.
+
+	* lilycall.py (Call.get_process): new function.
+	(check_fontconfig): symlink /System/Library/Fonts to
+	prefix/share/SystemFonts.
+	(Call.get_fc_cache_process): run fc-cache.
+
+2005-06-16  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* MainMenu.nib/classes.nib (Module): add Find functionality:
+	use performFindPanelAction with numeric tags for menu entries.
+
+	* LilyPond.py (TinyTinyDocument.init): init
+	ProcessLogWindowController to None.
+
+2005-06-15  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* LilyPond.py (google_lilypond): new function. Provide context
+	sensitive help.
+	(lily_version): new function
+	(open_url): new function
+	(TinyTinyDocument.windowControllerDidLoadNib_): 
+	only load welcome if there are no other files loaded.
+	(TinyTinyDocument.windowControllerDidLoadNib_): use firstStart boolean.
+
+	* setup.py (plist): set copyright, version and credits for app. 
+
+	* Credits.html (href): new file.
+
+	* TinyTinyDocument.nib: switch off spell checking.
+
+	* LilyPond.py (TinyTinyDocument.updateMySyntax): run convert-ly
+	from Compile > Update Syntax.
+
+2005-06-14  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* Welcome-to-LilyPond-MacOS.ly: new file MacOS specific Welcome to
+	LilyPond.
+
+	* lilycall.py: move from ../
+
+	* LilyPond.py: rename from ClickEdit.py
+	(TinyTinyDocument.compileFile_): new method.
+	(TinyTinyDocument.compileMe): new method. Create
+	ProcessLogWindowController
+
+2005-06-13  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* ProcessLog.py: new file: NSText bridge for calling a command.
+
+2005-06-10  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* URLHandlerClass.py (URLHandlerClass.openURL): unquote textedit URI
+
+2005-06-08  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* URLHandlerClass.py (URLHandlerClass.charCount): update for a:b:c
+	URLs.
+
+2005-05-24  Han-Wen Nienhuys  <hanwen@xs4all.nl>
+
+	* MainMenu.nib: remove superfluous formatting commands.
+
+	* URLHandlerClass.py: simplify, use NSDocument::textView
+
