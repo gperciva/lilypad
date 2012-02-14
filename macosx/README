@@ -1,0 +1,33 @@
+HOW-TO BUILD
+============
+
+on a Mac with Mac OS X 10.5 and Developer Tools installed (also runs in a VirtualBox VM):
+
+install official 2.6.6 python:
+http://www.python.org/ftp/python/2.6.6/python-2.6.6-macosx10.3.dmg
+
+install setuptools into this python:
+download http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg
+export PATH=/Library/Frameworks/Python.framework/Versions/2.6/bin:$PATH
+sudo sh <path/to/setuptools-0.6c11-py2.6.egg>
+
+get latest release version of pyobjc:
+svn co http://svn.red-bean.com/pyobjc/tags/pyobjc-2.3.1/
+
+cd pyobjc-2.3.1
+sed -E -i bak -e 's*\(/usr/bin/\)?python2.5*/Library/Frameworks/Python.framework/Versions/2.6/bin/python*' 02-develop-all.sh
+
+./02-develop-all.sh
+cd pyobjc
+/Library/Frameworks/Python.framework/Versions/2.6/bin/python setup.py develop
+cd ../..
+
+MACOSX_DEPLOYMENT_TARGET=10.5 /Library/Frameworks/Python.framework/Versions/2.6/bin/python2.6 setup.py py2app --icon=lilypond.icns
+
+cd dist
+tar czvf osx-lilypad-universal.tar.gz LilyPond.app
+
+Optional:
+
+copy lilypond into the Bundle:
+rsync -v -lr --ignore-existing /Applications/LilyPond.app/Contents/Resources/* dist/LilyPond.app/Contents/Resources/
