@@ -44,7 +44,7 @@ setup(
 		'Welcome-to-LilyPond-MacOS.ly'
 		],
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=["py2app", "pyobjc"],
+    setup_requires=["py2app", "pyobjc==2.3.1"],
 )
 
 
