@@ -37,7 +37,7 @@ setup(
 		'ProcessLog.nib',
 		'lilycall.py',
 		'ProcessLog.py',
-		'/System/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/shutil.py',
+		'/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/shutil.py',
 		'Credits.html',
 		'URLHandle.scriptSuite',
 		'URLHandle.scriptTerminology',
