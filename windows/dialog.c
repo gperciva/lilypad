@@ -587,7 +587,7 @@ VOID DIALOG_EditWrap(VOID)
     BOOL modify = FALSE;
     static const __WCHAR editW[] = { 'e','d','i','t',0 };
     DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL |
-                    ES_AUTOVSCROLL | ES_MULTILINE;
+                    ES_AUTOVSCROLL | ES_MULTILINE | ES_NOHIDESEL ;
     RECT rc;
     DWORD size;
     __LPWSTR pTemp;
@@ -788,7 +788,7 @@ BOOL GotoLineColumn(int nLine, int nColumn)
 {
     int nResult;
     int nLines;
-    int nCharacters;
+    int nCharacters=0;
     int nIndex;
 
     /* Line count is zero based.  */
@@ -801,14 +801,14 @@ BOOL GotoLineColumn(int nLine, int nColumn)
     if (nLine > nLines)
 	return FALSE;
 
+    /* The desired line's character index.  */
+    nIndex = SendMessage(Globals.hEdit, EM_LINEINDEX, nLine, 0);
+
     /* The number of characters in the selected line.  */
-    nCharacters = SendMessage(Globals.hEdit, EM_LINELENGTH, nLine, 0);
+    nCharacters = SendMessage(Globals.hEdit, EM_LINELENGTH, nIndex, 0);
 
     if (nColumn > nCharacters)
 	nColumn = 0;
-
-    /* The desired line's character index.  */
-    nIndex = SendMessage(Globals.hEdit, EM_LINEINDEX, nLine, 0);
 
     /* select the text .. place cursor */
     SendMessage(Globals.hEdit, EM_SETSEL, nIndex + nColumn, nIndex + nColumn);

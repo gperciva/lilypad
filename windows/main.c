@@ -199,9 +199,7 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
 
 	if (!Globals.bWrapLongLines) dwStyle |= WS_HSCROLL | ES_AUTOHSCROLL;
 
-        Globals.hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, editW, NULL,
-                             WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_HSCROLL |
-                             ES_AUTOVSCROLL | ES_MULTILINE,
+        Globals.hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, editW, NULL, dwStyle,
                              0, 0, rc.right, rc.bottom, hWnd,
                              NULL, Globals.hInstance, NULL);
         LILYPAD_InitFont();
@@ -451,6 +449,7 @@ void LILYPAD_DoFind(FINDREPLACE *fr)
     }
 
     SendMessage(Globals.hEdit, EM_SETSEL, found - content, found - content + len);
+    SendMessage(Globals.hEdit, EM_SCROLLCARET, 0, 0);
 }
 
 /***********************************************************************
