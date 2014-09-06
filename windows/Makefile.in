@@ -30,12 +30,15 @@ ifeq ($(MODULE),lilypad.exe)
 
 all: lilypad-ascii.exe
 install:: install-lilypad-ascii
+clean:: clean-lilypad-ascii
 
 lilypad-ascii.exe: lilypad.exe
-	rm -f $(OBJS)
 	$(MAKE) MODULE=$@ CPPFLAGS=-UUNICODE
 	touch lilypad.exe
 endif
 
 install-lilypad-ascii:
 	$(MAKE) MODULE=lilypad-ascii.exe install
+
+clean-lilypad-ascii:
+	$(MAKE) MODULE=lilypad-ascii.exe clean
