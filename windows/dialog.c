@@ -228,9 +228,8 @@ void DoOpenFile(__LPCWSTR szFileName)
 	ShowLastError();
 	return;
     }
-    size++;
 
-    pTemp = HeapAlloc(GetProcessHeap(), 0, size);
+    pTemp = HeapAlloc(GetProcessHeap(), 0, size + 1);
     if (!pTemp)
     {
 	CloseHandle(hFile);
