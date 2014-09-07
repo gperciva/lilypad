@@ -204,7 +204,7 @@ void DoOpenFile(__LPCWSTR szFileName)
 {
     static const __WCHAR dotlog[] = { '.','L','O','G',0 };
     HANDLE hFile;
-    __LPWSTR pTemp;
+    LPSTR pTemp;
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
