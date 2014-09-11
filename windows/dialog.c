@@ -240,6 +240,10 @@ void DoOpenFile(__LPCWSTR szFileName)
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
+#ifdef UNICODE
+    LPWSTR pwTemp;
+    DWORD wsize;
+#endif
 
     /* Close any files and prompt to save changes */
     if (!DoCloseFile())
@@ -280,7 +284,22 @@ void DoOpenFile(__LPCWSTR szFileName)
     CloseHandle(hFile);
     pTemp[dwNumRead] = 0;
 
+#ifdef UNICODE
+    wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
+    pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
+    if (!pwTemp)
+    {
+	HeapFree(GetProcessHeap(), 0, pTemp);
+	ShowLastError();
+	return;
+    }
+    MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, pwTemp, wsize);
+    if (*pwTemp == 0xFEFF) pwTemp++;
+    SetWindowText(Globals.hEdit, pwTemp);
+    HeapFree(GetProcessHeap(), 0, pwTemp);
+#else
     SetWindowText(Globals.hEdit, pTemp);
+#endif
 
     HeapFree(GetProcessHeap(), 0, pTemp);
 
