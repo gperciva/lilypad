@@ -248,17 +248,7 @@ void DoOpenFile(__LPCWSTR szFileName)
     CloseHandle(hFile);
     pTemp[dwNumRead] = 0;
 
-#ifdef UNICODE
-    if (IsTextUnicode(pTemp, dwNumRead, NULL))
-    {
-	__LPWSTR p = (__LPWSTR)pTemp;
-	/* We need to strip BOM Unicode character, SetWindowTextW won't do it for us. */
-	if (*p == 0xFEFF || *p == 0xFFFE) p++;
-	SetWindowText(Globals.hEdit, p);
-    }
-    else
-#endif
-	SetWindowText(Globals.hEdit, pTemp);
+    SetWindowText(Globals.hEdit, pTemp);
 
     HeapFree(GetProcessHeap(), 0, pTemp);
 
