@@ -138,6 +138,10 @@ static VOID DoSaveFile(VOID)
     DWORD dwNumWrite;
     LPSTR pTemp;
     DWORD size;
+#ifdef UNICODE
+    LPWSTR pwTemp;
+    DWORD wsize;
+#endif
 
     hFile = CreateFile(Globals.szFileName, GENERIC_WRITE, FILE_SHARE_WRITE,
                        NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -147,6 +151,30 @@ static VOID DoSaveFile(VOID)
         return;
     }
 
+#ifdef UNICODE
+    wsize = GetWindowTextLengthW(Globals.hEdit) + 1;
+    pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
+    if (!pwTemp)
+    {
+	CloseHandle(hFile);
+        ShowLastError();
+        return;
+    }
+    wsize = GetWindowTextW(Globals.hEdit, pwTemp, wsize) + 1;
+
+    size = WideCharToMultiByte(CP_UTF8, 0, pwTemp, wsize ,
+			       NULL, 0, NULL, NULL);
+    pTemp = HeapAlloc(GetProcessHeap(), 0, size);
+    if (!pTemp)
+    {
+	HeapFree(GetProcessHeap(), 0, pwTemp);
+	CloseHandle(hFile);
+        ShowLastError();
+        return;
+    }
+    size = WideCharToMultiByte(CP_UTF8, 0, pwTemp, wsize,
+			       pTemp, size, NULL, NULL) - 1;
+#else
     size = GetWindowTextLengthA(Globals.hEdit) + 1;
     pTemp = HeapAlloc(GetProcessHeap(), 0, size);
     if (!pTemp)
@@ -156,6 +184,7 @@ static VOID DoSaveFile(VOID)
         return;
     }
     size = GetWindowTextA(Globals.hEdit, pTemp, size);
+#endif
 
     if (!WriteFile(hFile, pTemp, size, &dwNumWrite, NULL))
         ShowLastError();
@@ -164,6 +193,9 @@ static VOID DoSaveFile(VOID)
 
     SetEndOfFile(hFile);
     CloseHandle(hFile);
+#ifdef UNICODE
+    HeapFree(GetProcessHeap(), 0, pwTemp);
+#endif
     HeapFree(GetProcessHeap(), 0, pTemp);
 }
 
