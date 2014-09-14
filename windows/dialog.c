@@ -240,6 +240,8 @@ void DoOpenFile(__LPCWSTR szFileName)
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
+    int counter;
+    int i;
 #ifdef UNICODE
     LPWSTR pwTemp;
     DWORD wsize;
@@ -283,6 +285,72 @@ void DoOpenFile(__LPCWSTR szFileName)
 
     CloseHandle(hFile);
     pTemp[dwNumRead] = 0;
+
+    /* newline normalization */
+    counter = 0;
+    for ( i=0; i<dwNumRead; i++ )
+    {
+	switch (pTemp[i])
+	{
+	    case '\r':
+	        if (pTemp[i+1]=='\n')
+	            i++;
+	        else
+		    counter++;
+	        break;
+	    case '\n':
+	        counter++;
+	        break;
+	    case 0:
+	        dwNumRead = i;
+	        break;
+	}
+    }
+    if (counter)
+    {
+	LPSTR p;
+	DWORD dwNewSize = dwNumRead + counter;
+
+	p = HeapAlloc(GetProcessHeap(), 0, dwNewSize + 1);
+	if (p)
+	{
+	    int i_in = 0;
+	    int i_out = 0;
+
+	    while ((i_in < dwNumRead) && (i_out < dwNewSize))
+	    {
+		char c=pTemp[i_in];
+		switch (c)
+		{
+		    case '\r':
+		        p[i_out++] = '\r';
+		        p[i_out] = '\n';
+		        if (pTemp[i_in+1]=='\n')
+			    i_in++;
+		        break;
+		    case '\n':
+		        p[i_out++] = '\r';
+		        p[i_out] = '\n';
+		        break;
+		    case 0:
+		        p[i_out] = 0;
+		        dwNumRead = i_in;
+		        dwNewSize = i_out;
+		        break;
+		    default:
+		        p[i_out] = c;
+		        break;
+		}
+		i_in++;
+		i_out++;
+	    }
+
+	    p[dwNewSize] = 0;
+	    HeapFree(GetProcessHeap(), 0, pTemp);
+	    pTemp = p;
+	    dwNumRead = dwNewSize;
+	}
+    }
 
 #ifdef UNICODE
     wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
