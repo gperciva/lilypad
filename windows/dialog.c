@@ -842,15 +842,6 @@ static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wPara
           EndDialog(hDlg, IDCANCEL);
           return TRUE;
 
-        case IDHELP:
-        {
-          /* FIXME: Bring this to work */
-          static const __WCHAR sorryW[] = { 'S','o','r','r','y',',',' ','n','o',' ','h','e','l','p',' ','a','v','a','i','l','a','b','l','e',0 };
-          static const __WCHAR helpW[] = { 'H','e','l','p',0 };
-          MessageBox(Globals.hMainWnd, sorryW, helpW, MB_ICONEXCLAMATION);
-          return TRUE;
-        }
-
 	default:
 	    break;
         }
