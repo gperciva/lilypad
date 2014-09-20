@@ -29,8 +29,6 @@
 #include "main.h"
 #include "dialog.h"
 
-static const __WCHAR helpfileW[] = { 'n','o','t','e','p','a','d','.','h','l','p',0 };
-
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -772,21 +770,6 @@ VOID DIALOG_SearchNext(VOID)
         DIALOG_Search();
     else                /* use the last find data */
         LILYPAD_DoFind(&Globals.lastFind);
-}
-
-VOID DIALOG_HelpContents(VOID)
-{
-    WinHelp(Globals.hMainWnd, helpfileW, HELP_INDEX, 0);
-}
-
-VOID DIALOG_HelpSearch(VOID)
-{
-        /* Search Help */
-}
-
-VOID DIALOG_HelpHelp(VOID)
-{
-    WinHelp(Globals.hMainWnd, helpfileW, HELP_HELPONHELP, 0);
 }
 
 VOID DIALOG_HelpAboutLilyPad(VOID)

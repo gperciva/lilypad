@@ -41,9 +41,6 @@ VOID DIALOG_SearchNext(VOID);
 
 VOID DIALOG_SelectFont(VOID);
 
-VOID DIALOG_HelpContents(VOID);
-VOID DIALOG_HelpSearch(VOID);
-VOID DIALOG_HelpHelp(VOID);
 VOID DIALOG_HelpAboutLilyPad(VOID);
 
 VOID DIALOG_TimeDate(VOID);
