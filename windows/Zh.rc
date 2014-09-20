@@ -49,10 +49,6 @@ POPUP "搜索（&S）" {
   MENUITEM "搜索下一个（&S）\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "帮助（&H）" {
-  MENUITEM "内容（&C）",         CMD_HELP_CONTENTS
-  MENUITEM "搜索（&S）...",        CMD_HELP_SEARCH
-  MENUITEM "如何使用帮助（&H）",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

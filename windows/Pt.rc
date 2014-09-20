@@ -57,10 +57,6 @@ POPUP "&Pesquisa" {
   MENUITEM "Localizar &próxima\tF3",	CMD_SEARCH_NEXT
  }
 POPUP "&Ajuda" {
-  MENUITEM "&Conteúdo",		CMD_HELP_CONTENTS
-  MENUITEM "&Procurar...",	CMD_HELP_SEARCH
-  MENUITEM "&Ajuda na ajuda",	CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -100,10 +96,6 @@ POPUP "&Pesquisa" {
   MENUITEM "Localizar &próxima\tF3",	CMD_SEARCH_NEXT
  }
 POPUP "&Ajuda" {
-  MENUITEM "&Conteúdo",		CMD_HELP_CONTENTS
-  MENUITEM "&Procurar...",	CMD_HELP_SEARCH
-  MENUITEM "&Ajuda na ajuda",	CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

@@ -53,10 +53,6 @@ POPUP "&Keresés" {
   MENUITEM "Köve&tkezõ keresése\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "&Súgó" {
-  MENUITEM "&Témakörök",         CMD_HELP_CONTENTS
-  MENUITEM "&Keresés...",        CMD_HELP_SEARCH
-  MENUITEM "&Használat",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

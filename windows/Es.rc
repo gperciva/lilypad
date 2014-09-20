@@ -57,10 +57,6 @@ POPUP "&Buscar" {
   MENUITEM "Buscar &siguiente\tF3", CMD_SEARCH_NEXT
  }
 POPUP "A&yuda" {
-  MENUITEM "Í&ndice",               CMD_HELP_CONTENTS
-  MENUITEM "&Buscar...",            CMD_HELP_SEARCH
-  MENUITEM "A&yuda sobre la ayuda", CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

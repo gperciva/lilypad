@@ -53,10 +53,6 @@ POPUP "&Sök" {
   MENUITEM "&Sök nästa\tF3",    CMD_SEARCH_NEXT
  }
 POPUP "&Hjälp" {
-  MENUITEM "&Innehåll",         CMD_HELP_CONTENTS
-  MENUITEM "&Sök...",           CMD_HELP_SEARCH
-  MENUITEM "Användningen &av hjälp",    CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

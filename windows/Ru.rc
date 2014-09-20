@@ -50,10 +50,6 @@ POPUP "П&оиск" {
   MENUITEM "Найти &далее\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "&Справка" {
-  MENUITEM "&Содержание",         CMD_HELP_CONTENTS
-  MENUITEM "&Поиск...",        CMD_HELP_SEARCH
-  MENUITEM "&Использование справки",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

@@ -52,10 +52,6 @@ POPUP "&Iskanje" {
   MENUITEM "Na&daljuj iskanje\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "&Pomoè" {
-  MENUITEM "&Teme pomoèi",         CMD_HELP_CONTENTS
-  MENUITEM "&Najdi ...",        CMD_HELP_SEARCH
-  MENUITEM "&O pomoèi",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

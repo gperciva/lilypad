@@ -56,10 +56,6 @@ POPUP "&Hledání" {
   MENUITEM "&Najdi dal¹í\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "&Nápovìda" {
-  MENUITEM "&Obsah",         CMD_HELP_CONTENTS
-  MENUITEM "&Najít...",        CMD_HELP_SEARCH
-  MENUITEM "&Pomoc k nápovìdì",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }

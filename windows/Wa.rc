@@ -55,10 +55,6 @@ POPUP "C&werî" {
   MENUITEM "&Shûvant\tF3",      CMD_SEARCH_NEXT
  }
 POPUP "&Aide" {
-  MENUITEM "Å&dvins",           CMD_HELP_CONTENTS
-  MENUITEM "C&werî...",         CMD_HELP_SEARCH
-  MENUITEM "&Aide so l' Aide",  CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
