@@ -29,8 +29,6 @@
 #include "main.h"
 #include "dialog.h"
 
-static const __WCHAR helpfileW[] = { 'n','o','t','e','p','a','d','.','h','l','p',0 };
-
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -774,21 +772,6 @@ VOID DIALOG_SearchNext(VOID)
         LILYPAD_DoFind(&Globals.lastFind);
 }
 
-VOID DIALOG_HelpContents(VOID)
-{
-    WinHelp(Globals.hMainWnd, helpfileW, HELP_INDEX, 0);
-}
-
-VOID DIALOG_HelpSearch(VOID)
-{
-        /* Search Help */
-}
-
-VOID DIALOG_HelpHelp(VOID)
-{
-    WinHelp(Globals.hMainWnd, helpfileW, HELP_HELPONHELP, 0);
-}
-
 VOID DIALOG_HelpAboutLilyPad(VOID)
 {
   DialogBox (Globals.hInstance, MAKEINTRESOURCE(DIALOG_ABOUTLILYPAD),
@@ -858,15 +841,6 @@ static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wPara
           /* discard user input and close dialog */
           EndDialog(hDlg, IDCANCEL);
           return TRUE;
-
-        case IDHELP:
-        {
-          /* FIXME: Bring this to work */
-          static const __WCHAR sorryW[] = { 'S','o','r','r','y',',',' ','n','o',' ','h','e','l','p',' ','a','v','a','i','l','a','b','l','e',0 };
-          static const __WCHAR helpW[] = { 'H','e','l','p',0 };
-          MessageBox(Globals.hMainWnd, sorryW, helpW, MB_ICONEXCLAMATION);
-          return TRUE;
-        }
 
 	default:
 	    break;

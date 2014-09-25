@@ -57,10 +57,6 @@ POPUP "&Buscar" {
   MENUITEM "Buscar &siguiente\tF3", CMD_SEARCH_NEXT
  }
 POPUP "A&yuda" {
-  MENUITEM "Í&ndice",               CMD_HELP_CONTENTS
-  MENUITEM "&Buscar...",            CMD_HELP_SEARCH
-  MENUITEM "A&yuda sobre la ayuda", CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -89,7 +85,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "Aceptar",      IDOK,                 180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "Cancelar",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "&Ayuda",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE

@@ -53,10 +53,6 @@ MAIN_MENU MENU
   MENUITEM "ค้นหาต่อไป\tF3",  CMD_SEARCH_NEXT
  }
  POPUP "ช่วยเหลีอ" {
-  MENUITEM "เนื้อหา",         CMD_HELP_CONTENTS
-  MENUITEM "ค้นหา...",        CMD_HELP_SEARCH
-  MENUITEM "เกี่ยวกับช่วยเหลีอ",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -85,7 +81,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "ตกลง",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "ยกเลิก",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "ช่วยเหลีอ",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE

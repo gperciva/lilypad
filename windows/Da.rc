@@ -52,10 +52,6 @@ POPUP "&Søg" {
   MENUITEM "&Find næste\tF3",   CMD_SEARCH_NEXT
  }
 POPUP "&Hjælp" {
-  MENUITEM "&Indhold",          CMD_HELP_CONTENTS
-  MENUITEM "&Søg efter hjælp om...",    CMD_HELP_SEARCH
-  MENUITEM "&Brug af Hjælp",    CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -84,7 +80,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "OK",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "Annuller",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "&Hjælp",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE

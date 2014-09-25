@@ -109,9 +109,6 @@ static int LILYPAD_MenuCommand(WPARAM wParam)
     case CMD_WRAP:             DIALOG_EditWrap(); break;
     case CMD_FONT:             DIALOG_SelectFont(); break;
 
-    case CMD_HELP_CONTENTS:    DIALOG_HelpContents(); break;
-    case CMD_HELP_SEARCH:      DIALOG_HelpSearch(); break;
-    case CMD_HELP_ON_HELP:     DIALOG_HelpHelp(); break;
     case CMD_HELP_ABOUT_LILYPAD: DIALOG_HelpAboutLilyPad(); break;
 
     default:
