@@ -138,6 +138,10 @@ static VOID DoSaveFile(VOID)
     DWORD dwNumWrite;
     LPSTR pTemp;
     DWORD size;
+#ifdef UNICODE
+    LPWSTR pwTemp;
+    DWORD wsize;
+#endif
 
     hFile = CreateFile(Globals.szFileName, GENERIC_WRITE, FILE_SHARE_WRITE,
                        NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -147,6 +151,30 @@ static VOID DoSaveFile(VOID)
         return;
     }
 
+#ifdef UNICODE
+    wsize = GetWindowTextLengthW(Globals.hEdit) + 1;
+    pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
+    if (!pwTemp)
+    {
+	CloseHandle(hFile);
+        ShowLastError();
+        return;
+    }
+    wsize = GetWindowTextW(Globals.hEdit, pwTemp, wsize) + 1;
+
+    size = WideCharToMultiByte(CP_UTF8, 0, pwTemp, wsize ,
+			       NULL, 0, NULL, NULL);
+    pTemp = HeapAlloc(GetProcessHeap(), 0, size);
+    if (!pTemp)
+    {
+	HeapFree(GetProcessHeap(), 0, pwTemp);
+	CloseHandle(hFile);
+        ShowLastError();
+        return;
+    }
+    size = WideCharToMultiByte(CP_UTF8, 0, pwTemp, wsize,
+			       pTemp, size, NULL, NULL) - 1;
+#else
     size = GetWindowTextLengthA(Globals.hEdit) + 1;
     pTemp = HeapAlloc(GetProcessHeap(), 0, size);
     if (!pTemp)
@@ -156,6 +184,7 @@ static VOID DoSaveFile(VOID)
         return;
     }
     size = GetWindowTextA(Globals.hEdit, pTemp, size);
+#endif
 
     if (!WriteFile(hFile, pTemp, size, &dwNumWrite, NULL))
         ShowLastError();
@@ -164,6 +193,9 @@ static VOID DoSaveFile(VOID)
 
     SetEndOfFile(hFile);
     CloseHandle(hFile);
+#ifdef UNICODE
+    HeapFree(GetProcessHeap(), 0, pwTemp);
+#endif
     HeapFree(GetProcessHeap(), 0, pTemp);
 }
 
@@ -208,6 +240,12 @@ void DoOpenFile(__LPCWSTR szFileName)
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
+    int counter;
+    int i;
+#ifdef UNICODE
+    LPWSTR pwTemp;
+    DWORD wsize;
+#endif
 
     /* Close any files and prompt to save changes */
     if (!DoCloseFile())
@@ -248,17 +286,88 @@ void DoOpenFile(__LPCWSTR szFileName)
     CloseHandle(hFile);
     pTemp[dwNumRead] = 0;
 
-#ifdef UNICODE
-    if (IsTextUnicode(pTemp, dwNumRead, NULL))
+    /* newline normalization */
+    counter = 0;
+    for ( i=0; i<dwNumRead; i++ )
     {
-	__LPWSTR p = (__LPWSTR)pTemp;
-	/* We need to strip BOM Unicode character, SetWindowTextW won't do it for us. */
-	if (*p == 0xFEFF || *p == 0xFFFE) p++;
-	SetWindowText(Globals.hEdit, p);
+	switch (pTemp[i])
+	{
+	    case '\r':
+	        if (pTemp[i+1]=='\n')
+	            i++;
+	        else
+		    counter++;
+	        break;
+	    case '\n':
+	        counter++;
+	        break;
+	    case 0:
+	        dwNumRead = i;
+	        break;
+	}
     }
-    else
+    if (counter)
+    {
+	LPSTR p;
+	DWORD dwNewSize = dwNumRead + counter;
+
+	p = HeapAlloc(GetProcessHeap(), 0, dwNewSize + 1);
+	if (p)
+	{
+	    int i_in = 0;
+	    int i_out = 0;
+
+	    while ((i_in < dwNumRead) && (i_out < dwNewSize))
+	    {
+		char c=pTemp[i_in];
+		switch (c)
+		{
+		    case '\r':
+		        p[i_out++] = '\r';
+		        p[i_out] = '\n';
+		        if (pTemp[i_in+1]=='\n')
+			    i_in++;
+		        break;
+		    case '\n':
+		        p[i_out++] = '\r';
+		        p[i_out] = '\n';
+		        break;
+		    case 0:
+		        p[i_out] = 0;
+		        dwNumRead = i_in;
+		        dwNewSize = i_out;
+		        break;
+		    default:
+		        p[i_out] = c;
+		        break;
+		}
+		i_in++;
+		i_out++;
+	    }
+
+	    p[dwNewSize] = 0;
+	    HeapFree(GetProcessHeap(), 0, pTemp);
+	    pTemp = p;
+	    dwNumRead = dwNewSize;
+	}
+    }
+
+#ifdef UNICODE
+    wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
+    pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
+    if (!pwTemp)
+    {
+	HeapFree(GetProcessHeap(), 0, pTemp);
+	ShowLastError();
+	return;
+    }
+    MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, pwTemp, wsize);
+    if (*pwTemp == 0xFEFF) pwTemp++;
+    SetWindowText(Globals.hEdit, pwTemp);
+    HeapFree(GetProcessHeap(), 0, pwTemp);
+#else
+    SetWindowText(Globals.hEdit, pTemp);
 #endif
-	SetWindowText(Globals.hEdit, pTemp);
 
     HeapFree(GetProcessHeap(), 0, pTemp);
 
