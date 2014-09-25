@@ -23,3 +23,5 @@ mingw
 missing
 notepad.exe.dbg.c
 rsrc.res
+*.zip
+*.ly
