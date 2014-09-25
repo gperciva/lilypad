@@ -58,10 +58,6 @@ POPUP "検索(&S)" {
   MENUITEM "次を検索(&S)\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "ヘルプ(&H)" {
-  MENUITEM "目次(&C)",         CMD_HELP_CONTENTS
-  MENUITEM "検索(&S)...",        CMD_HELP_SEARCH
-  MENUITEM "ヘルプの使い方(&H)",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "LilyPad について(&A)...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -90,7 +86,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "OK",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "キャンセル",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "ヘルプ(&H)",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE

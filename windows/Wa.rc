@@ -55,10 +55,6 @@ POPUP "C&werî" {
   MENUITEM "&Shûvant\tF3",      CMD_SEARCH_NEXT
  }
 POPUP "&Aide" {
-  MENUITEM "Å&dvins",           CMD_HELP_CONTENTS
-  MENUITEM "C&werî...",         CMD_HELP_SEARCH
-  MENUITEM "&Aide so l' Aide",  CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -87,7 +83,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "I Va",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "Rinoncî",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "&Aide",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE

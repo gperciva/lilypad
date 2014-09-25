@@ -52,10 +52,6 @@ POPUP "&Iskanje" {
   MENUITEM "Na&daljuj iskanje\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "&Pomoè" {
-  MENUITEM "&Teme pomoèi",         CMD_HELP_CONTENTS
-  MENUITEM "&Najdi ...",        CMD_HELP_SEARCH
-  MENUITEM "&O pomoèi",     CMD_HELP_ON_HELP
-  MENUITEM SEPARATOR
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -84,7 +80,6 @@ EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD |
 
 DEFPUSHBUTTON "V redu",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
 PUSHBUTTON    "Preklièi",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-PUSHBUTTON    "&Pomoè",       IDHELP,                180, 39, 40, 15, WS_TABSTOP
 }
 
 STRINGTABLE DISCARDABLE
