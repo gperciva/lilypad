@@ -107,16 +107,25 @@ conf_manext     = 5
 CLEAN_FILES     = *.o *.a *.so *.ln *.$(LIBEXT) \\\#*\\\# *~ *% .\\\#* *.bak *.orig *.rej \
                   *.flc *.spec.c *.dbg.c *.tab.c *.tab.h @LEX_OUTPUT_ROOT@.c core
 
+ifeq ($(MODULE),lilypad-ascii.exe)
+OBJS = $(C_SRCS:.c=.ansi.o) $(EXTRA_OBJS)
+
+RCOBJS = $(RC_SRCS:.rc=.ansi.res.o)
+else
 OBJS = $(C_SRCS:.c=.o) $(EXTRA_OBJS)
 
 RCOBJS = $(RC_SRCS:.rc=.res.o)
+endif
 LINTS  = $(C_SRCS:.c=.ln)
 
 # Implicit rules
 
-.SUFFIXES: .mc .rc .mc.rc .res .res.o .spec .spec.c .idl .tlb .h .ok .sfd .ttf
+.SUFFIXES: .mc .rc .mc.rc .res .res.o .spec .spec.c .idl .tlb .h .ok .sfd .ttf .ansi.o .ansi.res.o
 
 .c.o:
+	$(CC) -c $(ALLCFLAGS) -o $@ $<
+
+.c.ansi.o:
 	$(CC) -c $(ALLCFLAGS) -o $@ $<
 
 .s.o:
@@ -126,6 +135,9 @@ LINTS  = $(C_SRCS:.c=.ln)
 	$(LDPATH) $(WMC) -i -U -H /dev/null -o $@ $<
 
 .rc.res.o:
+	$(LDPATH) $(RC) $(RCFLAGS) -fo$@ $<
+
+.rc.ansi.res.o:
 	$(LDPATH) $(RC) $(RCFLAGS) -fo$@ $<
 
 .res.res.o:
