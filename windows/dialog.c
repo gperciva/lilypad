@@ -204,7 +204,7 @@ void DoOpenFile(__LPCWSTR szFileName)
 {
     static const __WCHAR dotlog[] = { '.','L','O','G',0 };
     HANDLE hFile;
-    __LPWSTR pTemp;
+    LPSTR pTemp;
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
@@ -228,9 +228,8 @@ void DoOpenFile(__LPCWSTR szFileName)
 	ShowLastError();
 	return;
     }
-    size++;
 
-    pTemp = HeapAlloc(GetProcessHeap(), 0, size);
+    pTemp = HeapAlloc(GetProcessHeap(), 0, size + 1);
     if (!pTemp)
     {
 	CloseHandle(hFile);
