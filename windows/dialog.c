@@ -535,7 +535,7 @@ VOID DIALOG_FilePrint(VOID)
     printer.hInstance             = Globals.hInstance;
     
     /* Set some default flags */
-    printer.Flags                 = PD_RETURNDC;
+    printer.Flags                 = PD_RETURNDC | PD_NOSELECTION;
     printer.nFromPage             = 0;
     printer.nMinPage              = 1;
     /* we really need to calculate number of pages to set nMaxPage and nToPage */
