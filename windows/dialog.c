@@ -471,13 +471,36 @@ VOID DIALOG_FileSaveAs(VOID)
     }
 }
 
+static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
+{
+    DRAWTEXTPARAMS dtps = { 0 };
+
+    dtps.cbSize = sizeof(dtps);
+    DrawTextEx(hdc, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
+	       ( dopage ? 0 : DT_CALCRECT ),
+	       &dtps);
+
+#ifdef UNICODE
+    p = p + dtps.uiLengthDrawn;
+#else
+    {
+        /* A MBCS character is not 1 byte per 1 character. */
+        unsigned int ui;
+        for( ui = 0; ui < dtps.uiLengthDrawn; ui++)
+            p = CharNext( p );
+    }
+#endif
+    return p;
+}
+
 VOID DIALOG_FilePrint(VOID)
 {
     DOCINFO di;
     PRINTDLG printer;
     SIZE szMetric;
+    RECT rcMain;
     int cWidthPels, cHeightPels, border;
-    int xLeft, yTop, pagecount, dopage, copycount;
+    int pagecount, dopage, copycount;
     unsigned int i;
     LOGFONT hdrFont;
     HFONT font, old_font=0;
@@ -554,7 +577,7 @@ VOID DIALOG_FilePrint(VOID)
     
     border = 150;
     for (copycount=1; copycount <= printer.nCopies; copycount++) {
-        i = 0;
+        LPTSTR p = pTemp;
         pagecount = 1;
         do {
             static const __WCHAR letterM[] = { 'M',0 };
@@ -584,32 +607,21 @@ VOID DIALOG_FilePrint(VOID)
                 TextOut(printer.hDC, border*2, border+szMetric.cy/2, Globals.szFileTitle, lstrlen(Globals.szFileTitle));
             }
             
-            /* The starting point for the main text */
-            xLeft = border*2;
-            yTop = border+szMetric.cy*4;
+            /* The RECT for the main text */
+            rcMain.left = border*2;
+            rcMain.top = border+szMetric.cy*4;
+            rcMain.right = cWidthPels-border;
+            rcMain.bottom = cHeightPels-border*2;
             
             SelectObject(printer.hDC, old_font);
             GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric); 
             
-            /* Since outputting strings is giving me problems, output the main
-            text one character at a time.
-            */
-            do {
-                if (pTemp[i] == '\n') {
-                    xLeft = border*2;
-                    yTop += szMetric.cy;
-                }
-                else if (pTemp[i] != '\r') {
-                    if (dopage)
-                        TextOut(printer.hDC, xLeft, yTop, &pTemp[i], 1);
-                    xLeft += szMetric.cx;
-                }
-            } while (i++<size && yTop<(cHeightPels-border*2));
+            p = print_main_text(printer.hDC, rcMain, dopage, p);
             
             if (dopage)
                 EndPage(printer.hDC);
             pagecount++;
-        } while (i<size);
+        } while ( *p != 0 );
     }
 
     EndDoc(printer.hDC);
