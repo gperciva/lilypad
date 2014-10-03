@@ -559,9 +559,9 @@ VOID DIALOG_FilePrint(VOID)
         do {
             static const __WCHAR letterM[] = { 'M',0 };
 
-            if (pagecount >= printer.nFromPage &&
-    /*          ((printer.Flags & PD_PAGENUMS) == 0 ||  pagecount <= printer.nToPage))*/
-            pagecount <= printer.nToPage)
+            if ( !(printer.Flags & PD_PAGENUMS) ||
+		 (pagecount >= printer.nFromPage &&
+		  pagecount <= printer.nToPage) )
                 dopage = 1;
             else
                 dopage = 0;
