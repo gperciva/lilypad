@@ -502,29 +502,10 @@ VOID DIALOG_FilePrint(VOID)
     int cWidthPels, cHeightPels, border;
     int pagecount, dopage, copycount;
     unsigned int i;
-    LOGFONT hdrFont;
-    HFONT font, old_font=0;
+    LOGFONT lfHdrFont, lfMainFont;
+    HFONT hHdrFont, hMainFont;
     DWORD size;
     __LPWSTR pTemp;
-    static const __WCHAR times_new_romanW[] = { 'T','i','m','e','s',' ','N','e','w',' ','R','o','m','a','n',0 };
-
-    /* Get a small font and print some header info on each page */
-    hdrFont.lfHeight = 100;
-    hdrFont.lfWidth = 0;
-    hdrFont.lfEscapement = 0;
-    hdrFont.lfOrientation = 0;
-    hdrFont.lfWeight = FW_BOLD;
-    hdrFont.lfItalic = 0;
-    hdrFont.lfUnderline = 0;
-    hdrFont.lfStrikeOut = 0;
-    hdrFont.lfCharSet = ANSI_CHARSET;
-    hdrFont.lfOutPrecision = OUT_DEFAULT_PRECIS;
-    hdrFont.lfClipPrecision = CLIP_DEFAULT_PRECIS;
-    hdrFont.lfQuality = PROOF_QUALITY;
-    hdrFont.lfPitchAndFamily = VARIABLE_PITCH | FF_ROMAN;
-    lstrcpy(hdrFont.lfFaceName, times_new_romanW);
-    
-    font = CreateFontIndirect(&hdrFont);
     
     /* Get Current Settings */
     ZeroMemory(&printer, sizeof(printer));
@@ -551,6 +532,20 @@ VOID DIALOG_FilePrint(VOID)
     Globals.hDevNames = printer.hDevNames;
 
     assert(printer.hDC != 0);
+
+    /* header font */
+    lfHdrFont = Globals.lfFont;
+    lfHdrFont.lfHeight = -MulDiv(Globals.iPointSize,
+				 GetDeviceCaps(printer.hDC, LOGPIXELSY),
+				 72 * 10);  /* 72pt = 1inch */
+    hHdrFont = CreateFontIndirect(&lfHdrFont);
+
+    /* main text font */
+    lfMainFont = Globals.lfFont;
+    lfMainFont.lfHeight = -MulDiv(Globals.iPointSize,
+				  GetDeviceCaps(printer.hDC, LOGPIXELSY),
+				  72 * 10);  /* 72pt = 1inch */
+    hMainFont = CreateFontIndirect(&lfMainFont);
 
     /* initialize DOCINFO */
     di.cbSize = sizeof(DOCINFO);
@@ -589,7 +584,7 @@ VOID DIALOG_FilePrint(VOID)
             else
                 dopage = 0;
             
-            old_font = SelectObject(printer.hDC, font);
+            SelectObject(printer.hDC, hHdrFont);
             GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
                 
             if (dopage) {
@@ -613,7 +608,7 @@ VOID DIALOG_FilePrint(VOID)
             rcMain.right = cWidthPels-border;
             rcMain.bottom = cHeightPels-border*2;
             
-            SelectObject(printer.hDC, old_font);
+            SelectObject(printer.hDC, hMainFont);
             GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric); 
             
             p = print_main_text(printer.hDC, rcMain, dopage, p);
@@ -625,6 +620,8 @@ VOID DIALOG_FilePrint(VOID)
     }
 
     EndDoc(printer.hDC);
+    DeleteObject(hMainFont);
+    DeleteObject(hHdrFont);
     DeleteDC(printer.hDC);
     HeapFree(GetProcessHeap(), 0, pTemp);
 }
