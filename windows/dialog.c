@@ -753,6 +753,7 @@ VOID DIALOG_SelectFont(VOID)
 
         Globals.hFont=CreateFontIndirect( &lf );
         Globals.lfFont=lf;
+        Globals.iPointSize=cf.iPointSize;
         SendMessage( Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)TRUE );
         if( currfont!=NULL )
             DeleteObject( currfont );

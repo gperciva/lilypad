@@ -55,9 +55,16 @@ VOID SetFileName(__LPCWSTR szFileName)
 static VOID LILYPAD_InitFont()
 {
     LOGFONT *lf = &Globals.lfFont;
+    HDC hdc;
     static const __WCHAR systemW[] = { 'C','o','u','r','i','e','r',' ','N','e','w',0 };
 
-    lf->lfHeight        = -13;
+    Globals.iPointSize = 10 * 10;  /* default font size is 10pt */
+    hdc=GetDC(Globals.hMainWnd);
+    lf->lfHeight        = -MulDiv(Globals.iPointSize,
+				  GetDeviceCaps(hdc, LOGPIXELSY),
+				  72 * 10);  /* 72pt = 1inch */
+    ReleaseDC(Globals.hMainWnd, hdc);
+
     lf->lfWidth         = 0;
     lf->lfEscapement    = 0;
     lf->lfOrientation   = 0;
