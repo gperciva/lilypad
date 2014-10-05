@@ -522,7 +522,8 @@ static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
 
     dtps.cbSize = sizeof(dtps);
     DrawTextEx(hdc, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
-	       ( dopage ? 0 : DT_CALCRECT ),
+	       ( dopage ? 0 : DT_CALCRECT ) |
+	       ( Globals.bWrapLongLines ? DT_WORDBREAK : 0 ),
 	       &dtps);
 
 #ifdef UNICODE
