@@ -471,6 +471,18 @@ VOID DIALOG_FileSaveAs(VOID)
     }
 }
 
+static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
+{
+    if (dopage)
+    {
+        /* Write a rectangle and header at the top of each page */
+        Rectangle(hdc, rcHdrArea.left, rcHdrArea.top,
+                  rcHdrArea.right, rcHdrArea.bottom);
+        TextOut(hdc, rcHdrText.left, rcHdrText.top,
+                Globals.szFileTitle, lstrlen(Globals.szFileTitle));
+    }
+}
+
 static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
 {
     DRAWTEXTPARAMS dtps = { 0 };
@@ -498,7 +510,7 @@ VOID DIALOG_FilePrint(VOID)
     DOCINFO di;
     PRINTDLG printer;
     SIZE szMetric;
-    RECT rcMain;
+    RECT rcHdrArea, rcHdrText, rcMain;
     int cWidthPels, cHeightPels, border;
     int pagecount, dopage, copycount;
     unsigned int i;
@@ -594,14 +606,21 @@ VOID DIALOG_FilePrint(VOID)
                     MessageBox(Globals.hMainWnd, failedW, errorW, MB_ICONEXCLAMATION);
                     return;
                 }
-                /* Write a rectangle and header at the top of each page */
-                Rectangle(printer.hDC, border, border, cWidthPels-border, border+szMetric.cy*2);
-                /* I don't know what's up with this TextOut command. This comes out
-                kind of mangled.
-                */
-                TextOut(printer.hDC, border*2, border+szMetric.cy/2, Globals.szFileTitle, lstrlen(Globals.szFileTitle));
             }
             
+            /* The RECT for the header area */
+            rcHdrArea.left = border;
+            rcHdrArea.top = border;
+            rcHdrArea.right = cWidthPels-border;
+            rcHdrArea.bottom = border+szMetric.cy*2;
+            /* The RECT for the header text */
+            rcHdrText.left = border*2;
+            rcHdrText.top = border+szMetric.cy/2;
+            rcHdrText.right = cWidthPels-border;
+            rcHdrText.bottom = border+szMetric.cy*4;
+
+            print_header(printer.hDC, rcHdrArea, rcHdrText, dopage);
+
             /* The RECT for the main text */
             rcMain.left = border*2;
             rcMain.top = border+szMetric.cy*4;
