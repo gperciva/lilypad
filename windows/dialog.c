@@ -511,8 +511,8 @@ static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
         /* Write a rectangle and header at the top of each page */
         Rectangle(hdc, rcHdrArea.left, rcHdrArea.top,
                   rcHdrArea.right, rcHdrArea.bottom);
-        TextOut(hdc, rcHdrText.left, rcHdrText.top,
-                Globals.szFileTitle, lstrlen(Globals.szFileTitle));
+        ExtTextOut(hdc, rcHdrText.left, rcHdrText.top, ETO_CLIPPED, &rcHdrText,
+		   Globals.szFileTitle, lstrlen(Globals.szFileTitle), NULL);
     }
 }
 
