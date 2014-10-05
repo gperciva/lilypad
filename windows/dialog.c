@@ -518,6 +518,7 @@ VOID DIALOG_FilePrint(VOID)
     HFONT hHdrFont, hMainFont;
     DWORD size;
     __LPWSTR pTemp;
+    static const TCHAR letterM[] = TEXT("M");
     
     /* Get Current Settings */
     ZeroMemory(&printer, sizeof(printer));
@@ -572,6 +573,30 @@ VOID DIALOG_FilePrint(VOID)
     cWidthPels = GetDeviceCaps(printer.hDC, HORZRES);
     cHeightPels = GetDeviceCaps(printer.hDC, VERTRES);
 
+    /* Get the header font height for calculate page layout */
+    SelectObject(printer.hDC, hHdrFont);
+    GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
+
+    border = 150;
+
+    /* The RECT for the header area */
+    rcHdrArea.left = border;
+    rcHdrArea.top = border;
+    rcHdrArea.right = cWidthPels-border;
+    rcHdrArea.bottom = border+szMetric.cy*2;
+
+    /* The RECT for the header text */
+    rcHdrText.left = border*2;
+    rcHdrText.top = border+szMetric.cy/2;
+    rcHdrText.right = cWidthPels-border;
+    rcHdrText.bottom = border+szMetric.cy*4;
+
+    /* The RECT for the main text */
+    rcMain.left = border*2;
+    rcMain.top = border+szMetric.cy*4;
+    rcMain.right = cWidthPels-border;
+    rcMain.bottom = cHeightPels-border*2;
+
     /* Get the file text */
     size = GetWindowTextLength(Globals.hEdit) + 1;
     pTemp = HeapAlloc(GetProcessHeap(), 0, size * sizeof(__WCHAR));
@@ -582,13 +607,10 @@ VOID DIALOG_FilePrint(VOID)
     }
     size = GetWindowText(Globals.hEdit, pTemp, size);
     
-    border = 150;
     for (copycount=1; copycount <= printer.nCopies; copycount++) {
         LPTSTR p = pTemp;
         pagecount = 1;
         do {
-            static const __WCHAR letterM[] = { 'M',0 };
-
             if ( !(printer.Flags & PD_PAGENUMS) ||
 		 (pagecount >= printer.nFromPage &&
 		  pagecount <= printer.nToPage) )
@@ -596,9 +618,6 @@ VOID DIALOG_FilePrint(VOID)
             else
                 dopage = 0;
             
-            SelectObject(printer.hDC, hHdrFont);
-            GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
-                
             if (dopage) {
                 if (StartPage(printer.hDC) <= 0) {
                     static const __WCHAR failedW[] = { 'S','t','a','r','t','P','a','g','e',' ','f','a','i','l','e','d',0 };
@@ -607,29 +626,11 @@ VOID DIALOG_FilePrint(VOID)
                     return;
                 }
             }
-            
-            /* The RECT for the header area */
-            rcHdrArea.left = border;
-            rcHdrArea.top = border;
-            rcHdrArea.right = cWidthPels-border;
-            rcHdrArea.bottom = border+szMetric.cy*2;
-            /* The RECT for the header text */
-            rcHdrText.left = border*2;
-            rcHdrText.top = border+szMetric.cy/2;
-            rcHdrText.right = cWidthPels-border;
-            rcHdrText.bottom = border+szMetric.cy*4;
 
+            SelectObject(printer.hDC, hHdrFont);
             print_header(printer.hDC, rcHdrArea, rcHdrText, dopage);
 
-            /* The RECT for the main text */
-            rcMain.left = border*2;
-            rcMain.top = border+szMetric.cy*4;
-            rcMain.right = cWidthPels-border;
-            rcMain.bottom = cHeightPels-border*2;
-            
             SelectObject(printer.hDC, hMainFont);
-            GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric); 
-            
             p = print_main_text(printer.hDC, rcMain, dopage, p);
             
             if (dopage)
