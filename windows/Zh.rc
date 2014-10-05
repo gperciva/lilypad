@@ -53,42 +53,8 @@ POPUP "°ïÖú£¨&H£©" {
  }
 }
 
-/* Dialog `Page setup' */
-
-DIALOG_PAGESETUP DIALOG 0, 0, 225, 95
-LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
-STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
-FONT 10, "MS Shell Dlg"
-CAPTION "Ò³ÃæÉèÖÃ"
-{
-LTEXT    "Ò³Ã¼£¨&H£©:",  0x140,   10, 07, 40, 15
-EDITTEXT                         0x141,       60, 05,110, 12, WS_BORDER | WS_TABSTOP
-LTEXT    "½Å×¢£¨&F£©:",  0x142,   10, 24, 40, 15
-EDITTEXT                         0x143,       60, 22,110, 12, WS_BORDER | WS_TABSTOP
-
-GROUPBOX "±ßÔµ¿Õ°×£¨&M£©£º",      0x144,     10, 43,160, 45
-LTEXT    "×ó£¨&L£©£º",        0x145,   20, 55, 30, 10, WS_CHILD
-EDITTEXT /*STRING_PAGESETUP_LEFTVALUE,*/   0x147,       50, 55, 35, 11, WS_CHILD | WS_BORDER | WS_TABSTOP
-LTEXT    "ÉÏ£¨&T£©£º",         0x148,    20, 73, 30, 10, WS_CHILD
-EDITTEXT /*STRING_PAGESETUP_TOPVALUE,*/    0x14A,        50, 73, 35, 11, WS_CHILD | WS_BORDER | WS_TABSTOP
-LTEXT    "ÓÒ£¨&R£©£º",       0x14B, 100, 55, 30, 10, WS_CHILD
-EDITTEXT /*STRING_PAGESETUP_RIGHTVALUE,*/  0x14D,     130, 55, 35, 11, WS_CHILD | WS_BORDER | WS_TABSTOP
-LTEXT    "ÏÂ£¨&B£©£º",      0x14E,100, 73, 30, 10, WS_CHILD
-EDITTEXT /*STRING_PAGESETUP_BOTTOMVALUE,*/ 0x150,    130, 73, 35, 11, WS_CHILD | WS_BORDER | WS_TABSTOP
-
-DEFPUSHBUTTON "È·¶¨",         IDOK,                   180,  3, 40, 15, WS_TABSTOP
-PUSHBUTTON    "È¡Ïû",     IDCANCEL,               180, 21, 40, 15, WS_TABSTOP
-}
-
 STRINGTABLE DISCARDABLE LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 {
-STRING_PAGESETUP_HEADERVALUE,   "&n"        /* FIXME */
-STRING_PAGESETUP_FOOTERVALUE,   "Page &s"   /* FIXME */
-STRING_PAGESETUP_LEFTVALUE,             "20 mm"     /* FIXME */
-STRING_PAGESETUP_RIGHTVALUE,    "20 mm"     /* FIXME */
-STRING_PAGESETUP_TOPVALUE,              "25 mm"     /* FIXME */
-STRING_PAGESETUP_BOTTOMVALUE,   "25 mm"     /* FIXME */
-
 STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "´íÎó"
 STRING_WARNING,                                 "¾¯¸æ"

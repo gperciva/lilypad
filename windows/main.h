@@ -52,12 +52,6 @@ typedef struct
 
   RECT    rtMargin;
   DWORD   MarginFlags;
-  __WCHAR   szMarginTop[MAX_PATH];
-  __WCHAR   szMarginBottom[MAX_PATH];
-  __WCHAR   szMarginLeft[MAX_PATH];
-  __WCHAR   szMarginRight[MAX_PATH];
-  __WCHAR   szHeader[MAX_PATH];
-  __WCHAR   szFooter[MAX_PATH];
 
   FINDREPLACE find;
   FINDREPLACE lastFind;

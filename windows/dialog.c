@@ -30,7 +30,6 @@
 #include "dialog.h"
 
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 VOID ShowLastError(void)
 {
@@ -931,55 +930,6 @@ VOID DIALOG_FilePageSetup(void)
             Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
         }
     }
-}
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- *           DIALOG_PAGESETUP_DlgProc
- */
-
-static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-
-   switch (msg)
-    {
-    case WM_COMMAND:
-      switch (wParam)
-        {
-        case IDOK:
-          /* save user input and close dialog */
-          GetDlgItemText(hDlg, 0x141, Globals.szHeader, SIZEOF(Globals.szHeader));
-          GetDlgItemText(hDlg, 0x143, Globals.szFooter, SIZEOF(Globals.szFooter));
-          GetDlgItemText(hDlg, 0x14A, Globals.szMarginTop, SIZEOF(Globals.szMarginTop));
-          GetDlgItemText(hDlg, 0x150, Globals.szMarginBottom, SIZEOF(Globals.szMarginBottom));
-          GetDlgItemText(hDlg, 0x147, Globals.szMarginLeft, SIZEOF(Globals.szMarginLeft));
-          GetDlgItemText(hDlg, 0x14D, Globals.szMarginRight, SIZEOF(Globals.szMarginRight));
-          EndDialog(hDlg, IDOK);
-          return TRUE;
-
-        case IDCANCEL:
-          /* discard user input and close dialog */
-          EndDialog(hDlg, IDCANCEL);
-          return TRUE;
-
-	default:
-	    break;
-        }
-      break;
-
-    case WM_INITDIALOG:
-       /* fetch last user input prior to display dialog */
-       SetDlgItemText(hDlg, 0x141, Globals.szHeader);
-       SetDlgItemText(hDlg, 0x143, Globals.szFooter);
-       SetDlgItemText(hDlg, 0x14A, Globals.szMarginTop);
-       SetDlgItemText(hDlg, 0x150, Globals.szMarginBottom);
-       SetDlgItemText(hDlg, 0x147, Globals.szMarginLeft);
-       SetDlgItemText(hDlg, 0x14D, Globals.szMarginRight);
-       break;
-    }
-
-  return FALSE;
 }
 
 /**
