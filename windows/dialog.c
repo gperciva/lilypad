@@ -521,7 +521,9 @@ static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
     DRAWTEXTPARAMS dtps = { 0 };
 
     dtps.cbSize = sizeof(dtps);
+    dtps.iTabLength = TAB_LENGTH;
     DrawTextEx(hdc, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
+	       DT_EXPANDTABS | DT_TABSTOP |
 	       ( dopage ? 0 : DT_CALCRECT ) |
 	       ( Globals.bWrapLongLines ? DT_WORDBREAK : 0 ),
 	       &dtps);

@@ -34,6 +34,7 @@
 #include "lilypad_res.h"
 
 #define MAX_STRING_LEN      255
+#define TAB_LENGTH          8
 
 typedef struct
 {
