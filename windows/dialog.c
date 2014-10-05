@@ -519,15 +519,29 @@ static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
 static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
 {
     DRAWTEXTPARAMS dtps = { 0 };
+    HDC hdcDraw;
 
+    if(!dopage)
+    {
+        /* To skip this page, draw the text on dummy DC. */
+        hdcDraw=CreateCompatibleDC(hdc);
+        SelectObject(hdcDraw, GetCurrentObject(hdc, OBJ_FONT));
+    }
+    else
+    {
+        hdcDraw=hdc;
+    }
     dtps.cbSize = sizeof(dtps);
     dtps.iTabLength = TAB_LENGTH;
-    DrawTextEx(hdc, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
+    DrawTextEx(hdcDraw, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
 	       DT_EXPANDTABS | DT_TABSTOP |
-	       ( dopage ? 0 : DT_CALCRECT ) |
 	       ( Globals.bWrapLongLines ? DT_WORDBREAK : 0 ),
 	       &dtps);
 
+    if(!dopage)
+    {
+        DeleteDC(hdcDraw);
+    }
 #ifdef UNICODE
     p = p + dtps.uiLengthDrawn;
 #else
