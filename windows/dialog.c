@@ -549,6 +549,7 @@ VOID DIALOG_FilePrint(VOID)
     unsigned int i;
     LOGFONT lfHdrFont, lfMainFont;
     HFONT hHdrFont, hMainFont;
+    HPEN hPen;
     DWORD size;
     __LPWSTR pTemp;
     static const TCHAR letterM[] = TEXT("M");
@@ -582,6 +583,9 @@ VOID DIALOG_FilePrint(VOID)
 
     assert(printer.hDC != 0);
 
+    /* Map mode*/
+    SetMapMode(printer.hDC, MM_TEXT);
+
     /* header font */
     lfHdrFont = Globals.lfFont;
     lfHdrFont.lfHeight = -MulDiv(Globals.iPointSize,
@@ -595,6 +599,11 @@ VOID DIALOG_FilePrint(VOID)
 				  GetDeviceCaps(printer.hDC, LOGPIXELSY),
 				  72 * 10);  /* 72pt = 1inch */
     hMainFont = CreateFontIndirect(&lfMainFont);
+
+    /* pen */
+    hPen = CreatePen(PS_INSIDEFRAME,
+		     MulDiv(1, GetDeviceCaps(printer.hDC, LOGPIXELSY), 72),
+		     RGB(0, 0, 0));  /* 1pt black insideframe pen */
 
     /* initialize DOCINFO */
     di.cbSize = sizeof(DOCINFO);
@@ -664,6 +673,9 @@ VOID DIALOG_FilePrint(VOID)
     rcMain.right = cWidthPels-rcMargin.right;
     rcMain.bottom = cHeightPels-rcMargin.bottom;
 
+    /* pen */
+    SelectObject(printer.hDC, hPen);
+
     /* Get the file text */
     size = GetWindowTextLength(Globals.hEdit) + 1;
     pTemp = HeapAlloc(GetProcessHeap(), 0, size * sizeof(__WCHAR));
@@ -707,9 +719,10 @@ VOID DIALOG_FilePrint(VOID)
     }
 
     EndDoc(printer.hDC);
+    DeleteDC(printer.hDC);
+    DeleteObject(hPen);
     DeleteObject(hMainFont);
     DeleteObject(hHdrFont);
-    DeleteDC(printer.hDC);
     HeapFree(GetProcessHeap(), 0, pTemp);
 }
 
