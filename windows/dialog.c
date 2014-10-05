@@ -907,8 +907,30 @@ static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wPa
  */
 VOID DIALOG_FilePageSetup(void)
 {
-  DialogBox(Globals.hInstance, MAKEINTRESOURCE(DIALOG_PAGESETUP),
-            Globals.hMainWnd, DIALOG_PAGESETUP_DlgProc);
+    PAGESETUPDLG psd = { 0 };
+
+    psd.lStructSize = sizeof(psd);
+    psd.hwndOwner = Globals.hMainWnd;
+    psd.hDevMode = Globals.hDevMode;
+    psd.hDevNames = Globals.hDevNames;
+    psd.Flags = ( Globals.MarginFlags ?
+                  ( Globals.MarginFlags | PSD_MARGINS ) : 0);
+    psd.rtMargin = Globals.rtMargin;
+    if (PageSetupDlg(&psd))
+    {
+        Globals.hDevMode = psd.hDevMode;
+        Globals.hDevNames = psd.hDevNames;
+
+        Globals.rtMargin = psd.rtMargin;
+        if (psd.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
+        {
+            Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
+        }
+        else if (psd.Flags & PSD_INTHOUSANDTHSOFINCHES)
+        {
+            Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
+        }
+    }
 }
 
 
