@@ -144,6 +144,7 @@ static VOID LILYPAD_InitData(VOID)
     *p = '\0';
     Globals.hDevMode = NULL;
     Globals.hDevNames = NULL;
+    Globals.MarginFlags = 0;
 
     CheckMenuItem(GetMenu(Globals.hMainWnd), CMD_WRAP,
             MF_BYCOMMAND | (Globals.bWrapLongLines ? MF_CHECKED : MF_UNCHECKED));

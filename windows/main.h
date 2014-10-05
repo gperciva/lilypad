@@ -49,6 +49,9 @@ typedef struct
   __WCHAR   szFileName[MAX_PATH];
   __WCHAR   szFileTitle[MAX_PATH];
   __WCHAR   szFilter[2 * MAX_STRING_LEN + 100];
+
+  RECT    rtMargin;
+  DWORD   MarginFlags;
   __WCHAR   szMarginTop[MAX_PATH];
   __WCHAR   szMarginBottom[MAX_PATH];
   __WCHAR   szMarginLeft[MAX_PATH];

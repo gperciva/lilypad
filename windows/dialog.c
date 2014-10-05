@@ -471,6 +471,40 @@ VOID DIALOG_FileSaveAs(VOID)
     }
 }
 
+static VOID init_default_printer(VOID)
+{
+    if (!Globals.hDevMode && !Globals.hDevNames)
+    {
+        PAGESETUPDLG psd = { 0 };
+
+        psd.lStructSize = sizeof(psd);
+        psd.Flags = PSD_RETURNDEFAULT;
+        if (PageSetupDlg(&psd))
+        {
+            Globals.hDevMode = psd.hDevMode;
+            Globals.hDevNames = psd.hDevNames;
+
+            Globals.rtMargin = psd.rtMargin;
+            if (psd.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
+            {
+                Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
+            }
+            else if (psd.Flags & PSD_INTHOUSANDTHSOFINCHES)
+            {
+                Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
+            }
+        }
+    }
+    if (!Globals.MarginFlags)
+    {
+        Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
+        Globals.rtMargin.left = 2500;
+        Globals.rtMargin.top = 2500;
+        Globals.rtMargin.right = 2500;
+        Globals.rtMargin.bottom = 2500;
+    }
+}
+
 static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
 {
     if (dopage)
@@ -510,8 +544,8 @@ VOID DIALOG_FilePrint(VOID)
     DOCINFO di;
     PRINTDLG printer;
     SIZE szMetric;
-    RECT rcHdrArea, rcHdrText, rcMain;
-    int cWidthPels, cHeightPels, border;
+    RECT rcMargin, rcHdrArea, rcHdrText, rcMain;
+    int cWidthPels, cHeightPels;
     int pagecount, dopage, copycount;
     unsigned int i;
     LOGFONT lfHdrFont, lfMainFont;
@@ -520,6 +554,9 @@ VOID DIALOG_FilePrint(VOID)
     __LPWSTR pTemp;
     static const TCHAR letterM[] = TEXT("M");
     
+    /* initialize default printer */
+    init_default_printer();
+
     /* Get Current Settings */
     ZeroMemory(&printer, sizeof(printer));
     printer.lStructSize           = sizeof(printer);
@@ -577,25 +614,56 @@ VOID DIALOG_FilePrint(VOID)
     SelectObject(printer.hDC, hHdrFont);
     GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
 
-    border = 150;
+    /* Get Margin */
+    rcMargin = Globals.rtMargin;
+    if (Globals.MarginFlags & PSD_INHUNDREDTHSOFMILLIMETERS)
+    {
+        rcMargin.left = MulDiv(rcMargin.left,
+                               GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                               2540);  /* 25.4mm = 1inch */
+        rcMargin.top = MulDiv(rcMargin.top,
+                              GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                              2540);  /* 25.4mm = 1inch */
+        rcMargin.right = MulDiv(rcMargin.right,
+                                GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                2540);  /* 25.4mm = 1inch */
+        rcMargin.bottom = MulDiv(rcMargin.bottom,
+                                 GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                 2540);  /* 25.4mm = 1inch */
+    }
+    else
+    {
+        rcMargin.left = MulDiv(rcMargin.left,
+                               GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                               1000);
+        rcMargin.top = MulDiv(rcMargin.top,
+                              GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                              1000);
+        rcMargin.right = MulDiv(rcMargin.right,
+                                GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                1000);
+        rcMargin.bottom = MulDiv(rcMargin.bottom,
+                                 GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                 1000);
+    }
 
     /* The RECT for the header area */
-    rcHdrArea.left = border;
-    rcHdrArea.top = border;
-    rcHdrArea.right = cWidthPels-border;
-    rcHdrArea.bottom = border+szMetric.cy*2;
+    rcHdrArea.left = rcMargin.left;
+    rcHdrArea.top = rcMargin.top;
+    rcHdrArea.right = cWidthPels-rcMargin.right;
+    rcHdrArea.bottom = rcMargin.top+szMetric.cy*2;
 
     /* The RECT for the header text */
-    rcHdrText.left = border*2;
-    rcHdrText.top = border+szMetric.cy/2;
-    rcHdrText.right = cWidthPels-border;
-    rcHdrText.bottom = border+szMetric.cy*4;
+    rcHdrText.left = rcMargin.left + szMetric.cx*2;
+    rcHdrText.top = rcMargin.top+szMetric.cy/2;
+    rcHdrText.right = cWidthPels-rcMargin.right-szMetric.cx*2;
+    rcHdrText.bottom = rcMargin.top+szMetric.cy*2;
 
     /* The RECT for the main text */
-    rcMain.left = border*2;
-    rcMain.top = border+szMetric.cy*4;
-    rcMain.right = cWidthPels-border;
-    rcMain.bottom = cHeightPels-border*2;
+    rcMain.left = rcMargin.left;
+    rcMain.top = rcMargin.top+szMetric.cy*4;
+    rcMain.right = cWidthPels-rcMargin.right;
+    rcMain.bottom = cHeightPels-rcMargin.bottom;
 
     /* Get the file text */
     size = GetWindowTextLength(Globals.hEdit) + 1;
@@ -650,6 +718,7 @@ VOID DIALOG_FilePrinterSetup(VOID)
 {
     PRINTDLG printer;
 
+    init_default_printer();
     ZeroMemory(&printer, sizeof(printer));
     printer.lStructSize         = sizeof(printer);
     printer.hwndOwner           = Globals.hMainWnd;
