@@ -88,6 +88,13 @@ STRING_OUT_OF_MEMORY,                   "この操作を実行するためのメ
 足りません。\nメモリの空きを増やすためにいくつかのアプリケーションを\n終了して\
 下さい。"
 
+/* LOGFONT structure value of default font */
+STRING_FONT_SIZE	"100"  /* 10.0 pt */
+STRING_FONT_WEIGHT	"400"  /* FW_NORMAL */
+STRING_FONT_ITALIC	"0"    /* FALSE */
+STRING_FONT_CHARSET	"1"    /* DEFAULT_CHARSET */
+STRING_FONT_PITCHANDFAMILY "0x01"  /* FIXED_PITCH | FF_DONTCARE */
+STRING_FONT_FACENAME	"ＭＳ ゴシック"
 }
 
 #pragma code_page(default)

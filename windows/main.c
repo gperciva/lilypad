@@ -56,9 +56,13 @@ static VOID LILYPAD_InitFont()
 {
     LOGFONT *lf = &Globals.lfFont;
     HDC hdc;
-    static const __WCHAR systemW[] = { 'C','o','u','r','i','e','r',' ','N','e','w',0 };
+    TCHAR szBuff[MAX_STRING_LEN];
 
-    Globals.iPointSize = 10 * 10;  /* default font size is 10pt */
+    if (LoadString(Globals.hInstance, STRING_FONT_SIZE,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        Globals.iPointSize = StrToInt(szBuff);
+    else
+        Globals.iPointSize = 10 * 10;  /* default font size is 10pt */
     hdc=GetDC(Globals.hMainWnd);
     lf->lfHeight        = -MulDiv(Globals.iPointSize,
 				  GetDeviceCaps(hdc, LOGPIXELSY),
@@ -68,16 +72,45 @@ static VOID LILYPAD_InitFont()
     lf->lfWidth         = 0;
     lf->lfEscapement    = 0;
     lf->lfOrientation   = 0;
-    lf->lfWeight        = FW_NORMAL;
-    lf->lfItalic        = FALSE;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_WEIGHT,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfWeight    = StrToInt(szBuff);
+    else
+        lf->lfWeight    = FW_NORMAL;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_ITALIC,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfItalic    = StrToInt(szBuff);
+    else
+        lf->lfItalic    = FALSE;
+
     lf->lfUnderline     = FALSE;
     lf->lfStrikeOut     = FALSE;
-    lf->lfCharSet       = DEFAULT_CHARSET;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_CHARSET,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfCharSet   = StrToInt(szBuff);
+    else
+        lf->lfCharSet   = DEFAULT_CHARSET;
+
     lf->lfOutPrecision  = OUT_DEFAULT_PRECIS;
     lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
-    lf->lfQuality       = ANTIALIASED_QUALITY;
-    lf->lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
-    lstrcpy(lf->lfFaceName, systemW);
+    lf->lfQuality       = DEFAULT_QUALITY;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_PITCHANDFAMILY,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+    {
+        int i;
+        StrToIntEx(szBuff, STIF_SUPPORT_HEX, &i);
+        lf->lfPitchAndFamily = i;
+    }
+    else
+        lf->lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
+
+    if (!LoadString(Globals.hInstance, STRING_FONT_FACENAME, lf->lfFaceName,
+		    sizeof(lf->lfFaceName)/sizeof(lf->lfFaceName[0])))
+        lf->lfFaceName[0] = 0;
 
     Globals.hFont = CreateFontIndirect(lf);
     SendMessage(Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)FALSE);
