@@ -858,7 +858,8 @@ VOID DIALOG_SelectFont(VOID)
     cf.lStructSize=sizeof(cf);
     cf.hwndOwner=Globals.hMainWnd;
     cf.lpLogFont=&lf;
-    cf.Flags=CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT;
+    cf.Flags=CF_SCREENFONTS | CF_SCALABLEONLY | CF_NOVERTFONTS |
+      CF_INITTOLOGFONTSTRUCT;
 
     if( ChooseFont(&cf) )
     {
