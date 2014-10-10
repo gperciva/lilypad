@@ -508,11 +508,24 @@ static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
 {
     if (dopage)
     {
+        TCHAR szUntitled[MAX_STRING_LEN];
+        LPTSTR p;
+
+        if (Globals.szFileTitle[0] != 0)
+        {
+            p = Globals.szFileTitle;
+        }
+        else
+        {
+            LoadString(Globals.hInstance, STRING_UNTITLED,
+		       szUntitled, sizeof(szUntitled)/sizeof(szUntitled[0]));
+            p = szUntitled;
+        }
         /* Write a rectangle and header at the top of each page */
         Rectangle(hdc, rcHdrArea.left, rcHdrArea.top,
                   rcHdrArea.right, rcHdrArea.bottom);
         ExtTextOut(hdc, rcHdrText.left, rcHdrText.top, ETO_CLIPPED, &rcHdrText,
-		   Globals.szFileTitle, lstrlen(Globals.szFileTitle), NULL);
+		   p, lstrlen(p), NULL);
     }
 }
 
