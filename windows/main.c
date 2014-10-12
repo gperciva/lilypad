@@ -22,6 +22,11 @@
  *
  */
 
+/* lilypond supports Windows 2000 and higher. */
+#ifndef WINVER
+#define WINVER 0x500
+#endif
+
 #include <windows.h>
 #include <shlwapi.h>
 #include <stdio.h>

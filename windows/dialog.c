@@ -20,6 +20,11 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* lilypond supports Windows 2000 and higher. */
+#ifndef WINVER
+#define WINVER 0x500
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 #include <windows.h>
@@ -571,7 +576,8 @@ static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
 VOID DIALOG_FilePrint(VOID)
 {
     DOCINFO di;
-    PRINTDLG printer;
+    PRINTDLGEX printer = { 0 };
+    PRINTPAGERANGE ppr[1];
     SIZE szMetric;
     RECT rcMargin, rcHdrArea, rcHdrText, rcMain;
     int cWidthPels, cHeightPels;
@@ -588,27 +594,40 @@ VOID DIALOG_FilePrint(VOID)
     init_default_printer();
 
     /* Get Current Settings */
-    ZeroMemory(&printer, sizeof(printer));
     printer.lStructSize           = sizeof(printer);
     printer.hwndOwner             = Globals.hMainWnd;
     printer.hDevMode              = Globals.hDevMode;
     printer.hDevNames             = Globals.hDevNames;
-    printer.hInstance             = Globals.hInstance;
     
     /* Set some default flags */
     printer.Flags                 = PD_RETURNDC | PD_NOSELECTION |
-      PD_USEDEVMODECOPIES;
-    printer.nFromPage             = 0;
-    printer.nMinPage              = 1;
-    /* we really need to calculate number of pages to set nMaxPage and nToPage */
-    printer.nToPage               = 0;
-    printer.nMaxPage              = -1;
+      PD_NOCURRENTPAGE | PD_USEDEVMODECOPIESANDCOLLATE;
 
-    if (!PrintDlg(&printer)) return;
+    printer.nPageRanges           = 0;
+    printer.nMaxPageRanges        = sizeof(ppr) / sizeof(ppr[0]);
+    printer.lpPageRanges          = ppr;
+
+    printer.nMinPage              = 1;
+    /* we really need to calculate number of pages to set nMaxPage */
+    printer.nMaxPage              = -1;
+    printer.nCopies               = 1;
+    printer.nStartPage            = START_PAGE_GENERAL;
+
+    if (PrintDlgEx(&printer) != S_OK ||
+        printer.dwResultAction == PD_RESULT_CANCEL)
+        return;
 
     Globals.hDevMode = printer.hDevMode;
     Globals.hDevNames = printer.hDevNames;
 
+    if (printer.dwResultAction == PD_RESULT_APPLY)
+    {
+        if (printer.hDC)
+            DeleteDC(printer.hDC);
+        return;
+    }
+
+    assert(printer.dwResultAction == PD_RESULT_PRINT);
     assert(printer.hDC != 0);
 
     /* Map mode*/
@@ -719,8 +738,8 @@ VOID DIALOG_FilePrint(VOID)
         pagecount = 1;
         do {
             if ( !(printer.Flags & PD_PAGENUMS) ||
-		 (pagecount >= printer.nFromPage &&
-		  pagecount <= printer.nToPage) )
+		 (pagecount >= printer.lpPageRanges[0].nFromPage &&
+		  pagecount <= printer.lpPageRanges[0].nToPage) )
                 dopage = 1;
             else
                 dopage = 0;
