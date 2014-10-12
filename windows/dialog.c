@@ -577,7 +577,7 @@ VOID DIALOG_FilePrint(VOID)
 {
     DOCINFO di;
     PRINTDLGEX printer = { 0 };
-    PRINTPAGERANGE ppr[1];
+    PRINTPAGERANGE ppr[16];
     SIZE szMetric;
     RECT rcMargin, rcHdrArea, rcHdrText, rcMain;
     int cWidthPels, cHeightPels;
@@ -737,12 +737,20 @@ VOID DIALOG_FilePrint(VOID)
         LPTSTR p = pTemp;
         pagecount = 1;
         do {
-            if ( !(printer.Flags & PD_PAGENUMS) ||
-		 (pagecount >= printer.lpPageRanges[0].nFromPage &&
-		  pagecount <= printer.lpPageRanges[0].nToPage) )
-                dopage = 1;
-            else
+            if ( printer.Flags & PD_PAGENUMS )
+            {
+                int i;
+
                 dopage = 0;
+                for ( i = 0; i < printer.nPageRanges; i++ )
+                {
+                    if(pagecount >= printer.lpPageRanges[i].nFromPage &&
+		       pagecount <= printer.lpPageRanges[i].nToPage)
+                        dopage = 1;
+                }
+            }
+            else
+                dopage = 1;
             
             if (dopage) {
                 if (StartPage(printer.hDC) <= 0) {
