@@ -32,7 +32,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "&Drucken\tStrg+P",          CMD_PRINT
   MENUITEM "Seite ein&richten...",      CMD_PAGE_SETUP
-  MENUITEM "Drucker&einrichtung...",    CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Beenden",          CMD_EXIT
  }

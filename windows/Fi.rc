@@ -30,7 +30,6 @@ MAIN_MENU MENU
   MENUITEM "Talleta &nimellä...",	CMD_SAVE_AS
   MENUITEM "T&ulosta",		CMD_PRINT
   MENUITEM "&Sivun asetukset...",	CMD_PAGE_SETUP
-  MENUITEM "&Kirjoittimen asetukset...",	CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Poistu",		CMD_EXIT
  }

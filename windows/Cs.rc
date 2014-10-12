@@ -33,7 +33,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "&Tisk",            CMD_PRINT
   MENUITEM "Nas&tavení stránky...",    CMD_PAGE_SETUP
-  MENUITEM "Nastavení tiská&rny...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Konec",             CMD_EXIT
  }

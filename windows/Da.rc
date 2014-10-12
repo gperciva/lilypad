@@ -30,7 +30,6 @@ MAIN_MENU MENU
   MENUITEM "Gem so&m...",       CMD_SAVE_AS
   MENUITEM "&Udskriv",          CMD_PRINT
   MENUITEM "Side&opsætning...", CMD_PAGE_SETUP
-  MENUITEM "&Indstil printer...",       CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Afslut",           CMD_EXIT
  }

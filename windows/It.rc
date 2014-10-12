@@ -34,7 +34,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "&Stampa",            CMD_PRINT
   MENUITEM "&Imposta pagina...",    CMD_PAGE_SETUP
-  MENUITEM "&Configurazione stampante...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "E&sci",             CMD_EXIT
  }

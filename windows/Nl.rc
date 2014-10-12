@@ -30,7 +30,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "&Afdrukken",	     CMD_PRINT
   MENUITEM "Pagina-in&stelling...",  CMD_PAGE_SETUP
-  MENUITEM "Printerinstellingen...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Afsluiten",             CMD_EXIT
  }

@@ -35,7 +35,6 @@ POPUP "ファイル(&F)" {
   MENUITEM SEPARATOR
   MENUITEM "印刷(&P)...\tCtrl+P",            CMD_PRINT
   MENUITEM "ページ設定(&T)...",    CMD_PAGE_SETUP
-  MENUITEM "プリンタの設定(&R)...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "終了(&X)",             CMD_EXIT
  }

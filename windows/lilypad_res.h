@@ -34,7 +34,6 @@
 #define CMD_SAVE_AS             0x103
 #define CMD_PRINT               0x104
 #define CMD_PAGE_SETUP          0x105
-#define CMD_PRINTER_SETUP       0x106
 #define CMD_EXIT                0x108
 
 #define CMD_UNDO                0x110

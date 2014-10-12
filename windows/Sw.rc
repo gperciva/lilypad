@@ -31,7 +31,6 @@ MAIN_MENU MENU
   MENUITEM "Spara &som...",     CMD_SAVE_AS
   MENUITEM "&Skriv ut",         CMD_PRINT
   MENUITEM "Sid La&yout...",    CMD_PAGE_SETUP
-  MENUITEM "Skrivar &inställningar...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Avsluta",          CMD_EXIT
  }

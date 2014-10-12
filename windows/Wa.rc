@@ -33,7 +33,6 @@ MAIN_MENU MENU
   MENUITEM "Schaper èt r&lomer...",     CMD_SAVE_AS
   MENUITEM "&Rexhe",            CMD_PRINT
   MENUITEM "Arrandjmint del &Pådje...", CMD_PAGE_SETUP
-  MENUITEM "&Apontiaedje del scrirece...",      CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "Moussî &Foû",       CMD_EXIT
  }

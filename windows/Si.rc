@@ -30,7 +30,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "Na&tisni",            CMD_PRINT
   MENUITEM "P&riprava strani ...",    CMD_PAGE_SETUP
-  MENUITEM "&Tiskalnik ...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "Iz&hod",             CMD_EXIT
  }

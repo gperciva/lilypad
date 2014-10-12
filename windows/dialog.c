@@ -773,26 +773,6 @@ VOID DIALOG_FilePrint(VOID)
     HeapFree(GetProcessHeap(), 0, pTemp);
 }
 
-VOID DIALOG_FilePrinterSetup(VOID)
-{
-    PRINTDLG printer;
-
-    init_default_printer();
-    ZeroMemory(&printer, sizeof(printer));
-    printer.lStructSize         = sizeof(printer);
-    printer.hwndOwner           = Globals.hMainWnd;
-    printer.hDevMode            = Globals.hDevMode;
-    printer.hDevNames           = Globals.hDevNames;
-    printer.hInstance           = Globals.hInstance;
-    printer.Flags               = PD_PRINTSETUP;
-    printer.nCopies             = 1;
-
-    PrintDlg(&printer);
-
-    Globals.hDevMode = printer.hDevMode;
-    Globals.hDevNames = printer.hDevNames;
-}
-
 VOID DIALOG_FileExit(VOID)
 {
     PostMessage(Globals.hMainWnd, WM_CLOSE, 0, 0l);

@@ -27,7 +27,6 @@ MAIN_MENU MENU LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
   MENUITEM "Сохранить &как...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
   MENUITEM "Пара&метры страницы...",    CMD_PAGE_SETUP
-  MENUITEM "&Настройка принтера...", CMD_PRINTER_SETUP
   MENUITEM "&Печатать",            CMD_PRINT
   MENUITEM SEPARATOR
   MENUITEM "В&ыход",             CMD_EXIT

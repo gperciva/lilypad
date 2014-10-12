@@ -30,7 +30,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "พิมพ์",            CMD_PRINT
   MENUITEM "ปรับแต่งหน้า...",    CMD_PAGE_SETUP
-  MENUITEM "ปรับแต่งเครื่องพิมพ์...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "ออก",             CMD_EXIT
  }

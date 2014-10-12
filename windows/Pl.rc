@@ -33,7 +33,6 @@ MAIN_MENU MENU
   MENUITEM SEPARATOR
   MENUITEM "&Drukuj",            CMD_PRINT
   MENUITEM "&Ustawienia strony...",    CMD_PAGE_SETUP
-  MENUITEM "Ustawienia &drukarki...", CMD_PRINTER_SETUP
   MENUITEM SEPARATOR
   MENUITEM "Zakoñ&cz",             CMD_EXIT
  }
