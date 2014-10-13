@@ -233,7 +233,7 @@ BOOL DoCloseFile(void)
     return(TRUE);
 }
 
-static LPSTR newline_normalization(LPSTR pIn, LPDWORD lpdwSize)
+static LPTSTR newline_normalization(LPTSTR pIn, LPDWORD lpdwSize)
 {
     int counter=0;
     int i;
@@ -242,13 +242,13 @@ static LPSTR newline_normalization(LPSTR pIn, LPDWORD lpdwSize)
     {
         switch (pIn[i])
         {
-            case '\r':
-                if (pIn[i+1]=='\n')
+            case TEXT('\r'):
+                if (pIn[i+1]==TEXT('\n'))
                     i++;
                 else
                     counter++;
                 break;
-            case '\n':
+            case TEXT('\n'):
                 counter++;
                 break;
             case 0:
@@ -258,10 +258,11 @@ static LPSTR newline_normalization(LPSTR pIn, LPDWORD lpdwSize)
     }
     if (counter)
     {
-        LPSTR pOut;
+        LPTSTR pOut;
         DWORD dwNewSize = *lpdwSize + counter;
 
-        pOut = HeapAlloc(GetProcessHeap(), 0, dwNewSize + 1);
+        pOut = HeapAlloc(GetProcessHeap(), 0,
+			 (dwNewSize + 1) * sizeof(TCHAR) );
         if (pOut)
         {
             int i_in = 0;
@@ -269,18 +270,18 @@ static LPSTR newline_normalization(LPSTR pIn, LPDWORD lpdwSize)
 
             while ((i_in < *lpdwSize) && (i_out < dwNewSize))
             {
-                char c=pIn[i_in];
+                TCHAR c=pIn[i_in];
                 switch (c)
                 {
-                    case '\r':
-                        pOut[i_out++] = '\r';
-                        pOut[i_out] = '\n';
-                        if (pIn[i_in+1]=='\n')
+                    case TEXT('\r'):
+                        pOut[i_out++] = TEXT('\r');
+                        pOut[i_out] = TEXT('\n');
+                        if (pIn[i_in+1]==TEXT('\n'))
                             i_in++;
                         break;
-                    case '\n':
-                        pOut[i_out++] = '\r';
-                        pOut[i_out] = '\n';
+                    case TEXT('\n'):
+                        pOut[i_out++] = TEXT('\r');
+                        pOut[i_out] = TEXT('\n');
                         break;
                     case 0:
                         pIn[i_out] = 0;
@@ -356,8 +357,6 @@ void DoOpenFile(__LPCWSTR szFileName)
     CloseHandle(hFile);
     pTemp[dwNumRead] = 0;
 
-    pTemp=newline_normalization(pTemp, &dwNumRead);
-
 #ifdef UNICODE
     wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
     pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
@@ -369,9 +368,11 @@ void DoOpenFile(__LPCWSTR szFileName)
     }
     MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, pwTemp, wsize);
     if (*pwTemp == 0xFEFF) pwTemp++;
+    pwTemp=newline_normalization(pwTemp, &wsize);
     SetWindowText(Globals.hEdit, pwTemp);
     HeapFree(GetProcessHeap(), 0, pwTemp);
 #else
+    pTemp=newline_normalization(pTemp, &dwNumRead);
     SetWindowText(Globals.hEdit, pTemp);
 #endif
 
