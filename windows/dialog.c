@@ -33,6 +33,7 @@
 
 #include "main.h"
 #include "dialog.h"
+#include "convert.h"
 
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -316,6 +317,7 @@ void DoOpenFile(__LPCWSTR szFileName)
 #ifdef UNICODE
     LPWSTR pwTemp;
     DWORD wsize;
+    DWORD dwNumConverted;
 #endif
 
     /* Close any files and prompt to save changes */
@@ -355,10 +357,9 @@ void DoOpenFile(__LPCWSTR szFileName)
     }
 
     CloseHandle(hFile);
-    pTemp[dwNumRead] = 0;
 
 #ifdef UNICODE
-    wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
+    wsize = dwNumRead + 1;
     pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
     if (!pwTemp)
     {
@@ -366,12 +367,18 @@ void DoOpenFile(__LPCWSTR szFileName)
 	ShowLastError();
 	return;
     }
-    MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, pwTemp, wsize);
-    if (*pwTemp == 0xFEFF) pwTemp++;
-    pwTemp=newline_normalization(pwTemp, &wsize);
-    SetWindowText(Globals.hEdit, pwTemp);
+    convert_to_utf16(pTemp, dwNumRead, pwTemp, wsize, &dwNumConverted);
+
+    pwTemp[dwNumConverted] = 0;  /* null termination */
+    pwTemp=newline_normalization(pwTemp, &dwNumConverted);
+    if (*pwTemp == 0xFEFF)
+      SetWindowText(Globals.hEdit, pwTemp + 1);  /* skip BOM */
+    else
+      SetWindowText(Globals.hEdit, pwTemp);
+
     HeapFree(GetProcessHeap(), 0, pwTemp);
 #else
+    pTemp[dwNumRead] = 0;  /* null termination */
     pTemp=newline_normalization(pTemp, &dwNumRead);
     SetWindowText(Globals.hEdit, pTemp);
 #endif
