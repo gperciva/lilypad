@@ -34,6 +34,7 @@
 #include "lilypad_res.h"
 
 #define MAX_STRING_LEN      255
+#define TAB_LENGTH          8
 
 typedef struct
 {
@@ -43,17 +44,15 @@ typedef struct
   HWND    hEdit;
   HFONT   hFont; /* Font used by the edit control */
   LOGFONT lfFont;
+  int     iPointSize;
   BOOL    bWrapLongLines;
   __WCHAR   szFindText[MAX_PATH];
   __WCHAR   szFileName[MAX_PATH];
   __WCHAR   szFileTitle[MAX_PATH];
   __WCHAR   szFilter[2 * MAX_STRING_LEN + 100];
-  __WCHAR   szMarginTop[MAX_PATH];
-  __WCHAR   szMarginBottom[MAX_PATH];
-  __WCHAR   szMarginLeft[MAX_PATH];
-  __WCHAR   szMarginRight[MAX_PATH];
-  __WCHAR   szHeader[MAX_PATH];
-  __WCHAR   szFooter[MAX_PATH];
+
+  RECT    rtMargin;
+  DWORD   MarginFlags;
 
   FINDREPLACE find;
   FINDREPLACE lastFind;

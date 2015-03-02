@@ -22,6 +22,11 @@
  *
  */
 
+/* lilypond supports Windows 2000 and higher. */
+#ifndef WINVER
+#define WINVER 0x500
+#endif
+
 #include <windows.h>
 #include <shlwapi.h>
 #include <stdio.h>
@@ -55,22 +60,62 @@ VOID SetFileName(__LPCWSTR szFileName)
 static VOID LILYPAD_InitFont()
 {
     LOGFONT *lf = &Globals.lfFont;
-    static const __WCHAR systemW[] = { 'C','o','u','r','i','e','r',' ','N','e','w',0 };
+    HDC hdc;
+    TCHAR szBuff[MAX_STRING_LEN];
 
-    lf->lfHeight        = -13;
+    if (LoadString(Globals.hInstance, STRING_FONT_SIZE,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        Globals.iPointSize = StrToInt(szBuff);
+    else
+        Globals.iPointSize = 10 * 10;  /* default font size is 10pt */
+    hdc=GetDC(Globals.hMainWnd);
+    lf->lfHeight        = -MulDiv(Globals.iPointSize,
+				  GetDeviceCaps(hdc, LOGPIXELSY),
+				  72 * 10);  /* 72pt = 1inch */
+    ReleaseDC(Globals.hMainWnd, hdc);
+
     lf->lfWidth         = 0;
     lf->lfEscapement    = 0;
     lf->lfOrientation   = 0;
-    lf->lfWeight        = FW_NORMAL;
-    lf->lfItalic        = FALSE;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_WEIGHT,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfWeight    = StrToInt(szBuff);
+    else
+        lf->lfWeight    = FW_NORMAL;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_ITALIC,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfItalic    = StrToInt(szBuff);
+    else
+        lf->lfItalic    = FALSE;
+
     lf->lfUnderline     = FALSE;
     lf->lfStrikeOut     = FALSE;
-    lf->lfCharSet       = DEFAULT_CHARSET;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_CHARSET,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+        lf->lfCharSet   = StrToInt(szBuff);
+    else
+        lf->lfCharSet   = DEFAULT_CHARSET;
+
     lf->lfOutPrecision  = OUT_DEFAULT_PRECIS;
     lf->lfClipPrecision = CLIP_DEFAULT_PRECIS;
-    lf->lfQuality       = ANTIALIASED_QUALITY;
-    lf->lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
-    lstrcpy(lf->lfFaceName, systemW);
+    lf->lfQuality       = DEFAULT_QUALITY;
+
+    if (LoadString(Globals.hInstance, STRING_FONT_PITCHANDFAMILY,
+		   szBuff, sizeof(szBuff)/sizeof(szBuff[0])))
+    {
+        int i;
+        StrToIntEx(szBuff, STIF_SUPPORT_HEX, &i);
+        lf->lfPitchAndFamily = i;
+    }
+    else
+        lf->lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
+
+    if (!LoadString(Globals.hInstance, STRING_FONT_FACENAME, lf->lfFaceName,
+		    sizeof(lf->lfFaceName)/sizeof(lf->lfFaceName[0])))
+        lf->lfFaceName[0] = 0;
 
     Globals.hFont = CreateFontIndirect(lf);
     SendMessage(Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)FALSE);
@@ -92,7 +137,6 @@ static int LILYPAD_MenuCommand(WPARAM wParam)
     case CMD_SAVE_AS:           DIALOG_FileSaveAs(); break;
     case CMD_PRINT:             DIALOG_FilePrint(); break;
     case CMD_PAGE_SETUP:        DIALOG_FilePageSetup(); break;
-    case CMD_PRINTER_SETUP:     DIALOG_FilePrinterSetup();break;
     case CMD_EXIT:              DIALOG_FileExit(); break;
 
     case CMD_UNDO:             DIALOG_EditUndo(); break;
@@ -137,6 +181,7 @@ static VOID LILYPAD_InitData(VOID)
     *p = '\0';
     Globals.hDevMode = NULL;
     Globals.hDevNames = NULL;
+    Globals.MarginFlags = 0;
 
     CheckMenuItem(GetMenu(Globals.hMainWnd), CMD_WRAP,
             MF_BYCOMMAND | (Globals.bWrapLongLines ? MF_CHECKED : MF_UNCHECKED));
@@ -191,6 +236,7 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
         static const __WCHAR editW[] = { 'e','d','i','t',0 };
 	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL |
 	                ES_AUTOVSCROLL | ES_MULTILINE | ES_NOHIDESEL;
+        unsigned int uTabLength = TAB_LENGTH * 4;
         RECT rc;
         GetClientRect(hWnd, &rc);
 
@@ -200,6 +246,7 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
                              0, 0, rc.right, rc.bottom, hWnd,
                              NULL, Globals.hInstance, NULL);
         LILYPAD_InitFont();
+        SendMessage(Globals.hEdit, EM_SETTABSTOPS, 1, (LPARAM)&uTabLength);
         break;
     }
 

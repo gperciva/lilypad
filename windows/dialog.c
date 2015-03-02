@@ -28,9 +28,9 @@
 
 #include "main.h"
 #include "dialog.h"
+#include "convert.h"
 
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
-static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
 VOID ShowLastError(void)
 {
@@ -229,6 +229,77 @@ BOOL DoCloseFile(void)
     return(TRUE);
 }
 
+static LPTSTR newline_normalization(LPTSTR pIn, LPDWORD lpdwSize)
+{
+    int counter=0;
+    int i;
+
+    for ( i = 0; i < *lpdwSize; i++ )
+    {
+        switch (pIn[i])
+        {
+            case TEXT('\r'):
+                if (pIn[i+1]==TEXT('\n'))
+                    i++;
+                else
+                    counter++;
+                break;
+            case TEXT('\n'):
+                counter++;
+                break;
+            case 0:
+                *lpdwSize = i;
+                break;
+        }
+    }
+    if (counter)
+    {
+        LPTSTR pOut;
+        DWORD dwNewSize = *lpdwSize + counter;
+
+        pOut = HeapAlloc(GetProcessHeap(), 0,
+			 (dwNewSize + 1) * sizeof(TCHAR) );
+        if (pOut)
+        {
+            int i_in = 0;
+            int i_out = 0;
+
+            while ((i_in < *lpdwSize) && (i_out < dwNewSize))
+            {
+                TCHAR c=pIn[i_in];
+                switch (c)
+                {
+                    case TEXT('\r'):
+                        pOut[i_out++] = TEXT('\r');
+                        pOut[i_out] = TEXT('\n');
+                        if (pIn[i_in+1]==TEXT('\n'))
+                            i_in++;
+                        break;
+                    case TEXT('\n'):
+                        pOut[i_out++] = TEXT('\r');
+                        pOut[i_out] = TEXT('\n');
+                        break;
+                    case 0:
+                        pIn[i_out] = 0;
+                        *lpdwSize = i_in;
+                        dwNewSize = i_out;
+                        break;
+                    default:
+                        pOut[i_out] = c;
+                        break;
+                }
+                i_in++;
+                i_out++;
+            }
+
+            pOut[dwNewSize] = 0;
+            HeapFree(GetProcessHeap(), 0, pIn);
+            *lpdwSize = dwNewSize;
+            return pOut;
+        }
+    }
+    return pIn;
+}
 
 void DoOpenFile(__LPCWSTR szFileName)
 {
@@ -238,11 +309,10 @@ void DoOpenFile(__LPCWSTR szFileName)
     DWORD size;
     DWORD dwNumRead;
     __WCHAR log[5];
-    int counter;
-    int i;
 #ifdef UNICODE
     LPWSTR pwTemp;
     DWORD wsize;
+    DWORD dwNumConverted;
 #endif
 
     /* Close any files and prompt to save changes */
@@ -282,76 +352,9 @@ void DoOpenFile(__LPCWSTR szFileName)
     }
 
     CloseHandle(hFile);
-    pTemp[dwNumRead] = 0;
-
-    /* newline normalization */
-    counter = 0;
-    for ( i=0; i<dwNumRead; i++ )
-    {
-	switch (pTemp[i])
-	{
-	    case '\r':
-	        if (pTemp[i+1]=='\n')
-	            i++;
-	        else
-		    counter++;
-	        break;
-	    case '\n':
-	        counter++;
-	        break;
-	    case 0:
-	        dwNumRead = i;
-	        break;
-	}
-    }
-    if (counter)
-    {
-	LPSTR p;
-	DWORD dwNewSize = dwNumRead + counter;
-
-	p = HeapAlloc(GetProcessHeap(), 0, dwNewSize + 1);
-	if (p)
-	{
-	    int i_in = 0;
-	    int i_out = 0;
-
-	    while ((i_in < dwNumRead) && (i_out < dwNewSize))
-	    {
-		char c=pTemp[i_in];
-		switch (c)
-		{
-		    case '\r':
-		        p[i_out++] = '\r';
-		        p[i_out] = '\n';
-		        if (pTemp[i_in+1]=='\n')
-			    i_in++;
-		        break;
-		    case '\n':
-		        p[i_out++] = '\r';
-		        p[i_out] = '\n';
-		        break;
-		    case 0:
-		        p[i_out] = 0;
-		        dwNumRead = i_in;
-		        dwNewSize = i_out;
-		        break;
-		    default:
-		        p[i_out] = c;
-		        break;
-		}
-		i_in++;
-		i_out++;
-	    }
-
-	    p[dwNewSize] = 0;
-	    HeapFree(GetProcessHeap(), 0, pTemp);
-	    pTemp = p;
-	    dwNumRead = dwNewSize;
-	}
-    }
 
 #ifdef UNICODE
-    wsize = MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, NULL, 0);
+    wsize = dwNumRead + 1;
     pwTemp = HeapAlloc(GetProcessHeap(), 0, wsize * sizeof(WCHAR));
     if (!pwTemp)
     {
@@ -359,11 +362,19 @@ void DoOpenFile(__LPCWSTR szFileName)
 	ShowLastError();
 	return;
     }
-    MultiByteToWideChar(CP_UTF8, 0, pTemp, dwNumRead + 1, pwTemp, wsize);
-    if (*pwTemp == 0xFEFF) pwTemp++;
-    SetWindowText(Globals.hEdit, pwTemp);
+    convert_to_utf16(pTemp, dwNumRead, pwTemp, wsize, &dwNumConverted);
+
+    pwTemp[dwNumConverted] = 0;  /* null termination */
+    pwTemp=newline_normalization(pwTemp, &dwNumConverted);
+    if (*pwTemp == 0xFEFF)
+      SetWindowText(Globals.hEdit, pwTemp + 1);  /* skip BOM */
+    else
+      SetWindowText(Globals.hEdit, pwTemp);
+
     HeapFree(GetProcessHeap(), 0, pwTemp);
 #else
+    pTemp[dwNumRead] = 0;  /* null termination */
+    pTemp=newline_normalization(pTemp, &dwNumRead);
     SetWindowText(Globals.hEdit, pTemp);
 #endif
 
@@ -471,63 +482,182 @@ VOID DIALOG_FileSaveAs(VOID)
     }
 }
 
+static VOID init_default_printer(VOID)
+{
+    if (!Globals.hDevMode && !Globals.hDevNames)
+    {
+        PAGESETUPDLG psd = { 0 };
+
+        psd.lStructSize = sizeof(psd);
+        psd.Flags = PSD_RETURNDEFAULT;
+        if (PageSetupDlg(&psd))
+        {
+            Globals.hDevMode = psd.hDevMode;
+            Globals.hDevNames = psd.hDevNames;
+
+            Globals.rtMargin = psd.rtMargin;
+            if (psd.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
+            {
+                Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
+            }
+            else if (psd.Flags & PSD_INTHOUSANDTHSOFINCHES)
+            {
+                Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
+            }
+        }
+    }
+    if (!Globals.MarginFlags)
+    {
+        Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
+        Globals.rtMargin.left = 2500;
+        Globals.rtMargin.top = 2500;
+        Globals.rtMargin.right = 2500;
+        Globals.rtMargin.bottom = 2500;
+    }
+}
+
+static VOID print_header(HDC hdc, RECT rcHdrArea, RECT rcHdrText, BOOL dopage)
+{
+    if (dopage)
+    {
+        TCHAR szUntitled[MAX_STRING_LEN];
+        LPTSTR p;
+
+        if (Globals.szFileTitle[0] != 0)
+        {
+            p = Globals.szFileTitle;
+        }
+        else
+        {
+            LoadString(Globals.hInstance, STRING_UNTITLED,
+		       szUntitled, sizeof(szUntitled)/sizeof(szUntitled[0]));
+            p = szUntitled;
+        }
+        /* Write a rectangle and header at the top of each page */
+        Rectangle(hdc, rcHdrArea.left, rcHdrArea.top,
+                  rcHdrArea.right, rcHdrArea.bottom);
+        ExtTextOut(hdc, rcHdrText.left, rcHdrText.top, ETO_CLIPPED, &rcHdrText,
+		   p, lstrlen(p), NULL);
+    }
+}
+
+static LPTSTR print_main_text(HDC hdc, RECT rc, BOOL dopage, LPTSTR p)
+{
+    DRAWTEXTPARAMS dtps = { 0 };
+    HDC hdcDraw;
+
+    if(!dopage)
+    {
+        /* To skip this page, draw the text on dummy DC. */
+        hdcDraw=CreateCompatibleDC(hdc);
+        SelectObject(hdcDraw, GetCurrentObject(hdc, OBJ_FONT));
+    }
+    else
+    {
+        hdcDraw=hdc;
+    }
+    dtps.cbSize = sizeof(dtps);
+    dtps.iTabLength = TAB_LENGTH;
+    DrawTextEx(hdcDraw, p, -1, &rc, DT_EDITCONTROL | DT_NOPREFIX |
+	       DT_EXPANDTABS | DT_TABSTOP |
+	       ( Globals.bWrapLongLines ? DT_WORDBREAK : 0 ),
+	       &dtps);
+
+    if(!dopage)
+    {
+        DeleteDC(hdcDraw);
+    }
+#ifdef UNICODE
+    p = p + dtps.uiLengthDrawn;
+#else
+    {
+        /* A MBCS character is not 1 byte per 1 character. */
+        unsigned int ui;
+        for( ui = 0; ui < dtps.uiLengthDrawn; ui++)
+            p = CharNext( p );
+    }
+#endif
+    return p;
+}
+
 VOID DIALOG_FilePrint(VOID)
 {
     DOCINFO di;
-    PRINTDLG printer;
+    PRINTDLGEX printer = { 0 };
+    PRINTPAGERANGE ppr[16];
     SIZE szMetric;
-    int cWidthPels, cHeightPels, border;
-    int xLeft, yTop, pagecount, dopage, copycount;
+    RECT rcMargin, rcHdrArea, rcHdrText, rcMain;
+    int cWidthPels, cHeightPels;
+    int pagecount, dopage, copycount;
     unsigned int i;
-    LOGFONT hdrFont;
-    HFONT font, old_font=0;
+    LOGFONT lfHdrFont, lfMainFont;
+    HFONT hHdrFont, hMainFont;
+    HPEN hPen;
     DWORD size;
     __LPWSTR pTemp;
-    static const __WCHAR times_new_romanW[] = { 'T','i','m','e','s',' ','N','e','w',' ','R','o','m','a','n',0 };
+    static const TCHAR letterM[] = TEXT("M");
+    
+    /* initialize default printer */
+    init_default_printer();
 
-    /* Get a small font and print some header info on each page */
-    hdrFont.lfHeight = 100;
-    hdrFont.lfWidth = 0;
-    hdrFont.lfEscapement = 0;
-    hdrFont.lfOrientation = 0;
-    hdrFont.lfWeight = FW_BOLD;
-    hdrFont.lfItalic = 0;
-    hdrFont.lfUnderline = 0;
-    hdrFont.lfStrikeOut = 0;
-    hdrFont.lfCharSet = ANSI_CHARSET;
-    hdrFont.lfOutPrecision = OUT_DEFAULT_PRECIS;
-    hdrFont.lfClipPrecision = CLIP_DEFAULT_PRECIS;
-    hdrFont.lfQuality = PROOF_QUALITY;
-    hdrFont.lfPitchAndFamily = VARIABLE_PITCH | FF_ROMAN;
-    lstrcpy(hdrFont.lfFaceName, times_new_romanW);
-    
-    font = CreateFontIndirect(&hdrFont);
-    
     /* Get Current Settings */
-    ZeroMemory(&printer, sizeof(printer));
     printer.lStructSize           = sizeof(printer);
     printer.hwndOwner             = Globals.hMainWnd;
     printer.hDevMode              = Globals.hDevMode;
     printer.hDevNames             = Globals.hDevNames;
-    printer.hInstance             = Globals.hInstance;
     
     /* Set some default flags */
-    printer.Flags                 = PD_RETURNDC;
-    printer.nFromPage             = 0;
+    printer.Flags                 = PD_RETURNDC | PD_NOSELECTION |
+      PD_NOCURRENTPAGE | PD_USEDEVMODECOPIESANDCOLLATE;
+
+    printer.nPageRanges           = 0;
+    printer.nMaxPageRanges        = sizeof(ppr) / sizeof(ppr[0]);
+    printer.lpPageRanges          = ppr;
+
     printer.nMinPage              = 1;
-    /* we really need to calculate number of pages to set nMaxPage and nToPage */
-    printer.nToPage               = 0;
+    /* we really need to calculate number of pages to set nMaxPage */
     printer.nMaxPage              = -1;
+    printer.nCopies               = 1;
+    printer.nStartPage            = START_PAGE_GENERAL;
 
-    /* Let commdlg manage copy settings */
-    printer.nCopies               = (WORD)PD_USEDEVMODECOPIES;
-
-    if (!PrintDlg(&printer)) return;
+    if (PrintDlgEx(&printer) != S_OK ||
+        printer.dwResultAction == PD_RESULT_CANCEL)
+        return;
 
     Globals.hDevMode = printer.hDevMode;
     Globals.hDevNames = printer.hDevNames;
 
+    if (printer.dwResultAction == PD_RESULT_APPLY)
+    {
+        if (printer.hDC)
+            DeleteDC(printer.hDC);
+        return;
+    }
+
+    assert(printer.dwResultAction == PD_RESULT_PRINT);
     assert(printer.hDC != 0);
+
+    /* Map mode*/
+    SetMapMode(printer.hDC, MM_TEXT);
+
+    /* header font */
+    lfHdrFont = Globals.lfFont;
+    lfHdrFont.lfHeight = -MulDiv(Globals.iPointSize,
+				 GetDeviceCaps(printer.hDC, LOGPIXELSY),
+				 72 * 10);  /* 72pt = 1inch */
+    hHdrFont = CreateFontIndirect(&lfHdrFont);
+
+    /* main text font */
+    lfMainFont = Globals.lfFont;
+    lfMainFont.lfHeight = -MulDiv(Globals.iPointSize,
+				  GetDeviceCaps(printer.hDC, LOGPIXELSY),
+				  72 * 10);  /* 72pt = 1inch */
+    hMainFont = CreateFontIndirect(&lfMainFont);
+
+    /* pen */
+    hPen = CreatePen(PS_INSIDEFRAME,
+		     MulDiv(1, GetDeviceCaps(printer.hDC, LOGPIXELSY), 72),
+		     RGB(0, 0, 0));  /* 1pt black insideframe pen */
 
     /* initialize DOCINFO */
     di.cbSize = sizeof(DOCINFO);
@@ -542,6 +672,64 @@ VOID DIALOG_FilePrint(VOID)
     cWidthPels = GetDeviceCaps(printer.hDC, HORZRES);
     cHeightPels = GetDeviceCaps(printer.hDC, VERTRES);
 
+    /* Get the header font height for calculate page layout */
+    SelectObject(printer.hDC, hHdrFont);
+    GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
+
+    /* Get Margin */
+    rcMargin = Globals.rtMargin;
+    if (Globals.MarginFlags & PSD_INHUNDREDTHSOFMILLIMETERS)
+    {
+        rcMargin.left = MulDiv(rcMargin.left,
+                               GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                               2540);  /* 25.4mm = 1inch */
+        rcMargin.top = MulDiv(rcMargin.top,
+                              GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                              2540);  /* 25.4mm = 1inch */
+        rcMargin.right = MulDiv(rcMargin.right,
+                                GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                2540);  /* 25.4mm = 1inch */
+        rcMargin.bottom = MulDiv(rcMargin.bottom,
+                                 GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                 2540);  /* 25.4mm = 1inch */
+    }
+    else
+    {
+        rcMargin.left = MulDiv(rcMargin.left,
+                               GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                               1000);
+        rcMargin.top = MulDiv(rcMargin.top,
+                              GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                              1000);
+        rcMargin.right = MulDiv(rcMargin.right,
+                                GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                1000);
+        rcMargin.bottom = MulDiv(rcMargin.bottom,
+                                 GetDeviceCaps(printer.hDC, LOGPIXELSX),
+                                 1000);
+    }
+
+    /* The RECT for the header area */
+    rcHdrArea.left = rcMargin.left;
+    rcHdrArea.top = rcMargin.top;
+    rcHdrArea.right = cWidthPels-rcMargin.right;
+    rcHdrArea.bottom = rcMargin.top+szMetric.cy*2;
+
+    /* The RECT for the header text */
+    rcHdrText.left = rcMargin.left + szMetric.cx*2;
+    rcHdrText.top = rcMargin.top+szMetric.cy/2;
+    rcHdrText.right = cWidthPels-rcMargin.right-szMetric.cx*2;
+    rcHdrText.bottom = rcMargin.top+szMetric.cy*2;
+
+    /* The RECT for the main text */
+    rcMain.left = rcMargin.left;
+    rcMain.top = rcMargin.top+szMetric.cy*4;
+    rcMain.right = cWidthPels-rcMargin.right;
+    rcMain.bottom = cHeightPels-rcMargin.bottom;
+
+    /* pen */
+    SelectObject(printer.hDC, hPen);
+
     /* Get the file text */
     size = GetWindowTextLength(Globals.hEdit) + 1;
     pTemp = HeapAlloc(GetProcessHeap(), 0, size * sizeof(__WCHAR));
@@ -552,23 +740,25 @@ VOID DIALOG_FilePrint(VOID)
     }
     size = GetWindowText(Globals.hEdit, pTemp, size);
     
-    border = 150;
     for (copycount=1; copycount <= printer.nCopies; copycount++) {
-        i = 0;
+        LPTSTR p = pTemp;
         pagecount = 1;
         do {
-            static const __WCHAR letterM[] = { 'M',0 };
+            if ( printer.Flags & PD_PAGENUMS )
+            {
+                int i;
 
-            if (pagecount >= printer.nFromPage &&
-    /*          ((printer.Flags & PD_PAGENUMS) == 0 ||  pagecount <= printer.nToPage))*/
-            pagecount <= printer.nToPage)
-                dopage = 1;
-            else
                 dopage = 0;
+                for ( i = 0; i < printer.nPageRanges; i++ )
+                {
+                    if(pagecount >= printer.lpPageRanges[i].nFromPage &&
+		       pagecount <= printer.lpPageRanges[i].nToPage)
+                        dopage = 1;
+                }
+            }
+            else
+                dopage = 1;
             
-            old_font = SelectObject(printer.hDC, font);
-            GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric);
-                
             if (dopage) {
                 if (StartPage(printer.hDC) <= 0) {
                     static const __WCHAR failedW[] = { 'S','t','a','r','t','P','a','g','e',' ','f','a','i','l','e','d',0 };
@@ -576,64 +766,26 @@ VOID DIALOG_FilePrint(VOID)
                     MessageBox(Globals.hMainWnd, failedW, errorW, MB_ICONEXCLAMATION);
                     return;
                 }
-                /* Write a rectangle and header at the top of each page */
-                Rectangle(printer.hDC, border, border, cWidthPels-border, border+szMetric.cy*2);
-                /* I don't know what's up with this TextOut command. This comes out
-                kind of mangled.
-                */
-                TextOut(printer.hDC, border*2, border+szMetric.cy/2, Globals.szFileTitle, lstrlen(Globals.szFileTitle));
             }
-            
-            /* The starting point for the main text */
-            xLeft = border*2;
-            yTop = border+szMetric.cy*4;
-            
-            SelectObject(printer.hDC, old_font);
-            GetTextExtentPoint32(printer.hDC, letterM, 1, &szMetric); 
-            
-            /* Since outputting strings is giving me problems, output the main
-            text one character at a time.
-            */
-            do {
-                if (pTemp[i] == '\n') {
-                    xLeft = border*2;
-                    yTop += szMetric.cy;
-                }
-                else if (pTemp[i] != '\r') {
-                    if (dopage)
-                        TextOut(printer.hDC, xLeft, yTop, &pTemp[i], 1);
-                    xLeft += szMetric.cx;
-                }
-            } while (i++<size && yTop<(cHeightPels-border*2));
+
+            SelectObject(printer.hDC, hHdrFont);
+            print_header(printer.hDC, rcHdrArea, rcHdrText, dopage);
+
+            SelectObject(printer.hDC, hMainFont);
+            p = print_main_text(printer.hDC, rcMain, dopage, p);
             
             if (dopage)
                 EndPage(printer.hDC);
             pagecount++;
-        } while (i<size);
+        } while ( *p != 0 );
     }
 
     EndDoc(printer.hDC);
     DeleteDC(printer.hDC);
+    DeleteObject(hPen);
+    DeleteObject(hMainFont);
+    DeleteObject(hHdrFont);
     HeapFree(GetProcessHeap(), 0, pTemp);
-}
-
-VOID DIALOG_FilePrinterSetup(VOID)
-{
-    PRINTDLG printer;
-
-    ZeroMemory(&printer, sizeof(printer));
-    printer.lStructSize         = sizeof(printer);
-    printer.hwndOwner           = Globals.hMainWnd;
-    printer.hDevMode            = Globals.hDevMode;
-    printer.hDevNames           = Globals.hDevNames;
-    printer.hInstance           = Globals.hInstance;
-    printer.Flags               = PD_PRINTSETUP;
-    printer.nCopies             = 1;
-
-    PrintDlg(&printer);
-
-    Globals.hDevMode = printer.hDevMode;
-    Globals.hDevNames = printer.hDevNames;
 }
 
 VOID DIALOG_FileExit(VOID)
@@ -733,7 +885,8 @@ VOID DIALOG_SelectFont(VOID)
     cf.lStructSize=sizeof(cf);
     cf.hwndOwner=Globals.hMainWnd;
     cf.lpLogFont=&lf;
-    cf.Flags=CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT;
+    cf.Flags=CF_SCREENFONTS | CF_SCALABLEONLY | CF_NOVERTFONTS |
+      CF_INITTOLOGFONTSTRUCT;
 
     if( ChooseFont(&cf) )
     {
@@ -741,6 +894,7 @@ VOID DIALOG_SelectFont(VOID)
 
         Globals.hFont=CreateFontIndirect( &lf );
         Globals.lfFont=lf;
+        Globals.iPointSize=cf.iPointSize;
         SendMessage( Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)TRUE );
         if( currfont!=NULL )
             DeleteObject( currfont );
@@ -808,57 +962,30 @@ static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wPa
  */
 VOID DIALOG_FilePageSetup(void)
 {
-  DialogBox(Globals.hInstance, MAKEINTRESOURCE(DIALOG_PAGESETUP),
-            Globals.hMainWnd, DIALOG_PAGESETUP_DlgProc);
-}
+    PAGESETUPDLG psd = { 0 };
 
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- *           DIALOG_PAGESETUP_DlgProc
- */
-
-static INT_PTR WINAPI DIALOG_PAGESETUP_DlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-
-   switch (msg)
+    psd.lStructSize = sizeof(psd);
+    psd.hwndOwner = Globals.hMainWnd;
+    psd.hDevMode = Globals.hDevMode;
+    psd.hDevNames = Globals.hDevNames;
+    psd.Flags = ( Globals.MarginFlags ?
+                  ( Globals.MarginFlags | PSD_MARGINS ) : 0);
+    psd.rtMargin = Globals.rtMargin;
+    if (PageSetupDlg(&psd))
     {
-    case WM_COMMAND:
-      switch (wParam)
+        Globals.hDevMode = psd.hDevMode;
+        Globals.hDevNames = psd.hDevNames;
+
+        Globals.rtMargin = psd.rtMargin;
+        if (psd.Flags & PSD_INHUNDREDTHSOFMILLIMETERS)
         {
-        case IDOK:
-          /* save user input and close dialog */
-          GetDlgItemText(hDlg, 0x141, Globals.szHeader, SIZEOF(Globals.szHeader));
-          GetDlgItemText(hDlg, 0x143, Globals.szFooter, SIZEOF(Globals.szFooter));
-          GetDlgItemText(hDlg, 0x14A, Globals.szMarginTop, SIZEOF(Globals.szMarginTop));
-          GetDlgItemText(hDlg, 0x150, Globals.szMarginBottom, SIZEOF(Globals.szMarginBottom));
-          GetDlgItemText(hDlg, 0x147, Globals.szMarginLeft, SIZEOF(Globals.szMarginLeft));
-          GetDlgItemText(hDlg, 0x14D, Globals.szMarginRight, SIZEOF(Globals.szMarginRight));
-          EndDialog(hDlg, IDOK);
-          return TRUE;
-
-        case IDCANCEL:
-          /* discard user input and close dialog */
-          EndDialog(hDlg, IDCANCEL);
-          return TRUE;
-
-	default:
-	    break;
+            Globals.MarginFlags = PSD_INHUNDREDTHSOFMILLIMETERS;
         }
-      break;
-
-    case WM_INITDIALOG:
-       /* fetch last user input prior to display dialog */
-       SetDlgItemText(hDlg, 0x141, Globals.szHeader);
-       SetDlgItemText(hDlg, 0x143, Globals.szFooter);
-       SetDlgItemText(hDlg, 0x14A, Globals.szMarginTop);
-       SetDlgItemText(hDlg, 0x150, Globals.szMarginBottom);
-       SetDlgItemText(hDlg, 0x147, Globals.szMarginLeft);
-       SetDlgItemText(hDlg, 0x14D, Globals.szMarginRight);
-       break;
+        else if (psd.Flags & PSD_INTHOUSANDTHSOFINCHES)
+        {
+            Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
+        }
     }
-
-  return FALSE;
 }
 
 /**

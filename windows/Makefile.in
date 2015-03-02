@@ -4,13 +4,14 @@ SRCDIR    = @srcdir@
 VPATH     = @srcdir@
 MODULE    = lilypad.exe
 APPMODE   = -mwindows
-IMPORTS   = comdlg32 shell32 shlwapi user32 gdi32 msvcrt advapi32 kernel32
+IMPORTS   = comdlg32 shell32 shlwapi user32 gdi32 msvcrt advapi32 kernel32 ole32
 EXTRAINCL = -I$(TOPSRCDIR)/include/msvcrt
 EXTRADEFS = -DNO_LIBWINE_PORT
 MKINSTALLDIRS= @MKINSTALLDIRS@
 
 C_SRCS = \
 	dialog.c \
+	convert.c \
 	main.c
 
 RC_SRCS = rsrc.rc
