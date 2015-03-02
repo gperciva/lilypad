@@ -20,11 +20,6 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
-/* lilypond supports Windows 2000 and higher. */
-#ifndef WINVER
-#define WINVER 0x500
-#endif
-
 #include <assert.h>
 #include <stdio.h>
 #include <windows.h>
