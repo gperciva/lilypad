@@ -81,6 +81,13 @@ STRING_NOTFOUND,                                        "找不到文件 '%s'"
 STRING_OUT_OF_MEMORY,                   "没有足够的内存可以用来完成此项任务。 \
 \n请关闭一些程序施放内存后再试。"
 
+/* LOGFONT structure value of default font */
+STRING_FONT_SIZE	"100"  /* 10.0 pt */
+STRING_FONT_WEIGHT	"400"  /* FW_NORMAL */
+STRING_FONT_ITALIC	"0"    /* FALSE */
+STRING_FONT_CHARSET	"1"    /* DEFAULT_CHARSET */
+STRING_FONT_PITCHANDFAMILY "0x01"  /* FIXED_PITCH | FF_DONTCARE */
+STRING_FONT_FACENAME	"SimHei"
 }
 
 #pragma code_page(default)
