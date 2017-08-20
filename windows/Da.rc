@@ -25,11 +25,11 @@ MAIN_MENU MENU
 {
  POPUP "&Filef" {
   MENUITEM "&Ny...",            CMD_NEW
-  MENUITEM "Å&bn\tEnter",       CMD_OPEN
+  MENUITEM "Ã…&bn\tEnter",       CMD_OPEN
   MENUITEM "&Gem",              CMD_SAVE
   MENUITEM "Gem so&m...",       CMD_SAVE_AS
   MENUITEM "&Udskriv",          CMD_PRINT
-  MENUITEM "Side&opsætning...", CMD_PAGE_SETUP
+  MENUITEM "Side&opsÃ¦tning...", CMD_PAGE_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Afslut",           CMD_EXIT
  }
@@ -38,7 +38,7 @@ POPUP "&Rediger" {
   MENUITEM SEPARATOR
   MENUITEM "&Klip\tCtrl+X",     CMD_CUT
   MENUITEM "K&opier\tCtrl+C",   CMD_COPY
-  MENUITEM "Sæt &ind\tCtrl+V",  CMD_PASTE
+  MENUITEM "SÃ¦t &ind\tCtrl+V",  CMD_PASTE
   MENUITEM "&Slet\tDel",        CMD_DELETE
   MENUITEM SEPARATOR
   MENUITEM "Marker &alt",       CMD_SELECT_ALL
@@ -46,11 +46,11 @@ POPUP "&Rediger" {
   MENUITEM SEPARATOR
   MENUITEM "Automatisk &linjeskift",    CMD_WRAP
  }
-POPUP "&Søg" {
-  MENUITEM "&Søg...",           CMD_SEARCH
-  MENUITEM "&Find næste\tF3",   CMD_SEARCH_NEXT
+POPUP "&SÃ¸g" {
+  MENUITEM "&SÃ¸g...",           CMD_SEARCH
+  MENUITEM "&Find nÃ¦ste\tF3",   CMD_SEARCH_NEXT
  }
-POPUP "&Hjælp" {
+POPUP "&HjÃ¦lp" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -70,14 +70,14 @@ STRING_LILYPOND_FILES_LY,                  "LilyPond filer (*.ly)"
 STRING_TOOLARGE,                                "Filen '%s' er for stor til Notesblok. \
 \nBrug en anden editor til at redigere filen."
 STRING_NOTEXT,                                  "Du har ikke skrevet noget LilyPond. \
-\nSkriv noget LilyPond, og prøv så igen"
+\nSkriv noget LilyPond, og prÃ¸v sÃ¥ igen"
 STRING_DOESNOTEXIST,                            "File '%s'\ndoes not exist\n\n \
 Do you want to create a new file ?"
 STRING_NOTSAVED,                                "File '%s'\nhas been modified\n\n \
 Would you like to save the changes ?"
 STRING_NOTFOUND,                                        "Kan ikke finde '%s'."
-STRING_OUT_OF_MEMORY,                   "Der er ikke nok hukommelse til at udføre \
-denne operation. \nAfslut et eller flere aktive programmer for at frigøre \
-hukommelse, og prøv så igen."
+STRING_OUT_OF_MEMORY,                   "Der er ikke nok hukommelse til at udfÃ¸re \
+denne operation. \nAfslut et eller flere aktive programmer for at frigÃ¸re \
+hukommelse, og prÃ¸v sÃ¥ igen."
 
 }

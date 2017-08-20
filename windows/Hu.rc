@@ -23,35 +23,35 @@
 
 MAIN_MENU MENU LANGUAGE LANG_HUNGARIAN, SUBLANG_DEFAULT
 {
- POPUP "&F·jl" {
-  MENUITEM "⁄&j",           CMD_NEW
-  MENUITEM "Meg&nyit·s...",             CMD_OPEN
-  MENUITEM "&MentÈs",             CMD_SAVE
-  MENUITEM "MentÈs m·&skÈnt...",       CMD_SAVE_AS
+ POPUP "&F√°jl" {
+  MENUITEM "√ö&j",           CMD_NEW
+  MENUITEM "Meg&nyit√°s...",             CMD_OPEN
+  MENUITEM "&Ment√©s",             CMD_SAVE
+  MENUITEM "Ment√©s m√°&sk√©nt...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
-  MENUITEM "&Oldalbe·llÌt·s...",    CMD_PAGE_SETUP
-  MENUITEM "Nyom&tat·s...",            CMD_PRINT
+  MENUITEM "&Oldalbe√°ll√≠t√°s...",    CMD_PAGE_SETUP
+  MENUITEM "Nyom&tat√°s...",            CMD_PRINT
   MENUITEM SEPARATOR
-  MENUITEM "&KilÈpÈs",             CMD_EXIT
+  MENUITEM "&Kil√©p√©s",             CMD_EXIT
  }
-POPUP "S&zerkesztÈs" {
-  MENUITEM "&Visszavon·s\tCtrl+Z",     CMD_UNDO
+POPUP "S&zerkeszt√©s" {
+  MENUITEM "&Visszavon√°s\tCtrl+Z",     CMD_UNDO
   MENUITEM SEPARATOR
-  MENUITEM "Kiv·&g·s\tCtrl+X",      CMD_CUT
-  MENUITEM "&M·sol·s\tCtrl+C",     CMD_COPY
-  MENUITEM "&BeillesztÈs\tCtrl+V",    CMD_PASTE
-  MENUITEM "Tˆr&lÈs\tDel",      CMD_DELETE
+  MENUITEM "Kiv√°&g√°s\tCtrl+X",      CMD_CUT
+  MENUITEM "&M√°sol√°s\tCtrl+C",     CMD_COPY
+  MENUITEM "&Beilleszt√©s\tCtrl+V",    CMD_PASTE
+  MENUITEM "T√∂r&l√©s\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
-  MENUITEM "&Az ˆsszes kijelˆlÈse",       CMD_SELECT_ALL
-  MENUITEM "&Idı/d·tum\tF5",    CMD_TIME_DATE
+  MENUITEM "&Az √∂sszes kijel√∂l√©se",       CMD_SELECT_ALL
+  MENUITEM "&Id≈ë/d√°tum\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "&Hossz˙ sorok tˆrdelÈse",  CMD_WRAP
+  MENUITEM "&Hossz√∫ sorok t√∂rdel√©se",  CMD_WRAP
  }
-POPUP "&KeresÈs" {
-  MENUITEM "&KeresÈs...",           CMD_SEARCH
-  MENUITEM "Kˆve&tkezı keresÈse\tF3",  CMD_SEARCH_NEXT
+POPUP "&Keres√©s" {
+  MENUITEM "&Keres√©s...",           CMD_SEARCH
+  MENUITEM "K√∂ve&tkez≈ë keres√©se\tF3",  CMD_SEARCH_NEXT
  }
-POPUP "&S˙gÛ" {
+POPUP "&S√∫g√≥" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -60,25 +60,25 @@ STRINGTABLE DISCARDABLE LANGUAGE LANG_HUNGARIAN, SUBLANG_DEFAULT
 {
 STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "HIBA"
-STRING_WARNING,                                 "FIGYELMEZTET…S"
-STRING_INFO,                                    "Inform·ciÛ"
+STRING_WARNING,                                 "FIGYELMEZTET√âS"
+STRING_INFO,                                    "Inform√°ci√≥"
 
-STRING_UNTITLED,                                "(nÈvtelen)"
+STRING_UNTITLED,                                "(n√©vtelen)"
 
-STRING_ALL_FILES,                               "Minden f·jl (*.*)"
-STRING_LILYPOND_FILES_LY,                  "Szˆvegf·jlok (*.ly)"
+STRING_ALL_FILES,                               "Minden f√°jl (*.*)"
+STRING_LILYPOND_FILES_LY,                  "Sz√∂vegf√°jlok (*.ly)"
 
-STRING_TOOLARGE,                                "'%s' f·jl t˙l nagy mÈret˚.\n \
-KÈrem haszn·ljon m·sik szˆvegszerkesztı programot."
-STRING_NOTEXT,                                  "A szˆveg nem tartalmaz karaktert! \
-\nKÈrem gÈpeljen be nÈh·ny karaktert Ès prÛb·lja ˙jra!"
-STRING_DOESNOTEXIST,                            "A megadott '%s'\nf·jl nem lÈtezik!\n\n \
-KÌv·n lÈtrehozni ˙j f·jlt?"
-STRING_NOTSAVED,                                "'%s' f·jl\nmÛdosult\n\n \
-SzeretnÈ menteni a v·ltoz·sokat?"
-STRING_NOTFOUND,                                        "'%s' nem tal·lhatÛ!"
-STRING_OUT_OF_MEMORY,                   "Nincs elegendı szabad memÛria!\
-\nZ·rjon be nÈh·ny alkalmaz·st, ezzel nˆvelve a szabad memÛria mÈretÈt\
+STRING_TOOLARGE,                                "'%s' f√°jl t√∫l nagy m√©ret≈±.\n \
+K√©rem haszn√°ljon m√°sik sz√∂vegszerkeszt≈ë programot."
+STRING_NOTEXT,                                  "A sz√∂veg nem tartalmaz karaktert! \
+\nK√©rem g√©peljen be n√©h√°ny karaktert √©s pr√≥b√°lja √∫jra!"
+STRING_DOESNOTEXIST,                            "A megadott '%s'\nf√°jl nem l√©tezik!\n\n \
+K√≠v√°n l√©trehozni √∫j f√°jlt?"
+STRING_NOTSAVED,                                "'%s' f√°jl\nm√≥dosult\n\n \
+Szeretn√© menteni a v√°ltoz√°sokat?"
+STRING_NOTFOUND,                                        "'%s' nem tal√°lhat√≥!"
+STRING_OUT_OF_MEMORY,                   "Nincs elegend≈ë szabad mem√≥ria!\
+\nZ√°rjon be n√©h√°ny alkalmaz√°st, ezzel n√∂velve a szabad mem√≥ria m√©ret√©t\
 !"
 
 }

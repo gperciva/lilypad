@@ -22,36 +22,36 @@ LANGUAGE LANG_THAI, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
 {
- POPUP "·øÈ¡" {
-  MENUITEM " √È“ß„À¡Ë...",        CMD_NEW
-  MENUITEM "‡ª‘¥...\tCtrl+O",   CMD_OPEN
-  MENUITEM "∫—π∑◊°\tCtrl+S",     CMD_SAVE
-  MENUITEM "∫—π∑◊°‡ªÁπ...",       CMD_SAVE_AS
+ POPUP "‡πÅ‡∏ü‡πâ‡∏°" {
+  MENUITEM "‡∏™‡∏£‡πâ‡∏≤‡∏á‡πÉ‡∏´‡∏°‡πà...",        CMD_NEW
+  MENUITEM "‡πÄ‡∏õ‡∏¥‡∏î...\tCtrl+O",   CMD_OPEN
+  MENUITEM "‡∏ö‡∏±‡∏ô‡∏ó‡∏∑‡∏Å\tCtrl+S",     CMD_SAVE
+  MENUITEM "‡∏ö‡∏±‡∏ô‡∏ó‡∏∑‡∏Å‡πÄ‡∏õ‡πá‡∏ô...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
-  MENUITEM "æ‘¡æÏ",            CMD_PRINT
-  MENUITEM "ª√—∫·µËßÀπÈ“...",    CMD_PAGE_SETUP
+  MENUITEM "‡∏û‡∏¥‡∏°‡∏û‡πå",            CMD_PRINT
+  MENUITEM "‡∏õ‡∏£‡∏±‡∏ö‡πÅ‡∏ï‡πà‡∏á‡∏´‡∏ô‡πâ‡∏≤...",    CMD_PAGE_SETUP
   MENUITEM SEPARATOR
-  MENUITEM "ÕÕ°",             CMD_EXIT
+  MENUITEM "‡∏≠‡∏≠‡∏Å",             CMD_EXIT
  }
- POPUP "·°È‰¢" {
-  MENUITEM "‡√’¬°§◊π\tCtrl+Z",     CMD_UNDO
+ POPUP "‡πÅ‡∏Å‡πâ‡πÑ‡∏Ç" {
+  MENUITEM "‡πÄ‡∏£‡∏µ‡∏¢‡∏Å‡∏Ñ‡∏∑‡∏ô\tCtrl+Z",     CMD_UNDO
   MENUITEM SEPARATOR
-  MENUITEM "µ—¥\tCtrl+X",      CMD_CUT
-  MENUITEM "µ—¥≈Õ°\tCtrl+C",     CMD_COPY
-  MENUITEM "«“ß\tCtrl+V",    CMD_PASTE
-  MENUITEM "≈∫\tDel",      CMD_DELETE
+  MENUITEM "‡∏ï‡∏±‡∏î\tCtrl+X",      CMD_CUT
+  MENUITEM "‡∏ï‡∏±‡∏î‡∏•‡∏≠‡∏Å\tCtrl+C",     CMD_COPY
+  MENUITEM "‡∏ß‡∏≤‡∏á\tCtrl+V",    CMD_PASTE
+  MENUITEM "‡∏•‡∏ö\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
-  MENUITEM "‡≈◊Õ°∑—ÈßÀ¡¥\tCtrl+A",       CMD_SELECT_ALL
-  MENUITEM "«—π∑’Ë/\tF5",    CMD_TIME_DATE
+  MENUITEM "‡πÄ‡∏•‡∏∑‡∏≠‡∏Å‡∏ó‡∏±‡πâ‡∏á‡∏´‡∏°‡∏î\tCtrl+A",       CMD_SELECT_ALL
+  MENUITEM "‡∏ß‡∏±‡∏ô‡∏ó‡∏µ‡πà/\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "ÀËÕ∫√√∑—¥¬“«",  CMD_WRAP
-  MENUITEM "√Ÿª·∫∫¥—«Õ—°…√...",          CMD_FONT
+  MENUITEM "‡∏´‡πà‡∏≠‡∏ö‡∏£‡∏£‡∏ó‡∏±‡∏î‡∏¢‡∏≤‡∏ß",  CMD_WRAP
+  MENUITEM "‡∏£‡∏π‡∏õ‡πÅ‡∏ö‡∏ö‡∏î‡∏±‡∏ß‡∏≠‡∏±‡∏Å‡∏©‡∏£...",          CMD_FONT
  }
- POPUP "§—πÀ“" {
-  MENUITEM "§ÈπÀ“\tCtrl+F",   CMD_SEARCH
-  MENUITEM "§ÈπÀ“µËÕ‰ª\tF3",  CMD_SEARCH_NEXT
+ POPUP "‡∏Ñ‡∏±‡∏ô‡∏´‡∏≤" {
+  MENUITEM "‡∏Ñ‡πâ‡∏ô‡∏´‡∏≤\tCtrl+F",   CMD_SEARCH
+  MENUITEM "‡∏Ñ‡πâ‡∏ô‡∏´‡∏≤‡∏ï‡πà‡∏≠‡πÑ‡∏õ\tF3",  CMD_SEARCH_NEXT
  }
- POPUP "™Ë«¬‡À≈’Õ" {
+ POPUP "‡∏ä‡πà‡∏ß‡∏¢‡πÄ‡∏´‡∏•‡∏µ‡∏≠" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -59,20 +59,20 @@ MAIN_MENU MENU
 STRINGTABLE DISCARDABLE
 {
 STRING_LILYPAD, "LilyPad"
-STRING_ERROR,         "§«“¡ª‘¥"
-STRING_WARNING,       "§Ì“µ◊Õπ"
-STRING_INFO,          "√“¬≈–‡Õ’¬¥"
+STRING_ERROR,         "‡∏Ñ‡∏ß‡∏≤‡∏°‡∏õ‡∏¥‡∏î"
+STRING_WARNING,       "‡∏Ñ‡πç‡∏≤‡∏ï‡∏∑‡∏≠‡∏ô"
+STRING_INFO,          "‡∏£‡∏≤‡∏¢‡∏•‡∏∞‡πÄ‡∏≠‡∏µ‡∏¢‡∏î"
 
-STRING_UNTITLED,      "‰¡Ë°Ì“Àπ¥™÷ËÕ"
+STRING_UNTITLED,      "‡πÑ‡∏°‡πà‡∏Å‡πç‡∏≤‡∏´‡∏ô‡∏î‡∏ä‡∏∂‡πà‡∏≠"
 
-STRING_ALL_FILES,       "∑ÿ°·øÈ¡ (*.*)"
-STRING_LILYPOND_FILES_LY,  "·øÈ¡µÌ“√“ (*.ly)"
+STRING_ALL_FILES,       "‡∏ó‡∏∏‡∏Å‡πÅ‡∏ü‡πâ‡∏° (*.*)"
+STRING_LILYPOND_FILES_LY,  "‡πÅ‡∏ü‡πâ‡∏°‡∏ï‡πç‡∏≤‡∏£‡∏≤ (*.ly)"
 
-STRING_TOOLARGE,  "·øÈ¡ '%s' „À≠Ë‡°‘π‰ª"
-STRING_NOTEXT,    "§ÿ≥‰¡Ë„¥‡¢’¬πÕ–‰√\n°√ÿ≥“≈Õß„À¡Ë"
-STRING_DOESNOTEXIST, "‰¡Ëæ∫·øÈ¡ '%s' ∑’ËµÈÕß°“√‡ª‘¥\n§ÿ≥µÈÕß°“√ √È“ß„À¡Ë‰¡Ë ?"
-STRING_NOTSAVED,  "¡’°“√‡ª≈’Ë¬π·ª≈ß°—∫‡Õ° “√\n\n'%s'\n\n§ÿ≥µÈÕß°“√∫—π∑÷°¡—πÀ√◊Õ‰¡Ë ?"
-STRING_NOTFOUND,  "‰¡Ëæ∫¢ÈÕ§«“¡ '%s' ∑’ËµÈÕß°“√§ÈπÀ“"
-STRING_OUT_OF_MEMORY, "§«“¡®Ì“À¡¥\n°√ÿ≥“≈Õß„À¡Ë"
+STRING_TOOLARGE,  "‡πÅ‡∏ü‡πâ‡∏° '%s' ‡πÉ‡∏´‡∏ç‡πà‡πÄ‡∏Å‡∏¥‡∏ô‡πÑ‡∏õ"
+STRING_NOTEXT,    "‡∏Ñ‡∏∏‡∏ì‡πÑ‡∏°‡πà‡πÉ‡∏î‡πÄ‡∏Ç‡∏µ‡∏¢‡∏ô‡∏≠‡∏∞‡πÑ‡∏£\n‡∏Å‡∏£‡∏∏‡∏ì‡∏≤‡∏•‡∏≠‡∏á‡πÉ‡∏´‡∏°‡πà"
+STRING_DOESNOTEXIST, "‡πÑ‡∏°‡πà‡∏û‡∏ö‡πÅ‡∏ü‡πâ‡∏° '%s' ‡∏ó‡∏µ‡πà‡∏ï‡πâ‡∏≠‡∏á‡∏Å‡∏≤‡∏£‡πÄ‡∏õ‡∏¥‡∏î\n‡∏Ñ‡∏∏‡∏ì‡∏ï‡πâ‡∏≠‡∏á‡∏Å‡∏≤‡∏£‡∏™‡∏£‡πâ‡∏≤‡∏á‡πÉ‡∏´‡∏°‡πà‡πÑ‡∏°‡πà ?"
+STRING_NOTSAVED,  "‡∏°‡∏µ‡∏Å‡∏≤‡∏£‡πÄ‡∏õ‡∏•‡∏µ‡πà‡∏¢‡∏ô‡πÅ‡∏õ‡∏•‡∏á‡∏Å‡∏±‡∏ö‡πÄ‡∏≠‡∏Å‡∏™‡∏≤‡∏£\n\n'%s'\n\n‡∏Ñ‡∏∏‡∏ì‡∏ï‡πâ‡∏≠‡∏á‡∏Å‡∏≤‡∏£‡∏ö‡∏±‡∏ô‡∏ó‡∏∂‡∏Å‡∏°‡∏±‡∏ô‡∏´‡∏£‡∏∑‡∏≠‡πÑ‡∏°‡πà ?"
+STRING_NOTFOUND,  "‡πÑ‡∏°‡πà‡∏û‡∏ö‡∏Ç‡πâ‡∏≠‡∏Ñ‡∏ß‡∏≤‡∏° '%s' ‡∏ó‡∏µ‡πà‡∏ï‡πâ‡∏≠‡∏á‡∏Å‡∏≤‡∏£‡∏Ñ‡πâ‡∏ô‡∏´‡∏≤"
+STRING_OUT_OF_MEMORY, "‡∏Ñ‡∏ß‡∏≤‡∏°‡∏à‡πç‡∏≤‡∏´‡∏°‡∏î\n‡∏Å‡∏£‡∏∏‡∏ì‡∏≤‡∏•‡∏≠‡∏á‡πÉ‡∏´‡∏°‡πà"
 
 }

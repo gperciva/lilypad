@@ -26,32 +26,32 @@ LANGUAGE LANG_WALON, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
 {
- POPUP "&Fitchî" {
+ POPUP "&FitchÃ®" {
   MENUITEM "&Novea...",         CMD_NEW
-  MENUITEM "&Drovî",            CMD_OPEN
+  MENUITEM "&DrovÃ®",            CMD_OPEN
   MENUITEM "&Schaper",          CMD_SAVE
-  MENUITEM "Schaper èt r&lomer...",     CMD_SAVE_AS
+  MENUITEM "Schaper Ã¨t r&lomer...",     CMD_SAVE_AS
   MENUITEM "&Rexhe",            CMD_PRINT
-  MENUITEM "Arrandjmint del &Pådje...", CMD_PAGE_SETUP
+  MENUITEM "Arrandjmint del &PÃ¥dje...", CMD_PAGE_SETUP
   MENUITEM SEPARATOR
-  MENUITEM "Moussî &Foû",       CMD_EXIT
+  MENUITEM "MoussÃ® &FoÃ»",       CMD_EXIT
  }
-POPUP "&Candjî" {
-  MENUITEM "&Disfé\tCtrl+Z",    CMD_UNDO
+POPUP "&CandjÃ®" {
+  MENUITEM "&DisfÃ©\tCtrl+Z",    CMD_UNDO
   MENUITEM SEPARATOR
-  MENUITEM "Cô&per\tCtrl+X",    CMD_CUT
-  MENUITEM "&Copyî\tCtrl+C",    CMD_COPY
+  MENUITEM "CÃ´&per\tCtrl+X",    CMD_CUT
+  MENUITEM "&CopyÃ®\tCtrl+C",    CMD_COPY
   MENUITEM "C&laper\tCtrl+V",   CMD_PASTE
   MENUITEM "&Rafacer\tDel",     CMD_DELETE
   MENUITEM SEPARATOR
   MENUITEM "&Tchwezi totafwait",        CMD_SELECT_ALL
   MENUITEM "&Eure/Date\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "Côper les ro&yes",  CMD_WRAP
+  MENUITEM "CÃ´per les ro&yes",  CMD_WRAP
  }
-POPUP "C&werî" {
-  MENUITEM "Cwerî...",          CMD_SEARCH
-  MENUITEM "&Shûvant\tF3",      CMD_SEARCH_NEXT
+POPUP "C&werÃ®" {
+  MENUITEM "CwerÃ®...",          CMD_SEARCH
+  MENUITEM "&ShÃ»vant\tF3",      CMD_SEARCH_NEXT
  }
 POPUP "&Aide" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
@@ -63,22 +63,22 @@ STRINGTABLE DISCARDABLE
 STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "AROKE"
 STRING_WARNING,                                 "ADVERTIXHMINT"
-STRING_INFO,                                    "Informåcion"
+STRING_INFO,                                    "InformÃ¥cion"
 
 STRING_UNTITLED,                                "(sin tite)"
 
-STRING_ALL_FILES,                               "Tos les fitchîs (*.*)"
-STRING_LILYPOND_FILES_LY,                  "Fitchîs LilyPonde (*.ly)"
+STRING_ALL_FILES,                               "Tos les fitchÃ®s (*.*)"
+STRING_LILYPOND_FILES_LY,                  "FitchÃ®s LilyPonde (*.ly)"
 
-STRING_TOOLARGE,                                "Li fitchî '%s' est trop gros pol lilypad.\n \
-Eployoz on ôte aspougneu di LilyPonde."
-STRING_NOTEXT,                                  "Vos n' avoz rén sicrît. \
-\nTapez ene sacwe èt rasayez"
+STRING_TOOLARGE,                                "Li fitchÃ® '%s' est trop gros pol lilypad.\n \
+Eployoz on Ã´te aspougneu di LilyPonde."
+STRING_NOTEXT,                                  "Vos n' avoz rÃ©n sicrÃ®t. \
+\nTapez ene sacwe Ã¨t rasayez"
 STRING_DOESNOTEXIST,                            "File '%s'\ndoes not exist\n\n \
 Do you want to create a new file ?"
-STRING_NOTSAVED,                                "Li fitchî '%s'\na candjî\n\n \
+STRING_NOTSAVED,                                "Li fitchÃ® '%s'\na candjÃ®\n\n \
 El voloz schaper ?"
-STRING_NOTFOUND,                                        "'%s' pout nén esse trové."
+STRING_NOTFOUND,                                        "'%s' pout nÃ©n esse trovÃ©."
 STRING_OUT_OF_MEMORY,                   "Li memwere est plinne. \n\
 Cloyoz on programe ou pus po monter li memwere libe."
 

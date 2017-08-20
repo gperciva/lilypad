@@ -36,13 +36,13 @@ MAIN_MENU MENU
 POPUP "&Urejanje" {
   MENUITEM "&Razveljavi\tCtrl+Z",     CMD_UNDO
   MENUITEM SEPARATOR
-  MENUITEM "&Izreûi\tCtrl+X",      CMD_CUT
+  MENUITEM "&Izre≈æi\tCtrl+X",      CMD_CUT
   MENUITEM "&Kopiraj\tCtrl+C",     CMD_COPY
   MENUITEM "&Prilepi\tCtrl+V",    CMD_PASTE
-  MENUITEM "Izbri&öi\tDel",      CMD_DELETE
+  MENUITEM "Izbri&≈°i\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
   MENUITEM "Izberi &vse",       CMD_SELECT_ALL
-  MENUITEM "»as/&Datum\tF5",    CMD_TIME_DATE
+  MENUITEM "ƒåas/&Datum\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
   MENUITEM "Pr&elom vrstice",  CMD_WRAP
  }
@@ -50,7 +50,7 @@ POPUP "&Iskanje" {
   MENUITEM "&Najdi ...",           CMD_SEARCH
   MENUITEM "Na&daljuj iskanje\tF3",  CMD_SEARCH_NEXT
  }
-POPUP "&PomoË" {
+POPUP "&Pomoƒç" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -67,16 +67,16 @@ STRING_UNTITLED,                                "Neimenovana"
 STRING_ALL_FILES,                               "Vse datoteke (*.*)"
 STRING_LILYPOND_FILES_LY,                  "Datoteke z besedilom (*.ly)"
 
-STRING_TOOLARGE,                                "Datoteka '%s' je prevelika za Beleûnico.\n \
+STRING_TOOLARGE,                                "Datoteka '%s' je prevelika za Bele≈ænico.\n \
 Uporabite drug urejevalnik."
 STRING_NOTEXT,                                  "Niste vnesli besedila. \
 \nVnesite besedilo in poskusite znova."
 STRING_DOESNOTEXIST,                            "Datoteka '%s' ne obstaja.\n\n \
-Ali ûelite ustvariti novo datoteko?"
+Ali ≈æelite ustvariti novo datoteko?"
 STRING_NOTSAVED,                                "Vsebina datoteke '%s'je bila spremenjena.\n\n \
-Ali ûelite shraniti spremembe?"
-STRING_NOTFOUND,                                        "Ni mogoËe najti '%s'."
-STRING_OUT_OF_MEMORY,                   "Na voljo ni dovolj pomnilnika, da bi bilo mogoËe dokonËati to \
-operacijo. \n»e ga ûelite sprostiti, konËajte enega ali veË programov in poskusite znova. "
+Ali ≈æelite shraniti spremembe?"
+STRING_NOTFOUND,                                        "Ni mogoƒçe najti '%s'."
+STRING_OUT_OF_MEMORY,                   "Na voljo ni dovolj pomnilnika, da bi bilo mogoƒçe dokonƒçati to \
+operacijo. \nƒåe ga ≈æelite sprostiti, konƒçajte enega ali veƒç programov in poskusite znova. "
 
 }

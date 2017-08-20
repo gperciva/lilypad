@@ -72,16 +72,16 @@ STRING_UNTITLED,                                "(senza nome)"
 STRING_ALL_FILES,                               "Tutti i file (*.*)"
 STRING_LILYPOND_FILES_LY,                  "File di LilyPondo (*.ly)"
 
-STRING_TOOLARGE,                                "Il file '%s' è troppo grande per il blocco note.\n \
+STRING_TOOLARGE,                                "Il file '%s' Ã¨ troppo grande per il blocco note.\n \
 Per favore usare un altro editor."
-STRING_NOTEXT,                                  "Non è stato inserito alcun LilyPondo. \
+STRING_NOTEXT,                                  "Non Ã¨ stato inserito alcun LilyPondo. \
 \nPer favore digitare qualcosa e riprovare"
 STRING_DOESNOTEXIST,                            "Il file '%s'\nnon esiste\n\n \
 Creare un nuovo file ?"
 STRING_NOTSAVED,                                "Il file '%s'\ne' stato modificato\n\n \
 Salvare le modifiche ?"
-STRING_NOTFOUND,                                        "'%s' non è stato trovato."
+STRING_NOTFOUND,                                        "'%s' non Ã¨ stato trovato."
 STRING_OUT_OF_MEMORY,                   "Memoria insufficente per completare questa operazione \
-task. \nChiudere una o più applicazioni per aumentare la quantita'\n di memoria libera."
+task. \nChiudere una o piÃ¹ applicazioni per aumentare la quantita'\n di memoria libera."
 
 }

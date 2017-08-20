@@ -5,7 +5,7 @@
  *  Proofread 1998 by David Lee Lambert <lamber45@egr.msu.edu>
  *  Proofread 1999 by Jose Marcos Lopez <jose.lopez@upcnet.upc.es>
  *  Copyright 2002 Sylvain Petreolle <spetreolle@yahoo.fr>
- *  Copyright 2003,2004 José Manuel Ferrer Ortiz
+ *  Copyright 2003,2004 JosÃ© Manuel Ferrer Ortiz
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ MAIN_MENU MENU
   MENUITEM "Guardar &como...",            CMD_SAVE_AS
   MENUITEM SEPARATOR
   MENUITEM "&Imprimir",                   CMD_PRINT
-  MENUITEM "Configurar &página...",       CMD_PAGE_SETUP
+  MENUITEM "Configurar &pÃ¡gina...",       CMD_PAGE_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Salir",                      CMD_EXIT
  }
@@ -48,7 +48,7 @@ POPUP "&Editar" {
   MENUITEM "Seleccionar t&odo\tCtrl+A", CMD_SELECT_ALL
   MENUITEM "&Hora y fecha\tF5",         CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "&Ajuste de línea",          CMD_WRAP
+  MENUITEM "&Ajuste de lÃ­nea",          CMD_WRAP
   MENUITEM "Tipo de &letra...",         CMD_FONT
  }
 POPUP "&Buscar" {
@@ -65,24 +65,24 @@ STRINGTABLE DISCARDABLE
 STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                   "ERROR"
 STRING_WARNING,                 "ADVERTENCIA"
-STRING_INFO,                    "Información"
+STRING_INFO,                    "InformaciÃ³n"
 
-STRING_UNTITLED,                "(sin título)"
+STRING_UNTITLED,                "(sin tÃ­tulo)"
 
 STRING_ALL_FILES,               "Todos los archivos (*.*)"
 STRING_LILYPOND_FILES_LY,          "Documentos de LilyPondo (*.ly)"
 
 STRING_TOOLARGE,                "El archivo '%s' es demasiado grande para el \
                                  bloc de notas.\n Use otro editor."
-STRING_NOTEXT,                  "No escribió nada. \nPor favor escriba algo e \
-                                 inténtelo de nuevo"
-STRING_DOESNOTEXIST,            "El archivo '%s'\nno existe\n\n ¿Desea crear \
+STRING_NOTEXT,                  "No escribiÃ³ nada. \nPor favor escriba algo e \
+                                 intÃ©ntelo de nuevo"
+STRING_DOESNOTEXIST,            "El archivo '%s'\nno existe\n\n Â¿Desea crear \
                                  un nuevo archivo?"
 STRING_NOTSAVED,                "El LilyPondo en el archivo '%s' ha cambiado\n\n \
-                                 ¿Desea guardar los cambios?"
-STRING_NOTFOUND,                "No se encontró '%s'."
+                                 Â¿Desea guardar los cambios?"
+STRING_NOTFOUND,                "No se encontrÃ³ '%s'."
 STRING_OUT_OF_MEMORY,           "No hay suficiente memoria para terminar esta \
-                                 tarea. \nCierre una o más aplicaciones para \
+                                 tarea. \nCierre una o mÃ¡s aplicaciones para \
                                  aumentar la cantidad \nde memoria libre."
 
 }
