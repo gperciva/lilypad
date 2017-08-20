@@ -31,6 +31,7 @@ MAIN_MENU MENU
   MENUITEM "Å&bn\tEnter",       CMD_OPEN
   MENUITEM "&Gem",              CMD_SAVE
   MENUITEM "Gem so&m...",       CMD_SAVE_AS
+  MENUITEM SEPARATOR
   MENUITEM "&Udskriv",          CMD_PRINT
   MENUITEM "Side&opsætning...", CMD_PAGE_SETUP
   MENUITEM SEPARATOR
@@ -48,6 +49,7 @@ POPUP "&Rediger" {
   MENUITEM "&Dato/tid\tF5",     CMD_TIME_DATE
   MENUITEM SEPARATOR
   MENUITEM "Automatisk &linjeskift",    CMD_WRAP
+  MENUITEM "&Font...",          CMD_FONT
  }
 POPUP "&Søg" {
   MENUITEM "&Søg...",           CMD_SEARCH

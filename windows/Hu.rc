@@ -49,6 +49,7 @@ POPUP "S&zerkesztés" {
   MENUITEM "&Idő/dátum\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
   MENUITEM "&Hosszú sorok tördelése",  CMD_WRAP
+  MENUITEM "&Font...",          CMD_FONT
  }
 POPUP "&Keresés" {
   MENUITEM "&Keresés...",           CMD_SEARCH

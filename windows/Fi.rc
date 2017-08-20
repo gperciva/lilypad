@@ -31,6 +31,7 @@ MAIN_MENU MENU
   MENUITEM "&Avaa",		CMD_OPEN
   MENUITEM "Ta&lleta",		CMD_SAVE
   MENUITEM "Talleta &nimellä...",	CMD_SAVE_AS
+  MENUITEM SEPARATOR
   MENUITEM "T&ulosta",		CMD_PRINT
   MENUITEM "&Sivun asetukset...",	CMD_PAGE_SETUP
   MENUITEM SEPARATOR
@@ -48,6 +49,7 @@ POPUP "&Muokkaa" {
   MENUITEM "&Aika/Päivämäärä\tF5",	CMD_TIME_DATE
   MENUITEM SEPARATOR
   MENUITEM "Ka&tkaise pitkä rivi",	CMD_WRAP
+  MENUITEM "&Font...",          CMD_FONT
  }
 POPUP "&Etsi" {
   MENUITEM "Etsi...",		CMD_SEARCH
