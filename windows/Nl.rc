@@ -18,6 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_DUTCH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -81,3 +84,5 @@ STRING_OUT_OF_MEMORY,                           "Onvoldoende geheugen. \
 \nSluit een of meer applicaties om de hoeveelheid \nbeschikbaar geheugen te vergroten."
 
 }
+
+#pragma code_page(default)

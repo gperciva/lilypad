@@ -19,6 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_DANISH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -81,3 +84,5 @@ denne operation. \nAfslut et eller flere aktive programmer for at frigøre \
 hukommelse, og prøv så igen."
 
 }
+
+#pragma code_page(default)

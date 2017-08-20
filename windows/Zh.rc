@@ -18,6 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 MAIN_MENU MENU LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 {
  POPUP "文件（&F）" {
@@ -77,3 +80,5 @@ STRING_OUT_OF_MEMORY,                   "没有足够的内存可以用来完成
 \n请关闭一些程序施放内存后再试。"
 
 }
+
+#pragma code_page(default)

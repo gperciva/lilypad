@@ -20,6 +20,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_FRENCH, SUBLANG_NEUTRAL
 
 MAIN_MENU MENU
@@ -84,3 +87,5 @@ tâche. \nFermez une ou plusieurs applications pour libérer\n\
 de la mémoire."
 
 }
+
+#pragma code_page(default)

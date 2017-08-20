@@ -20,6 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 #ifdef LANG_WALON
 
 LANGUAGE LANG_WALON, SUBLANG_DEFAULT
@@ -85,3 +88,5 @@ Cloyoz on programe ou pus po monter li memwere libe."
 }
 
 #endif  /* LANG_WALON */
+
+#pragma code_page(default)

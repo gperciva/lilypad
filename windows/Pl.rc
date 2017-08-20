@@ -21,6 +21,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_POLISH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -84,3 +87,5 @@ STRING_OUT_OF_MEMORY,                   "Za mało pamięci do wykonania tego zad
 Zamknij jedną lub więcej aplikacji aby zwiększyć ilość wolnej pamięci."
 
 }
+
+#pragma code_page(default)

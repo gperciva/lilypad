@@ -22,6 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_SPANISH, SUBLANG_NEUTRAL
 
 MAIN_MENU MENU
@@ -86,3 +89,5 @@ STRING_OUT_OF_MEMORY,           "No hay suficiente memoria para terminar esta \
                                  aumentar la cantidad \nde memoria libre."
 
 }
+
+#pragma code_page(default)

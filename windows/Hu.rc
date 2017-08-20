@@ -21,6 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 MAIN_MENU MENU LANGUAGE LANG_HUNGARIAN, SUBLANG_DEFAULT
 {
  POPUP "&Fájl" {
@@ -82,3 +85,5 @@ STRING_OUT_OF_MEMORY,                   "Nincs elegendő szabad memória!\
 !"
 
 }
+
+#pragma code_page(default)

@@ -18,6 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_THAI, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -76,3 +79,5 @@ STRING_NOTFOUND,  "ไม่พบข้อความ '%s' ที่ต้อ�
 STRING_OUT_OF_MEMORY, "ความจําหมด\nกรุณาลองใหม่"
 
 }
+
+#pragma code_page(default)

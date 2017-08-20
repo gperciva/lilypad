@@ -21,6 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -85,3 +88,5 @@ STRING_OUT_OF_MEMORY,                   "Není dost paměti na dokončení této
 paměti."
 
 }
+
+#pragma code_page(default)

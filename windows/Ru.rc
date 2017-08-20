@@ -18,6 +18,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 MAIN_MENU MENU LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 {
  POPUP "&Файл" {
@@ -78,3 +81,5 @@ STRING_OUT_OF_MEMORY,                   "Недостаточно памяти �
 \nЗакройте одно или несколько приложений и повторите попытку."
 
 }
+
+#pragma code_page(default)

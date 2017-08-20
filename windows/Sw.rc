@@ -20,6 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_SWEDISH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -82,3 +85,5 @@ den här uppgiften. \nAvsluta ett eller flera program för att öka mängden \nf
 minne."
 
 }
+
+#pragma code_page(default)
