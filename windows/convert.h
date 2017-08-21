@@ -1,7 +1,7 @@
 /*
  *  LilyPad (convert.h: text codepage autodetect and converter)
  *
- *  Copyright (C) 2014 Masamichi Hosoda <trueroad>
+ *  Copyright (C) 2014 Masamichi Hosoda <trueroad@trueroad.jp>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
