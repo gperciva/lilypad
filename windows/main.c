@@ -306,6 +306,10 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
         WmDpiChanged(hWnd, HIWORD(wParam), (LPRECT)lParam);
         break;
 
+    case WM_NCCREATE:
+        WmNcCreate(hWnd);
+        return DefWindowProc(hWnd, msg, wParam, lParam);
+
     default:
         return DefWindowProc(hWnd, msg, wParam, lParam);
     }
@@ -549,6 +553,7 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
 
     /* Setup windows */
 
+    initialize_per_monitor_dpi ();
     Globals.hMainWnd =
         CreateWindow(className, winName, WS_OVERLAPPEDWINDOW,
                      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
@@ -578,5 +583,6 @@ int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE prev, LPSTR cmdline, int show)
 	    DispatchMessage(&msg);
 	}
     }
+    uninitialize_per_monitor_dpi ();
     return msg.wParam;
 }

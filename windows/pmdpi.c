@@ -25,6 +25,30 @@
 #include "main.h"
 #include "pmdpi.h"
 
+typedef BOOL (WINAPI *LPENABLENONCLIENTDPISCALING)(HWND);
+
+static HMODULE hModDll = NULL;
+static LPENABLENONCLIENTDPISCALING lpfnEnableNonClientDpiScaling = NULL;
+
+VOID initialize_per_monitor_dpi (VOID)
+{
+    if( !hModDll )
+        hModDll = LoadLibrary(TEXT("user32.dll"));
+    if( hModDll && !lpfnEnableNonClientDpiScaling )
+        lpfnEnableNonClientDpiScaling =
+          (LPENABLENONCLIENTDPISCALING)
+          GetProcAddress(hModDll, "EnableNonClientDpiScaling");
+}
+
+VOID uninitialize_per_monitor_dpi (VOID)
+{
+    lpfnEnableNonClientDpiScaling = NULL;
+    if( hModDll ) {
+        FreeLibrary(hModDll);
+        hModDll = NULL;
+    }
+}
+
 VOID WmDpiChanged(HWND hWnd, WORD wDPI, LPRECT lprc)
 {
     HFONT currfont = Globals.hFont;
@@ -44,4 +68,10 @@ VOID WmDpiChanged(HWND hWnd, WORD wDPI, LPRECT lprc)
     SetWindowPos(hWnd, NULL, lprc->left, lprc->top,
                  lprc->right - lprc->left, lprc->bottom - lprc->top,
                  SWP_NOZORDER);
+}
+
+VOID WmNcCreate(HWND hWnd)
+{
+    if( lpfnEnableNonClientDpiScaling )
+        lpfnEnableNonClientDpiScaling(hWnd);
 }
