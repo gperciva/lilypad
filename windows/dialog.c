@@ -885,6 +885,7 @@ VOID DIALOG_SelectFont(VOID)
     cf.lStructSize=sizeof(cf);
     cf.hwndOwner=Globals.hMainWnd;
     cf.lpLogFont=&lf;
+    cf.iPointSize=Globals.iPointSize;
     cf.Flags=CF_SCREENFONTS | CF_SCALABLEONLY | CF_NOVERTFONTS |
       CF_INITTOLOGFONTSTRUCT;
 
@@ -892,9 +893,14 @@ VOID DIALOG_SelectFont(VOID)
     {
         HFONT currfont=Globals.hFont;
 
+        Globals.iPointSize=cf.iPointSize;
+        lf.lfHeight = -MulDiv(Globals.iPointSize,
+                              Globals.wDPI,
+                              72 * 10);  /* 72pt = 1inch */
+        lf.lfWidth = 0;
+
         Globals.hFont=CreateFontIndirect( &lf );
         Globals.lfFont=lf;
-        Globals.iPointSize=cf.iPointSize;
         SendMessage( Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)TRUE );
         if( currfont!=NULL )
             DeleteObject( currfont );

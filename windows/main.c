@@ -33,6 +33,7 @@
 
 #include "main.h"
 #include "dialog.h"
+#include "pmdpi.h"
 #include "lilypad_res.h"
 
 LILYPAD_GLOBALS Globals;
@@ -68,11 +69,14 @@ static VOID LILYPAD_InitFont()
         Globals.iPointSize = StrToInt(szBuff);
     else
         Globals.iPointSize = 10 * 10;  /* default font size is 10pt */
+
     hdc=GetDC(Globals.hMainWnd);
-    lf->lfHeight        = -MulDiv(Globals.iPointSize,
-				  GetDeviceCaps(hdc, LOGPIXELSY),
-				  72 * 10);  /* 72pt = 1inch */
+    Globals.wDPI = GetDeviceCaps(hdc, LOGPIXELSY);
     ReleaseDC(Globals.hMainWnd, hdc);
+
+    lf->lfHeight        = -MulDiv(Globals.iPointSize,
+				  Globals.wDPI,
+				  72 * 10);  /* 72pt = 1inch */
 
     lf->lfWidth         = 0;
     lf->lfEscapement    = 0;
@@ -296,6 +300,10 @@ static LRESULT WINAPI LILYPAD_WndProc(HWND hWnd, UINT msg, WPARAM wParam,
 
     case WM_INITMENUPOPUP:
         LILYPAD_InitMenuPopup((HMENU)wParam, lParam);
+        break;
+
+    case WM_DPICHANGED:
+        WmDpiChanged(hWnd, HIWORD(wParam), (LPRECT)lParam);
         break;
 
     default:
