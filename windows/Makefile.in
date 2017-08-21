@@ -45,12 +45,12 @@ install-lilypad-ascii:
 clean-lilypad-ascii:
 	$(MAKE) MODULE=lilypad-ascii.exe clean
 
-dialog.o: main.h dialog.h convert.h lilypad_res.h
+dialog.o: main.h dialog.h convert.h pmdpi.h lilypad_res.h
 convert.o: convert.h
 pmdpi.o: main.h pmdpi.h
 main.o: main.h dialog.h pmdpi.h lilypad_res.h
 
-dialog.ansi.o: main.h dialog.h convert.h lilypad_res.h
+dialog.ansi.o: main.h dialog.h convert.h pmdpi.h lilypad_res.h
 convert.ansi.o: convert.h
 pmdpi.ansi.o: main.h pmdpi.h
 main.ansi.o: main.h dialog.h pmdpi.h lilypad_res.h

@@ -26,6 +26,8 @@
 
 VOID initialize_per_monitor_dpi (VOID);
 VOID uninitialize_per_monitor_dpi (VOID);
+VOID unset_per_monitor_dpi (VOID);
+VOID set_per_monitor_dpi (VOID);
 
 VOID WmDpiChanged(HWND hWnd, WORD wDPI, LPRECT lprc);
 VOID WmNcCreate(HWND hWnd);

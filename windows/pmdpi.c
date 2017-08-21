@@ -26,9 +26,18 @@
 #include "pmdpi.h"
 
 typedef BOOL (WINAPI *LPENABLENONCLIENTDPISCALING)(HWND);
+typedef HANDLE (WINAPI *LPSETTHREADDPIAWARENESSCONTEXT)(HANDLE);
+
+#ifndef DPI_AWARENESS_CONTEXT_SYSTEM_AWARE
+#define DPI_AWARENESS_CONTEXT_SYSTEM_AWARE ((HANDLE)-2)
+#endif
+#ifndef DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE
+#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE ((HANDLE)-3)
+#endif
 
 static HMODULE hModDll = NULL;
 static LPENABLENONCLIENTDPISCALING lpfnEnableNonClientDpiScaling = NULL;
+static LPSETTHREADDPIAWARENESSCONTEXT lpfnSetThreadDpiAwarenessContext = NULL;
 
 VOID initialize_per_monitor_dpi (VOID)
 {
@@ -38,15 +47,34 @@ VOID initialize_per_monitor_dpi (VOID)
         lpfnEnableNonClientDpiScaling =
           (LPENABLENONCLIENTDPISCALING)
           GetProcAddress(hModDll, "EnableNonClientDpiScaling");
+    if( hModDll && !lpfnSetThreadDpiAwarenessContext )
+        lpfnSetThreadDpiAwarenessContext =
+          (LPSETTHREADDPIAWARENESSCONTEXT)
+          GetProcAddress(hModDll, "SetThreadDpiAwarenessContext");
+    set_per_monitor_dpi();
 }
 
 VOID uninitialize_per_monitor_dpi (VOID)
 {
+    lpfnSetThreadDpiAwarenessContext = NULL;
     lpfnEnableNonClientDpiScaling = NULL;
     if( hModDll ) {
         FreeLibrary(hModDll);
         hModDll = NULL;
     }
+}
+
+VOID unset_per_monitor_dpi (VOID)
+{
+    if( lpfnSetThreadDpiAwarenessContext )
+        lpfnSetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
+}
+
+VOID set_per_monitor_dpi (VOID)
+{
+    if( lpfnSetThreadDpiAwarenessContext )
+        lpfnSetThreadDpiAwarenessContext
+          (DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
 }
 
 VOID WmDpiChanged(HWND hWnd, WORD wDPI, LPRECT lprc)
