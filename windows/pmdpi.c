@@ -34,13 +34,19 @@ typedef HANDLE (WINAPI *LPSETTHREADDPIAWARENESSCONTEXT)(HANDLE);
 #ifndef DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE
 #define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE ((HANDLE)-3)
 #endif
+#ifndef DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2
+#define DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 ((HANDLE)-4)
+#endif
 
 static HMODULE hModDll = NULL;
 static LPENABLENONCLIENTDPISCALING lpfnEnableNonClientDpiScaling = NULL;
 static LPSETTHREADDPIAWARENESSCONTEXT lpfnSetThreadDpiAwarenessContext = NULL;
+static BOOL bDialogSwitchAware;
 
 VOID initialize_per_monitor_dpi (VOID)
 {
+    HANDLE aware;
+
     if( !hModDll )
         hModDll = LoadLibrary(TEXT("user32.dll"));
     if( hModDll && !lpfnEnableNonClientDpiScaling )
@@ -51,7 +57,19 @@ VOID initialize_per_monitor_dpi (VOID)
         lpfnSetThreadDpiAwarenessContext =
           (LPSETTHREADDPIAWARENESSCONTEXT)
           GetProcAddress(hModDll, "SetThreadDpiAwarenessContext");
-    set_per_monitor_dpi();
+
+    if( lpfnSetThreadDpiAwarenessContext ) {
+        aware = lpfnSetThreadDpiAwarenessContext
+          (DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+        if( aware ) {
+            /* Windows 10 Creators Update (1703) + */
+            bDialogSwitchAware = FALSE;
+        } else {
+            /* Windows 10 Anniversary Update (1607) */
+            bDialogSwitchAware = TRUE;
+            set_per_monitor_dpi();
+        }
+    }
 }
 
 VOID uninitialize_per_monitor_dpi (VOID)
@@ -66,13 +84,13 @@ VOID uninitialize_per_monitor_dpi (VOID)
 
 VOID unset_per_monitor_dpi (VOID)
 {
-    if( lpfnSetThreadDpiAwarenessContext )
+    if( lpfnSetThreadDpiAwarenessContext && bDialogSwitchAware )
         lpfnSetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
 }
 
 VOID set_per_monitor_dpi (VOID)
 {
-    if( lpfnSetThreadDpiAwarenessContext )
+    if( lpfnSetThreadDpiAwarenessContext && bDialogSwitchAware )
         lpfnSetThreadDpiAwarenessContext
           (DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
 }
