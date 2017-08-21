@@ -50,3 +50,4 @@ VOID ShowLastError();
 BOOL FileExists(__LPCWSTR szFilename);
 BOOL DoCloseFile(void);
 void DoOpenFile(__LPCWSTR szFileName);
+BOOL GotoLineColumn(int nLine, int nColumn);
