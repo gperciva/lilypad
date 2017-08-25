@@ -45,6 +45,7 @@ typedef struct
   HFONT   hFont; /* Font used by the edit control */
   LOGFONT lfFont;
   int     iPointSize;
+  WORD    wDPI;
   BOOL    bWrapLongLines;
   __WCHAR   szFindText[MAX_PATH];
   __WCHAR   szFileName[MAX_PATH];

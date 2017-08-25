@@ -29,6 +29,7 @@
 #include "main.h"
 #include "dialog.h"
 #include "convert.h"
+#include "pmdpi.h"
 
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -45,7 +46,9 @@ VOID ShowLastError(void)
             FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
             NULL, error, 0,
             (LPTSTR) &lpMsgBuf, 0, NULL);
+        unset_per_monitor_dpi();
         MessageBox(NULL, lpMsgBuf, szTitle, MB_OK | MB_ICONERROR);
+        set_per_monitor_dpi();
         LocalFree(lpMsgBuf);
     }
 }
@@ -79,6 +82,7 @@ int DIALOG_StringMsgBox(HWND hParent, int formatId, __LPCWSTR szString, DWORD dw
 {
    __WCHAR szMessage[MAX_STRING_LEN];
    __WCHAR szResource[MAX_STRING_LEN];
+   int retval;
 
    /* Load and format szMessage */
    LoadString(Globals.hInstance, formatId, szResource, SIZEOF(szResource));
@@ -93,7 +97,10 @@ int DIALOG_StringMsgBox(HWND hParent, int formatId, __LPCWSTR szString, DWORD dw
    /* Display Modal Dialog */
    if (hParent == NULL)
      hParent = Globals.hMainWnd;
-   return MessageBox(hParent, szMessage, szResource, dwFlags);
+   unset_per_monitor_dpi();
+   retval = MessageBox(hParent, szMessage, szResource, dwFlags);
+   set_per_monitor_dpi();
+   return retval;
 }
 
 static void AlertFileNotFound(__LPCWSTR szFileName)
@@ -438,8 +445,10 @@ VOID DIALOG_FileOpen(VOID)
     openfilename.lpstrDefExt       = szDefaultExt;
 
 
+    unset_per_monitor_dpi();
     if (GetOpenFileName(&openfilename))
 	DoOpenFile(openfilename.lpstrFile);
+    set_per_monitor_dpi();
 }
 
 
@@ -475,11 +484,13 @@ VOID DIALOG_FileSaveAs(VOID)
         OFN_HIDEREADONLY;
     saveas.lpstrDefExt       = szDefaultExt;
 
+    unset_per_monitor_dpi();
     if (GetSaveFileName(&saveas)) {
         SetFileName(szPath);
         UpdateWindowCaption();
         DoSaveFile();
     }
+    set_per_monitor_dpi();
 }
 
 static VOID init_default_printer(VOID)
@@ -620,9 +631,14 @@ VOID DIALOG_FilePrint(VOID)
     printer.nCopies               = 1;
     printer.nStartPage            = START_PAGE_GENERAL;
 
+    unset_per_monitor_dpi();
     if (PrintDlgEx(&printer) != S_OK ||
         printer.dwResultAction == PD_RESULT_CANCEL)
+    {
+        set_per_monitor_dpi();
         return;
+    }
+    set_per_monitor_dpi();
 
     Globals.hDevMode = printer.hDevMode;
     Globals.hDevNames = printer.hDevNames;
@@ -763,7 +779,9 @@ VOID DIALOG_FilePrint(VOID)
                 if (StartPage(printer.hDC) <= 0) {
                     static const __WCHAR failedW[] = { 'S','t','a','r','t','P','a','g','e',' ','f','a','i','l','e','d',0 };
                     static const __WCHAR errorW[] = { 'P','r','i','n','t',' ','E','r','r','o','r',0 };
+                    unset_per_monitor_dpi();
                     MessageBox(Globals.hMainWnd, failedW, errorW, MB_ICONEXCLAMATION);
+                    set_per_monitor_dpi();
                     return;
                 }
             }
@@ -885,20 +903,28 @@ VOID DIALOG_SelectFont(VOID)
     cf.lStructSize=sizeof(cf);
     cf.hwndOwner=Globals.hMainWnd;
     cf.lpLogFont=&lf;
+    cf.iPointSize=Globals.iPointSize;
     cf.Flags=CF_SCREENFONTS | CF_SCALABLEONLY | CF_NOVERTFONTS |
       CF_INITTOLOGFONTSTRUCT;
 
+    unset_per_monitor_dpi();
     if( ChooseFont(&cf) )
     {
         HFONT currfont=Globals.hFont;
 
+        Globals.iPointSize=cf.iPointSize;
+        lf.lfHeight = -MulDiv(Globals.iPointSize,
+                              Globals.wDPI,
+                              72 * 10);  /* 72pt = 1inch */
+        lf.lfWidth = 0;
+
         Globals.hFont=CreateFontIndirect( &lf );
         Globals.lfFont=lf;
-        Globals.iPointSize=cf.iPointSize;
         SendMessage( Globals.hEdit, WM_SETFONT, (WPARAM)Globals.hFont, (LPARAM)TRUE );
         if( currfont!=NULL )
             DeleteObject( currfont );
     }
+    set_per_monitor_dpi();
 }
 
 VOID DIALOG_Search(VOID)
@@ -914,7 +940,9 @@ VOID DIALOG_Search(VOID)
         /* We only need to create the modal FindReplace dialog which will */
         /* notify us of incoming events using hMainWnd Window Messages    */
 
+        unset_per_monitor_dpi();
         Globals.hFindReplaceDlg = FindText(&Globals.find);
+        set_per_monitor_dpi();
         assert(Globals.hFindReplaceDlg !=0);
 }
 
@@ -928,8 +956,10 @@ VOID DIALOG_SearchNext(VOID)
 
 VOID DIALOG_HelpAboutLilyPad(VOID)
 {
+  unset_per_monitor_dpi();
   DialogBox (Globals.hInstance, MAKEINTRESOURCE(DIALOG_ABOUTLILYPAD),
 	     Globals.hMainWnd, DIALOG_AboutLilyPadDlgProc);
+  set_per_monitor_dpi();
 }
 
 static INT_PTR WINAPI DIALOG_AboutLilyPadDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -971,6 +1001,7 @@ VOID DIALOG_FilePageSetup(void)
     psd.Flags = ( Globals.MarginFlags ?
                   ( Globals.MarginFlags | PSD_MARGINS ) : 0);
     psd.rtMargin = Globals.rtMargin;
+    unset_per_monitor_dpi();
     if (PageSetupDlg(&psd))
     {
         Globals.hDevMode = psd.hDevMode;
@@ -986,6 +1017,7 @@ VOID DIALOG_FilePageSetup(void)
             Globals.MarginFlags = PSD_INTHOUSANDTHSOFINCHES;
         }
     }
+    set_per_monitor_dpi();
 }
 
 /**

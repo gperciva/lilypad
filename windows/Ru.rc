@@ -18,37 +18,41 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 MAIN_MENU MENU LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 {
- POPUP "&Файл" {
-  MENUITEM "Созд&ать",           CMD_NEW
-  MENUITEM "&Открыть...",             CMD_OPEN
-  MENUITEM "&Сохранить",             CMD_SAVE
-  MENUITEM "Сохранить &как...",       CMD_SAVE_AS
+ POPUP "&Р¤Р°Р№Р»" {
+  MENUITEM "РЎРѕР·Рґ&Р°С‚СЊ",           CMD_NEW
+  MENUITEM "&РћС‚РєСЂС‹С‚СЊ...",             CMD_OPEN
+  MENUITEM "&РЎРѕС…СЂР°РЅРёС‚СЊ",             CMD_SAVE
+  MENUITEM "РЎРѕС…СЂР°РЅРёС‚СЊ &РєР°Рє...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
-  MENUITEM "Пара&метры страницы...",    CMD_PAGE_SETUP
-  MENUITEM "&Печатать",            CMD_PRINT
+  MENUITEM "&РџРµС‡Р°С‚Р°С‚СЊ",            CMD_PRINT
+  MENUITEM "РџР°СЂР°&РјРµС‚СЂС‹ СЃС‚СЂР°РЅРёС†С‹...",    CMD_PAGE_SETUP
   MENUITEM SEPARATOR
-  MENUITEM "В&ыход",             CMD_EXIT
+  MENUITEM "Р’&С‹С…РѕРґ",             CMD_EXIT
  }
-POPUP "&Правка" {
-  MENUITEM "&Отменить\tCtrl+Z",     CMD_UNDO
+POPUP "&РџСЂР°РІРєР°" {
+  MENUITEM "&РћС‚РјРµРЅРёС‚СЊ\tCtrl+Z",     CMD_UNDO
   MENUITEM SEPARATOR
-  MENUITEM "&Вырезать\tCtrl+X",      CMD_CUT
-  MENUITEM "&Копировать\tCtrl+C",     CMD_COPY
-  MENUITEM "Вст&авить\tCtrl+V",    CMD_PASTE
-  MENUITEM "&Удалить\tDel",      CMD_DELETE
+  MENUITEM "&Р’С‹СЂРµР·Р°С‚СЊ\tCtrl+X",      CMD_CUT
+  MENUITEM "&РљРѕРїРёСЂРѕРІР°С‚СЊ\tCtrl+C",     CMD_COPY
+  MENUITEM "Р’СЃС‚&Р°РІРёС‚СЊ\tCtrl+V",    CMD_PASTE
+  MENUITEM "&РЈРґР°Р»РёС‚СЊ\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
-  MENUITEM "Выделить в&се",       CMD_SELECT_ALL
-  MENUITEM "Врем&я и дата\tF5",    CMD_TIME_DATE
+  MENUITEM "Р’С‹РґРµР»РёС‚СЊ РІ&СЃРµ",       CMD_SELECT_ALL
+  MENUITEM "Р’СЂРµРј&СЏ Рё РґР°С‚Р°\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "&Перенос по словам",  CMD_WRAP
+  MENUITEM "&РџРµСЂРµРЅРѕСЃ РїРѕ СЃР»РѕРІР°Рј",  CMD_WRAP
+  MENUITEM "&Font...",          CMD_FONT
  }
-POPUP "П&оиск" {
-  MENUITEM "&Найти",           CMD_SEARCH
-  MENUITEM "Найти &далее\tF3",  CMD_SEARCH_NEXT
+POPUP "Рџ&РѕРёСЃРє" {
+  MENUITEM "&РќР°Р№С‚Рё",           CMD_SEARCH
+  MENUITEM "РќР°Р№С‚Рё &РґР°Р»РµРµ\tF3",  CMD_SEARCH_NEXT
  }
-POPUP "&Справка" {
+POPUP "&РЎРїСЂР°РІРєР°" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -56,25 +60,27 @@ POPUP "&Справка" {
 STRINGTABLE DISCARDABLE LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 {
 STRING_LILYPAD, "LilyPad"
-STRING_ERROR,                                   "ОШИБКА"
-STRING_WARNING,                                 "ВНИМАНИЕ"
-STRING_INFO,                                    "Информация"
+STRING_ERROR,                                   "РћРЁРР‘РљРђ"
+STRING_WARNING,                                 "Р’РќРРњРђРќРР•"
+STRING_INFO,                                    "РРЅС„РѕСЂРјР°С†РёСЏ"
 
-STRING_UNTITLED,                                "(без заголовка)"
+STRING_UNTITLED,                                "(Р±РµР· Р·Р°РіРѕР»РѕРІРєР°)"
 
-STRING_ALL_FILES,                               "Все файлы (*.*)"
-STRING_LILYPOND_FILES_LY,                  "Текстовые файлы (*.ly)"
+STRING_ALL_FILES,                               "Р’СЃРµ С„Р°Р№Р»С‹ (*.*)"
+STRING_LILYPOND_FILES_LY,                  "РўРµРєСЃС‚РѕРІС‹Рµ С„Р°Р№Р»С‹ (*.ly)"
 
-STRING_TOOLARGE,                                "Файл '%s' слишком большой для блокнота.\n \
-Используйте другой редактор."
-STRING_NOTEXT,                                  "Вы не ввели никакого текста. \
-\nВведите что-нибудь и попробуйте еще."
-STRING_DOESNOTEXIST,                            "Файл '%s'\nне существует\n\n \
-Хотите создать новый файл?"
-STRING_NOTSAVED,                                "Файл '%s'\nбыл изменен\n\n \
-Хотите сохранить изменения?"
-STRING_NOTFOUND,                                        "'%s' не найден."
-STRING_OUT_OF_MEMORY,                   "Недостаточно памяти для завершения этой операции \
-\nЗакройте одно или несколько приложений и повторите попытку."
+STRING_TOOLARGE,                                "Р¤Р°Р№Р» '%s' СЃР»РёС€РєРѕРј Р±РѕР»СЊС€РѕР№ РґР»СЏ Р±Р»РѕРєРЅРѕС‚Р°.\n \
+РСЃРїРѕР»СЊР·СѓР№С‚Рµ РґСЂСѓРіРѕР№ СЂРµРґР°РєС‚РѕСЂ."
+STRING_NOTEXT,                                  "Р’С‹ РЅРµ РІРІРµР»Рё РЅРёРєР°РєРѕРіРѕ С‚РµРєСЃС‚Р°. \
+\nР’РІРµРґРёС‚Рµ С‡С‚Рѕ-РЅРёР±СѓРґСЊ Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ."
+STRING_DOESNOTEXIST,                            "Р¤Р°Р№Р» '%s'\nРЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\n\n \
+РҐРѕС‚РёС‚Рµ СЃРѕР·РґР°С‚СЊ РЅРѕРІС‹Р№ С„Р°Р№Р»?"
+STRING_NOTSAVED,                                "Р¤Р°Р№Р» '%s'\nР±С‹Р» РёР·РјРµРЅРµРЅ\n\n \
+РҐРѕС‚РёС‚Рµ СЃРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ?"
+STRING_NOTFOUND,                                        "'%s' РЅРµ РЅР°Р№РґРµРЅ."
+STRING_OUT_OF_MEMORY,                   "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїР°РјСЏС‚Рё РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ СЌС‚РѕР№ РѕРїРµСЂР°С†РёРё \
+\nР—Р°РєСЂРѕР№С‚Рµ РѕРґРЅРѕ РёР»Рё РЅРµСЃРєРѕР»СЊРєРѕ РїСЂРёР»РѕР¶РµРЅРёР№ Рё РїРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ."
 
 }
+
+#pragma code_page(default)

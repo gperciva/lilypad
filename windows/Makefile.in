@@ -12,6 +12,7 @@ MKINSTALLDIRS= @MKINSTALLDIRS@
 C_SRCS = \
 	dialog.c \
 	convert.c \
+	pmdpi.c \
 	main.c
 
 RC_SRCS = rsrc.rc
@@ -43,3 +44,21 @@ install-lilypad-ascii:
 
 clean-lilypad-ascii:
 	$(MAKE) MODULE=lilypad-ascii.exe clean
+
+dialog.o: main.h dialog.h convert.h pmdpi.h lilypad_res.h
+convert.o: convert.h
+pmdpi.o: main.h pmdpi.h
+main.o: main.h dialog.h pmdpi.h lilypad_res.h
+
+dialog.ansi.o: main.h dialog.h convert.h pmdpi.h lilypad_res.h
+convert.ansi.o: convert.h
+pmdpi.ansi.o: main.h pmdpi.h
+main.ansi.o: main.h dialog.h pmdpi.h lilypad_res.h
+
+rsrc.res.o: lilypad.manifest \
+	Cs.rc Da.rc De.rc En.rc Es.rc Fi.rc Fr.rc Hu.rc It.rc Ja.rc \
+	Nl.rc Pl.rc Pt.rc Ru.rc Si.rc Sk.rc Sw.rc Th.rc Wa.rc Zh.rc
+
+rsrc.ansi.res.o: lilypad.manifest \
+	Cs.rc Da.rc De.rc En.rc Es.rc Fi.rc Fr.rc Hu.rc It.rc Ja.rc \
+	Nl.rc Pl.rc Pt.rc Ru.rc Si.rc Sk.rc Sw.rc Th.rc Wa.rc Zh.rc

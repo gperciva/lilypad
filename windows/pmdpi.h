@@ -1,7 +1,7 @@
 /*
- *  LilyPad (convert.h: text codepage autodetect and converter)
+ *  LilyPad (pmdpi.h: per-monitor DPI aware)
  *
- *  Copyright (C) 2014 Masamichi Hosoda <trueroad@trueroad.jp>
+ *  Copyright (C) 2017 Masamichi Hosoda <trueroad@trueroad.jp>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,5 +20,14 @@
  *
  */
 
-BOOL convert_to_utf16(LPSTR buff, DWORD size,
-		      LPWSTR wbuff, DWORD wsize, LPDWORD converted);
+#ifndef WM_DPICHANGED
+#define WM_DPICHANGED 0x02e0
+#endif
+
+VOID initialize_per_monitor_dpi (VOID);
+VOID uninitialize_per_monitor_dpi (VOID);
+VOID unset_per_monitor_dpi (VOID);
+VOID set_per_monitor_dpi (VOID);
+
+VOID WmDpiChanged(HWND hWnd, WORD wDPI, LPRECT lprc);
+VOID WmNcCreate(HWND hWnd);

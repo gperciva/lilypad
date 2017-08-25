@@ -21,40 +21,43 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_CZECH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
 {
  POPUP "&Soubor" {
-  MENUITEM "&Nov˝...",           CMD_NEW
-  MENUITEM "&Otev¯Ìt\tCtrl+O",     CMD_OPEN
-  MENUITEM "&Uloæit\tCtrl+S",     CMD_SAVE
-  MENUITEM "Uloæit j&ako...",       CMD_SAVE_AS
+  MENUITEM "&Nov√Ω...",           CMD_NEW
+  MENUITEM "&Otev≈ô√≠t\tCtrl+O",     CMD_OPEN
+  MENUITEM "&Uloƒæit\tCtrl+S",     CMD_SAVE
+  MENUITEM "Uloƒæit j&ako...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
   MENUITEM "&Tisk",            CMD_PRINT
-  MENUITEM "Nas&tavenÌ str·nky...",    CMD_PAGE_SETUP
+  MENUITEM "Nas&taven√≠ str√°nky...",    CMD_PAGE_SETUP
   MENUITEM SEPARATOR
   MENUITEM "&Konec",             CMD_EXIT
  }
 POPUP "U&pravit" {
-  MENUITEM "&ZpÏt\tCtrl+Z",     CMD_UNDO
+  MENUITEM "&Zpƒõt\tCtrl+Z",     CMD_UNDO
   MENUITEM SEPARATOR
   MENUITEM "Vyjmou&t\tCtrl+X",      CMD_CUT
-  MENUITEM "&KopÌrovat\tCtrl+C",     CMD_COPY
-  MENUITEM "&Vloæit\tCtrl+V",    CMD_PASTE
+  MENUITEM "&Kop√≠rovat\tCtrl+C",     CMD_COPY
+  MENUITEM "&Vloƒæit\tCtrl+V",    CMD_PASTE
   MENUITEM "&Smazat\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
-  MENUITEM "Vybrat vπ&e\tCtrl+A",       CMD_SELECT_ALL
-  MENUITEM "»&as/Datum\tF5",    CMD_TIME_DATE
+  MENUITEM "Vybrat vƒÖ&e\tCtrl+A",       CMD_SELECT_ALL
+  MENUITEM "ƒå&as/Datum\tF5",    CMD_TIME_DATE
   MENUITEM SEPARATOR
-  MENUITEM "Zalo&mit dlouhÈ ¯·dky",  CMD_WRAP
-  MENUITEM "&PÌsmo...",          CMD_FONT
+  MENUITEM "Zalo&mit dlouh√© ≈ô√°dky",  CMD_WRAP
+  MENUITEM "&P√≠smo...",          CMD_FONT
  }
-POPUP "&Hled·nÌ" {
+POPUP "&Hled√°n√≠" {
   MENUITEM "&Hledej\tCtrl+F",   CMD_SEARCH
-  MENUITEM "&Najdi dalπÌ\tF3",  CMD_SEARCH_NEXT
+  MENUITEM "&Najdi dalƒÖ√≠\tF3",  CMD_SEARCH_NEXT
  }
-POPUP "&N·povÏda" {
+POPUP "&N√°povƒõda" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
  }
 }
@@ -63,25 +66,27 @@ STRINGTABLE DISCARDABLE
 {
 STRING_LILYPAD, "LilyPad"
 STRING_ERROR,                                   "CHYBA"
-STRING_WARNING,                                 "VAROV¡NÕ"
+STRING_WARNING,                                 "VAROV√ÅN√ç"
 STRING_INFO,                                    "Informace"
 
-STRING_UNTITLED,                                "(bez n·zvu)"
+STRING_UNTITLED,                                "(bez n√°zvu)"
 
-STRING_ALL_FILES,                               "Vπechny soubory (*.*)"
-STRING_LILYPOND_FILES_LY,                  "LilyPondovÈ soubory (*.ly)"
+STRING_ALL_FILES,                               "VƒÖechny soubory (*.*)"
+STRING_LILYPOND_FILES_LY,                  "LilyPondov√© soubory (*.ly)"
 
-STRING_TOOLARGE,                                "Soubor '%s' je pro lilypad p¯Ìliπ velk˝.\n \
-Pouæijte jin˝ editor, prosÌm."
-STRING_NOTEXT,                                  "Nebyl zad·n æ·dn˝ LilyPond. \
+STRING_TOOLARGE,                                "Soubor '%s' je pro lilypad p≈ô√≠liƒÖ velk√Ω.\n \
+Pouƒæijte jin√Ω editor, pros√≠m."
+STRING_NOTEXT,                                  "Nebyl zad√°n ƒæ√°dn√Ω LilyPond. \
 \nPlease type something and try again"
 STRING_DOESNOTEXIST,                            "Soubor '%s'\nneexistuje.\n\n \
-Chcete ho vytvo¯it ?"
-STRING_NOTSAVED,                                "Soubor '%s'\nbyl zmÏnÏn.\n\n \
-Chcete uloæit zmÏny ?"
+Chcete ho vytvo≈ôit ?"
+STRING_NOTSAVED,                                "Soubor '%s'\nbyl zmƒõnƒõn.\n\n \
+Chcete uloƒæit zmƒõny ?"
 STRING_NOTFOUND,                                        "'%s' nebyl nalezen."
-STRING_OUT_OF_MEMORY,                   "NenÌ dost pamÏti na dokonËenÌ tÈto ˙lohy. \
-\nUzav¯ete jednu Ëi vÌce aplikacÌ abyste zÌskali vÌce  \nvolnÈ \
-pamÏti."
+STRING_OUT_OF_MEMORY,                   "Nen√≠ dost pamƒõti na dokonƒçen√≠ t√©to √∫lohy. \
+\nUzav≈ôete jednu ƒçi v√≠ce aplikac√≠ abyste z√≠skali v√≠ce  \nvoln√© \
+pamƒõti."
 
 }
+
+#pragma code_page(default)

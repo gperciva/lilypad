@@ -21,20 +21,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_POLISH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
 {
  POPUP "&Plik" {
   MENUITEM "&Nowy...",           CMD_NEW
-  MENUITEM "&OtwÛrz\tCtrl+O",     CMD_OPEN
+  MENUITEM "&Otw√≥rz\tCtrl+O",     CMD_OPEN
   MENUITEM "&Zapisz\tCtrl+S",     CMD_SAVE
   MENUITEM "Z&apisz jako...",       CMD_SAVE_AS
   MENUITEM SEPARATOR
   MENUITEM "&Drukuj",            CMD_PRINT
   MENUITEM "&Ustawienia strony...",    CMD_PAGE_SETUP
   MENUITEM SEPARATOR
-  MENUITEM "ZakoÒ&cz",             CMD_EXIT
+  MENUITEM "Zako≈Ñ&cz",             CMD_EXIT
  }
 POPUP "&Edycja" {
   MENUITEM "&Cofnij\tCtrl+Z",     CMD_UNDO
@@ -42,7 +45,7 @@ POPUP "&Edycja" {
   MENUITEM "&Wytnij\tCtrl+X",      CMD_CUT
   MENUITEM "&Kopiuj\tCtrl+C",     CMD_COPY
   MENUITEM "Wkl&ej\tCtrl+V",    CMD_PASTE
-  MENUITEM "&UsuÒ\tDel",      CMD_DELETE
+  MENUITEM "&Usu≈Ñ\tDel",      CMD_DELETE
   MENUITEM SEPARATOR
   MENUITEM "Zaznacz w&szystko\tCtrl+A",       CMD_SELECT_ALL
   MENUITEM "Godzina/&Data\tF5",    CMD_TIME_DATE
@@ -50,9 +53,9 @@ POPUP "&Edycja" {
   MENUITEM "&Zawijanie wierszy",  CMD_WRAP
   MENUITEM "Czci&onka...",          CMD_FONT
  }
-POPUP "&Znajdü" {
-  MENUITEM "&Znajdü\tCtrl+F",   CMD_SEARCH
-  MENUITEM "Z&najdü nastÍpny\tF3",  CMD_SEARCH_NEXT
+POPUP "&Znajd≈∫" {
+  MENUITEM "&Znajd≈∫\tCtrl+F",   CMD_SEARCH
+  MENUITEM "Z&najd≈∫ nastƒôpny\tF3",  CMD_SEARCH_NEXT
  }
 POPUP "Pomo&c" {
   MENUITEM "&About LilyPad...", CMD_HELP_ABOUT_LILYPAD
@@ -62,25 +65,27 @@ POPUP "Pomo&c" {
 STRINGTABLE DISCARDABLE
 {
 STRING_LILYPAD, "LilyPad"
-STRING_ERROR,                                   "B£•D"
-STRING_WARNING,                                 "OSTRZEØENIE"
+STRING_ERROR,                                   "B≈ÅƒÑD"
+STRING_WARNING,                                 "OSTRZE≈ªENIE"
 STRING_INFO,                                    "Informacja"
 
-STRING_UNTITLED,                                "(bez tytu≥u)"
+STRING_UNTITLED,                                "(bez tytu≈Çu)"
 
 STRING_ALL_FILES,                               "Wszystkie piki (*.*)"
 STRING_LILYPOND_FILES_LY,                  "Pliki LilyPondowe (*.ly)"
 
-STRING_TOOLARGE,                                "Plik '%s' jest za duøy dla notatnika.\n \
-ProszÍ uøyÊ innego edytora."
-STRING_NOTEXT,                                  "Nie wprowadzi≥eú øadnego LilyPondu. \
-\nProszÍ coú wpisaÊ i sprÛbowaÊ ponownie."
+STRING_TOOLARGE,                                "Plik '%s' jest za du≈ºy dla notatnika.\n \
+Proszƒô u≈ºyƒá innego edytora."
+STRING_NOTEXT,                                  "Nie wprowadzi≈Çe≈õ ≈ºadnego LilyPondu. \
+\nProszƒô co≈õ wpisaƒá i spr√≥bowaƒá ponownie."
 STRING_DOESNOTEXIST,                            "Plik '%s' nie istnieje\n\n \
-Czy chcesz utworzyÊ nowy plik ?"
-STRING_NOTSAVED,                                "Plik '%s'\nzosta≥ zmodyfikowany\n\n \
-Czy chcesz zachowaÊ zmiany ?"
-STRING_NOTFOUND,                                        "Nie moøna odnaleüÊ '%s'."
-STRING_OUT_OF_MEMORY,                   "Za ma≥o pamiÍci do wykonania tego zadania.\n \
-Zamknij jednπ lub wiÍcej aplikacji aby zwiÍkszyÊ iloúÊ wolnej pamiÍci."
+Czy chcesz utworzyƒá nowy plik ?"
+STRING_NOTSAVED,                                "Plik '%s'\nzosta≈Ç zmodyfikowany\n\n \
+Czy chcesz zachowaƒá zmiany ?"
+STRING_NOTFOUND,                                        "Nie mo≈ºna odnale≈∫ƒá '%s'."
+STRING_OUT_OF_MEMORY,                   "Za ma≈Ço pamiƒôci do wykonania tego zadania.\n \
+Zamknij jednƒÖ lub wiƒôcej aplikacji aby zwiƒôkszyƒá ilo≈õƒá wolnej pamiƒôci."
 
 }
+
+#pragma code_page(default)

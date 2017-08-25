@@ -20,6 +20,9 @@
  * Foundation, Inc., 51 Franklin St, Suite 500, Boston, MA 02110-1335, USA
  */
 
+/* UTF-8 */
+#pragma code_page(65001)
+
 LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
 
 MAIN_MENU MENU
@@ -66,7 +69,7 @@ CAPTION "About LilyPad"
 FONT 8, "MS Sans Serif"
 {
 CONTROL          "IDB_LILYPAD", IDC_STATIC, WC_STATIC, SS_SUNKEN | SS_BITMAP, 7, 7, 67, 62
-CTEXT            "Copyright (c) 2015 LilyPond Development Team", IDC_STATIC, 75, 7, 180, 8, SS_CENTER
+CTEXT            "Copyright (c) 2017 LilyPond Development Team", IDC_STATIC, 75, 7, 180, 8, SS_CENTER
 CTEXT            "LilyPad is licensed under the LGPL", IDC_STATIC, 77, 18, 180, 8, SS_CENTER
 DEFPUSHBUTTON    "OK", IDOK, 140, 41, 50, 14
 }
@@ -97,3 +100,5 @@ task. \nClose one or more applications to increase the amount of \nfree \
 memory."
 
 }
+
+#pragma code_page(default)
