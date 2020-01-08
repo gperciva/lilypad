@@ -11,6 +11,7 @@ class URLHandlerClass(NSScriptCommand):
         self.openURL(urlString)
         return None
 
+    @objc.python_method
     def openURL (self, urlString):
         urlString = urllib.unquote (urlString)
         m = re.match ("^textedit://([^:]*):?([0-9]*):?([0-9]*):?([0-9]*)$", urlString)
@@ -31,6 +32,7 @@ class URLHandlerClass(NSScriptCommand):
         path = m.group (1)
         self.jumpFile (path, line, char)
 
+    @objc.python_method
     def charCount (self, str, line, char):
         line -= 1
         char -= 1
@@ -41,6 +43,7 @@ class URLHandlerClass(NSScriptCommand):
             lineChars += min (char, len (lines[line]))
         return lineChars + 1
         
+    @objc.python_method
     def jumpFile (self, path, line, char):
         NSLog ("Jumping to %s %d %d\n" % (path, line, char))
 

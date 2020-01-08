@@ -21,6 +21,7 @@ class ProcessLog(NSObject):
         return self
 
     # the actual base class is NSObject
+    @objc.python_method
     def setProcess (self, process):
         self.out_str = ''
         if self.isLive():
@@ -106,7 +107,8 @@ class ProcessLogWindowController(NSWindowController):
         if self.processLog.isLive ():
             self.processLog.killProcess ()
             # rest is handled by timer.
-            
+           
+    @objc.python_method
     def runProcessWithCallback (self, process, finish_callback):
         self.finish_callback = finish_callback
         self.processLog.setProcess (process)
@@ -147,6 +149,7 @@ class ProcessLogWindowController(NSWindowController):
         range.length = ts_len
         tv.replaceCharactersInRange_withString_ (range, '')
         
+    @objc.python_method
     def addText (self, str):
         tv = self.textView
         ts_len = tv.textStorage().length ()

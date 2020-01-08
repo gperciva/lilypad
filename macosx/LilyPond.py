@@ -106,6 +106,7 @@ class TinyTinyDocument(NSDocument):
 
         firstStart = False
 
+    @objc.python_method
     def readFromUTF8(self, path):
         f = file(path)
         text = unicode(f.read(), "utf8")
@@ -192,6 +193,7 @@ class TinyTinyDocument(NSDocument):
         wc.setWindowTitle_ ('LilyPond -- ' + self.fileName())
         wc.runProcessWithCallback (call, self.open_pdf)
 
+    @objc.python_method
     def open_pdf (self, data):
         pdf_file = os.path.splitext (self.fileName())[0] + '.pdf'
         if os.path.exists (pdf_file):
