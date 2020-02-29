@@ -37,14 +37,13 @@ setup(
 		'ProcessLog.nib',
 		'lilycall.py',
 		'ProcessLog.py',
-		'/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/shutil.py',
 		'Credits.html',
 		'URLHandle.scriptSuite',
 		'URLHandle.scriptTerminology',
 		'Welcome-to-LilyPond-MacOS.ly'
 		],
+    packages=['distlib'],
+    package_dir={'distlib': 'venv/lib/python2.7/site-packages/pip/_vendor/distlib'},
     options=dict(py2app=dict(plist=plist)),
-    setup_requires=["py2app", "pyobjc==2.3.1"],
+    setup_requires=["py2app==0.19", "pyobjc"],
 )
-
-
